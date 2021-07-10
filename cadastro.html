@@ -38,9 +38,9 @@
 
         <!-- Select Basic -->
         <div class="form-group">
-          <label class="col-md-2 control-label" for="Estado Civil">Tipo de Pessoa<h11>*</h11></label>
+          <label class="col-md-2 control-label" for="tipopessoa">Tipo de Pessoa<h11>*</h11></label>
           <div class="col-md-2">
-            <select required id="Estado Civil" name="Estado Civil" class="form-control">
+            <select required id="tipopessoa" name="tipopessoa" class="form-control">
               <option value=""></option>
               <option value="instituicao">Instituição</option>
               <option value="pessoafisica">Pessoa fisica</option>
@@ -48,7 +48,7 @@
           </div>
           <label class="col-md-2 control-label" for="Nome">Documento <h11>*</h11></label>
           <div class="col-md-2">
-            <input id="document" name="document" placeholder="Apenas números" class="form-control input-md" required="true"
+            <input id="documento" name="documento" placeholder="Apenas números" class="form-control input-md" required="true"
               type="text" maxlength="14" pattern="[0-9]+$">
           </div>
         </div>
@@ -160,7 +160,7 @@
           <label class="col-md-2 control-label" for="Nome">Imagem <h11>*</h11></label>
           <div class="col-md-8">
             <input id="imagem" name="imagem" placeholder="Selecionar imagem"
-              class="form-control input-md" required="true" type="file" accept="image/*" onchange="requestUploadImagem(this.files[0], this.files[0].name)">
+              class="form-control input-md" required="true" type="file" accept="image/*" >
           </div>
         </div> 
 
