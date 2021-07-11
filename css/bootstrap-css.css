@@ -21,14 +21,18 @@ color: #fff;
     color: #fff;
     background-color:  purple;
     border-color: purple; 
+    margin-top:10px
+
+
 }
 
 .panel-body {
-    padding: 35px;
-    background-color: #f2dede;
-	
+   padding: 35px;
+   margin: -10px 35px 25px 25px;
+	    border-top-width:10px;
+border-color:black;
 }
-
+ 
  
 .btn-primary {
     color: #fff;
@@ -42,14 +46,14 @@ color: #fff;
     background-color: #333;
     border-color: #080808;
 	
-	margin:15px 10px 10px 10px;
+	margin:5px 5px 5px 5px;
 }
 
 .btn-success {
     color: #fff;
-    background-color: purple;
-    border-color: purple; 
-	margin:15px 10px 10px 10px;
+    background-color: #581575 ;
+    border-color: #581575 ; 
+	margin:4px 4px 4px 4px;
 
 }
 
@@ -62,16 +66,22 @@ body {
 }
 
 .panel-primary {
-    border-color: #613d90;
+
+ margin-top: 35px;
+    border-color: red;
+
+border: 5px solid red;
+border-color: #581575;
+
+    background-color: #6f42c145;
+  border-bottom-left-radius: 50px 40px;
+  border-bottom-right-radius: 50px 40px;
+
+  border-top-right-radius: 50px 40px;
+  border-top-left-radius: 50px 40px;
 }
 
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
-    position: relative;
-    min-height: 1px;
-    padding-right: 6px;
-    padding-left: 7px;
-}
  
 .col-md-1 {
     width: 18.33333333%;
@@ -93,4 +103,100 @@ img {
   right: 0;
   background-color:#e05ddc;
    
+}
+
+.input-group-addon{
+    
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+ 
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #581575;
+    border-color: #581575;
+}
+
+
+.input-md,.col-md-4,.col-md-8{
+    
+    margin-botton: 10px;
+    margin-top: 10px;
+   }
+
+.btn-editar{
+background-color: blue;
+color: white;
+margin-right:20px;
+    }
+
+.btn-excluir{
+background-color: red;
+color: white;
+    }
+
+.title{
+ font-family: Lobster;
+font-size:35px;
+margin-top: -15px;
+    margin-bottom: 30px;
+}
+
+
+
+.btn-adicionar-pet{
+background-color: purple;
+color: white;
+margin:0px 0px 30px;
+} 
+
+.btn-adicionar-campo{
+background-color: purple;
+color: white;
+margin:0px 0px 30px;
+}
+
+list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color:  #581575;
+    border-color:  #581575;
+}
+ 
+
+.formAdoption{
+margin:100px; 
+padding:30px; 
+border: 5px solid red;
+border-color: #581575;
+  border-bottom-left-radius: 50px 40px;
+  border-bottom-right-radius: 50px 40px;
+
+  border-top-right-radius: 50px 40px;
+  border-top-left-radius: 50px 40px;
+}
+
+.tableLinha {
+    flex: 0 0 auto;
+    width: 20.3333333333%;
+}
+
+.btn-pesquisarCep{
+margin-top:11px;
+}
+
+.col-8{
+    
+    flex: 0 0 auto;
+    width: 75.6666666667%;
+
+   }
+
+
+.btn_adotar_pet
+{
+margin-top:10px;
 }
