@@ -79,40 +79,31 @@ function requestCep(url, name) {
 
 
   function requestCadastro(opts) {
-    var imagem = document.getElementById('imagem');
 
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "");
-    //myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1ODY4MTUwLCJleHAiOjE2MjU5MDQxNTB9.h8EGmHLfxzTryA17w8z6dyYjYPhjWYH9P804D4Bz1y0")
-
-    var formdata = new FormData();
-    formdata.append("foto", imagem.files[0]);//, imagem.files[0].name);
-    formdata.append("pessoa", new Blob([JSON.stringify({email:opts.email,
-                                                        endereco:{
-                                                            bairro:opts.bairro,
-                                                            cep:opts.cep,
-                                                            cidade:opts.cidade,
-                                                            estado:opts.estado,
-                                                            id:opts.id,
-                                                            logradouro:opts.rua,
-                                                            numero:opts.numero
-                                                        },
-                                                        idPessoa:opts.idPessoa,
-                                                        nome:opts.nome,
-                                                        senha:opts.senha,
-                                                        sobrenome:opts.sobrenome
-                                                        })],
-                                                        {type: "application/json"}));
+    myHeaders.append("Content-Type", "application/json;charset=utf-8");
 
     if (opts.tipopessoa == "pessoafisica")
     {
         fetch('http://minhaudocao.com.br:8080/api/pessoa/add', {
-        //fetch('http://localhost:8080/api/pessoa/add', {
             method: 'POST',
-            headers: {
-                "Content-Type": "undefined"
-            },
-            data: formdata
+            headers: myHeaders,
+            body: JSON.stringify({email:opts.email,
+                endereco:{
+                    bairro:opts.bairro,
+                    cep:opts.cep,
+                    cidade:opts.cidade,
+                    estado:opts.estado,
+                    id:opts.id,
+                    logradouro:opts.rua,
+                    numero:opts.numero
+                },
+                idPessoa:opts.idPessoa,
+                nome:opts.nome,
+                senha:opts.senha,
+                sobrenome:opts.sobrenome,
+                imagem:imagemEnder
+                })
         }).then(response => response.ok ? alert("Cadastro efetuado com sucesso!"):alert("Não foi possível a inclusão do cadastro!"));
     } else {
         fetch('http://minhaudocao.com.br:8080/api/instituicao/add', {
@@ -130,7 +121,7 @@ function requestCep(url, name) {
                                     numero:opts.numero
                                 },
                                 idPessoa:opts.idPessoa,
-                                imagem:null,//formdata,
+                                imagem:imagemEnder,
                                 nome:opts.nome,
                                 senha:opts.senha,
                                 sobrenome:opts.sobrenome,
