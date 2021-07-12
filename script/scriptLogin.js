@@ -1,4 +1,3 @@
-    // Variavel Imagem
     var retorno;
 
   function requestLogin(opts) {

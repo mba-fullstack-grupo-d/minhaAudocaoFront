@@ -81,7 +81,7 @@ function requestCep(url, name) {
   function requestCadastro(opts) {
 
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json;charset=utf-8");
+    myHeaders.append("Content-Type", "application/json");
 
     if (opts.tipopessoa == "pessoafisica")
     {
@@ -95,7 +95,7 @@ function requestCep(url, name) {
                     cidade:opts.cidade,
                     estado:opts.estado,
                     id:opts.id,
-                    logradouro:opts.rua,
+                    logradouro:opts.logradouro,
                     numero:opts.numero
                 },
                 idPessoa:opts.idPessoa,
@@ -104,30 +104,45 @@ function requestCep(url, name) {
                 sobrenome:opts.sobrenome,
                 imagem:imagemEnder
                 })
-        }).then(response => response.ok ? alert("Cadastro efetuado com sucesso!"):alert("Não foi possível a inclusão do cadastro!"));
+        }).then(response => {
+            if (response.ok) {
+                alert("Cadastro efetuado com sucesso!");
+            } else {
+                alert("Não foi possível a inclusão do cadastro!")
+            }
+        })
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
     } else {
         fetch('http://minhaudocao.com.br:8080/api/instituicao/add', {
             method: 'POST',
             headers: myHeaders,
-            body: JSON.stringify({descrico:opts.documento,
-                                email:opts.email,
-                                endereco:{
-                                    bairro:opts.bairro,
-                                    cep:opts.cep,
-                                    cidade:opts.cidade,
-                                    estado:opts.estado,
-                                    id:opts.id,
-                                    logradouro:opts.rua,
-                                    numero:opts.numero
-                                },
-                                idPessoa:opts.idPessoa,
-                                imagem:imagemEnder,
-                                nome:opts.nome,
-                                senha:opts.senha,
-                                sobrenome:opts.sobrenome,
-                                telefone:opts.telefone
-                                })
-        }).then(response => response.ok ? alert("Cadastro efetuado com sucesso!"):alert("Não foi possível a inclusão do cadastro!"));
+            body: JSON.stringify({descricao:opts.sobrenome,
+                email:opts.email,
+                endereco:{
+                    bairro:opts.bairro,
+                    cep:opts.cep,
+                    cidade:opts.cidade,
+                    estado:opts.estado,
+                    id:opts.id,
+                    logradouro:opts.logradouro,
+                    numero:opts.numero
+                },
+                idPessoa:opts.idPessoa,
+                imagem:imagemEnder,
+                nome:opts.nome,
+                senha:opts.senha,
+                telefone:opts.telefone
+                })
+        }).then(response => {
+            if (response.ok) {
+                alert("Cadastro efetuado com sucesso!");
+            } else {
+                alert("Não foi possível a inclusão do cadastro!")
+            }
+        })
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 
     }
 }
@@ -147,11 +162,13 @@ function requestCep(url, name) {
     var cidade = document.getElementById('cidade').value;
     var estado = document.getElementById('estado').value;
     var telefone = document.getElementById('telefone').value;
+    var cep = document.getElementById('cep').value;
 
 
     if (validaEmail(email)) {
-        if (validaEndereco(rua, numero, bairro, cidade, estado )) {
+        if (validaEndereco(rua, numero, bairro, cidade, estado)) {
             if (validaConfirmacaoSenha(senha, confirmacao)){
+                if (validaNomeSobrenome(nome, sobrenome)){
                     requestCadastro({
                     idPessoa: null,
                     nome: nome,
@@ -162,12 +179,16 @@ function requestCep(url, name) {
                     bairro: bairro,
                     cep:cep,
                     cidade:cidade,
+                    estado:estado,
                     numero:numero,
                     id:null,
                     tipopessoa:tipopessoa,
                     documento:documento,
                     telefone:telefone
                 });
+                } else {
+                    alert('Nome e sobrenome/descrição requeridos!');
+                }
             } else {
                 alert('Confirmacao de senha não confere!');
             }
@@ -187,7 +208,7 @@ function requestCep(url, name) {
     var formdata = new FormData();
     formdata.append("file", imagem, nome);
 
-    fetch('http://localhost:8080/api/uploadFoto', {
+    fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
         method: 'POST',
         header:myHeaders,
         body: formdata
@@ -225,7 +246,7 @@ function validaEndereco(rua, numero, bairro, cidade, estado ) {
         if (re.test(numero)) {
             if (!nulo.test(bairro)) {
                 if (!nulo.test(cidade)) {
-                    if (!nulo.test(estado)) {
+                    if (!nulo.test(estado)) {                        
                         return true;
                     }
                 }
@@ -242,5 +263,17 @@ function validaConfirmacaoSenha(senha, confirmacao)
     }
     return true;
 
+}
+
+function validaNomeSobrenome(nome, sobrenome)
+{
+    const nulo = /null/;
+
+    if (!nulo.test(nome)){
+        if (!nulo.test(sobrenome)) {
+            return true;
+        }
+    }
+    return false;
 }
 
