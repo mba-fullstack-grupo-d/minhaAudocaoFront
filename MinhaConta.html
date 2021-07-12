@@ -34,16 +34,17 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
-
+ 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
  <!------ Include the above in your HEAD tag ---------->
   <link rel="stylesheet" type="text/css" href="css/bootstrap-css.css">
 
-
   </head>
   <body class="u-body">
 
- <header class="u-align-center u-border-1 u-border-grey-25 u-clearfix u-header u-header" id="sec-b094"><div class="u-clearfix u-sheet u-sheet-1">
+ 
+<header class="u-align-center u-border-1 u-border-grey-25 u-clearfix u-header u-header" id="sec-b094"><div class="u-clearfix u-sheet u-sheet-1">
         <nav class="u-align-center u-menu u-menu-dropdown u-nav-spacing-25 u-offcanvas u-menu-1">
           <div class="menu-collapse u-custom-font u-font-lobster" style="font-size: 1.5rem;">
             <a class="u-button-style u-custom-active-color u-custom-hover-color u-custom-text-active-color u-custom-text-color u-nav-link" href="#" style="padding: 4px 0px; font-size: calc(1em + 8px);">
@@ -87,13 +88,16 @@
         </nav> 
         <a href="index.html" class="u-border-1 u-border-active-custom-color-10 u-border-hover-custom-color-10 u-btn u-button-style u-custom-font u-font-lobster u-none u-text-body-color u-btn-3">Minha Audoção</a>
         <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1280" data-image-height="853"></div>
-      </div></header>
+      </div>
+
+
+</header>
 
 
 <div class="row">
   <div class="col-4 tableLinha">
     <div class="list-group" id="list-tab" role="tablist">
-      <a class="list-group-item list-group-item-action active" id="list-meusdados-list" data-bs-toggle="list" href="#list-meusdados" role="tab" aria-controls="list-home">Meus Dados</a>
+      <a class="list-group-item list-group-item-action active" onclick="preencherDadosPessoais(1)" id="list-meusdados-list" data-bs-toggle="list" href="#list-meusdados" role="tab" aria-controls="list-home">Meus Dados</a>
       <a class="list-group-item list-group-item-action" onclick="meMostraPets()" id="list-pets-list" data-bs-toggle="list" href="#list-pets" role="tab" aria-controls="list-profile">Pets</a>
       <a class="list-group-item list-group-item-action" onclick="meMostraEventos()"id="list-eventos-list" data-bs-toggle="list" href="#list-eventos" role="tab" aria-controls="list-messages">Eventos</a>
       <a class="list-group-item list-group-item-action" onclick="meMostraFormulario()" id="list-formularios-list" data-bs-toggle="list" href="#list-formulario" role="tab" aria-controls="list-settings">Formulario</a>
@@ -101,9 +105,41 @@
   </div>
   <div class="col-8">
     <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-meusdados" role="tabpanel" aria-labelledby="list-meusdados-list">
+      <div class="tab-pane fade show active" id="list-meusdados" role="tabpanel" aria-labelledby="list-meusdados-list" onload="preencherDadosPessoais(1)">
+
+<script>
+
+async function preencherDadosPessoais(campoId){
+
+window.scrollTo(0, 0);
+
+console.log(campoId);
+let response  = await fetch("http://minhaudocao.com.br:8080/api/instituicao/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"} }); 
 
 
+console.log(campoId);
+
+if (response.status === 200) {
+data= await response.json();
+console.log(data);
+document.getElementById("inputDocumento").value=data.nome;
+document.getElementById("nome").value=data.nome;
+document.getElementById("email").value=data.email;
+document.getElementById("telefone").value=data.telefone;
+document.getElementById("cep").value=data.endereco.cep;
+document.getElementById('rua').value=data.endereco.logradouro;
+document.getElementById('bairro').value=data.endereco.bairro;
+document.getElementById('cidade').value=data.endereco.cidade;
+document.getElementById('estado').value=data.endereco.estado;
+document.getElementById('numero').value=data.endereco.numero; 
+
+}
+
+else{ alert("Não foi possível a busca do evento!"); }
+}
+
+preencherDadosPessoais(1);
+</script>
 <form class="form-horizontal" method="POST">
 <fieldset>
 
@@ -242,20 +278,91 @@ function onlynumber(evt) {
    }
 }
 
-function mostraEscondePets(buttonName){
+function mostraEscondePets(buttonName, campoId){
+
+window.scrollTo(0, 0);
 var obj = document.getElementById("tablePets");
 obj.style.display = "none"; 
 var x = document.getElementById("formPetsDiv");
 x.style.visibility = "visible";
 var button = document.getElementById("cadastrar_pet");
-if(buttonName==1)
+if(buttonName==1){
 button.innerText = "Editar pet"
-if(buttonName==2)
+preencherFormPet(campoId)
+document.getElementById("fotos").style.visibility = "hidden"; 
+}
+if(buttonName==2){
 button.innerText = "Cadastrar pet"
+document.getElementById("fotos").style.visibility = "visible"; 
+document.getElementById("divFotosPets").style.visibility = "hidden";
+
+}
+}
+
+
+
+async function preencherFormPet(campoId){
+
+window.scrollTo(0, 0);
+
+console.log(campoId);
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"} }); 
+
+
+console.log(campoId);
+
+if (response.status === 200) {
+data= await response.json();
+console.log(data);
+
+
+document.getElementById("fotos").style.visibility = "hidden"; 
+document.getElementById("divFotosPets").style.visibility = "visible"; 
+document.getElementById("nome_pet").value=data.nome;
+document.getElementById('idade_pet').value=data.idade;
+
+document.getElementById('descricao_pet').value=data.descricao;
+var tipo = capitalizeFirstLetter(data.especie)
+console.log(tipo); 
+$("#especie_select").find('option:contains("' + tipo + '")').prop('selected', true);
+$("#sexo_select_pet").find('option:contains("' + capitalizeFirstLetter(data.genero) + '")').prop('selected', true);
+console.log(capitalizeFirstLetter(data.genero)); 
+$("#vacinado_select").find('option:contains("' + changeLabel(data.vacinado) + '")').prop('selected', true);
+$("#castrado_pet_select").find('option:contains("' + changeLabel(data.castrado) + '")').prop('selected', true);
+
+if(data.adotado){
+$("#status_pet_select").find('option:contains("Adotado")').prop('selected', true);
+}
+else{
+$("#status_pet_select").find('option:contains("Em adocao")').prop('selected', true);
+
+
+document.getElementById('img1').src=data.uriFotos[0];
+document.getElementById('img2').src=data.uriFotos[1];
+document.getElementById('img3').src=data.uriFotos[2];
+document.getElementById('img4').src=data.uriFotos[3];
+
+}
+   
+
+
 
 }
 
+else{ alert("Não foi possível a busca do evento!"); }
+}
+
+
+
+
+
+
+
+
+
 function mostraEscondeEventos(buttonName, campoId){
+
+window.scrollTo(0, 0);
 var obj = document.getElementById("tableEventos");
 obj.style.display = "none"; 
 var x = document.getElementById("formEventosDiv");
@@ -273,6 +380,7 @@ button.innerText = "Cadastrar evento"
 
 async function preencherFormEvento(campoId){
 
+window.scrollTo(0, 0);
 
 console.log(campoId);
 let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"} }); 
@@ -293,20 +401,32 @@ document.getElementById('cidade_evento').value=data.endereco.cidade;
 document.getElementById('estado_evento').value=data.endereco.estado;
 document.getElementById('numero_evento').value=data.endereco.numero;
 document.getElementById("descricao_evento").value=data.descricao;
+   
 
-document.getElementById("datepicker1").value=data.datas[0].horaInicio
-document.getElementById("datepicker2").value=data.datas[0].horaFim
+var year=data.datas[0].data.substring(0,4)
+var month=data.datas[0].data.substring(5,7)
+var day=data.datas[0].data.substring(8,10)
+
+date= day +"-"+ month +"-"+ year
+console.log(date) 
+document.getElementById("datepicker1").value= date +" "+ data.datas[0].horaInicio;
+document.getElementById("datepicker2").value= date +" "+ data.datas[0].horaFim
 
 
 }
 
-else{ alert("Não foi possível a inclusão do cadastro!"); }
+else{ alert("Não foi possível a busca do evento!"); }
 }
+
+
+
 
 
 
 
 function mostraEscondeFormulario(buttonName,campoId){
+
+window.scrollTo(0, 0);
 var obj = document.getElementById("tableFormulario");
 obj.style.display = "none"; 
 var x = document.getElementById("formFormularioDiv");
@@ -325,12 +445,14 @@ button.innerText = "Cadastrar campo"
 }
 
 function capitalizeFirstLetter(string) {
+
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 async function preencherFormCampo(campoId){
 
 
+window.scrollTo(0, 0);
 console.log(campoId);
 let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"} }); 
 
@@ -346,8 +468,6 @@ var tipo = capitalizeFirstLetter(data.tipo)
 console.log(tipo); 
 $("#tipo_campo_select").find('option:contains("' + tipo + '")').prop('selected', true);
 $("#obrigatorio_select").find('option:contains("' + changeLabel(data.obrigatorio) + '")').prop('selected', true);
-
-
 
 
 }
@@ -591,7 +711,8 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/add", { m
     "cidade": cidade,
     "estado": estado,
     "logradouro": rua ,
-    "numero": numero
+    "numero": numero,
+     "bairro":bairro
   },
   
   "instituicao": {
@@ -619,6 +740,7 @@ document.getElementById('bairro_evento').value="";
 document.getElementById('cidade_evento').value="";
 document.getElementById('estado_evento').value="";
 document.getElementById('descricao_evento').value=""; 
+document.getElementById("inputGroupFile01_event").value="";
 document.getElementById("inputGroupFile01_event").files[0].name="";
 document.getElementById('datepicker1').value="";
 var data2 = document.getElementById('datepicker2').value="";
@@ -631,6 +753,82 @@ else{ alert("Não foi possível a inclusão do cadastro!"); }
 
 console.log(foto) 
  
+}
+
+
+
+
+
+
+async function deletePet(idPet){ 
+
+console.log(idPet)
+var resultado = confirm("Deseja excluir o pet selecionado?");
+  if (resultado == true) {
+ 
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/delete/"+ idPet +"", { method: 'DELETE', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"}}); 
+if (response.status === 200) {
+alert("Campo excluido com sucesso!");
+sleep(10); 
+buscaPets(); 
+meMostraPets(); 
+
+ 
+}
+
+else{ alert("Não foi possível a exclusao do campo!");
+
+}
+
+}
+}
+
+
+async function deleteCampo(idCampo){ 
+
+console.log(idCampo)
+var resultado = confirm("Deseja excluir o campo selecionado?");
+  if (resultado == true) {
+ 
+let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/delete/"+ idCampo +"", { method: 'DELETE', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"}}); 
+if (response.status === 200) {
+alert("Campo excluido com sucesso!");
+sleep(10); 
+buscaCampo(); 
+meMostraFormulario(); 
+
+ 
+}
+
+else{ alert("Não foi possível a exclusao do campo!");
+
+}
+
+}
+}
+
+
+async function deleteEvento(idEvento){ 
+
+console.log(idEvento)
+var resultado = confirm("Deseja excluir o evento selecionado?");
+if (resultado == true) {
+ 
+let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/delete/"+ idEvento +"", { method: 'DELETE', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"}}); 
+if (response.status === 200) {
+alert("Evento excluido com sucesso!");
+sleep(10); 
+buscaEventos(); 
+meMostraEventos(); 
+
+ 
+}
+
+else{ alert("Não foi possível a exclusao do campo!");
+
+}
+
+}
 }
 
 
@@ -727,39 +925,100 @@ console.log(castrado_pet_select_value)
 console.log(descricao_pet) 
 console.log(foto1) 
 
-var imagemEnder;
+alert("Vamos fazer os uploads das fotos do seu pet e o cadastrado dele!");
 
- var myHeaders = new Headers();
- myHeaders.append('Authorization',"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM");
+var imagemEnder1,imagemEnder2,imagemEnder3,imagemEnder4;
+
+var myHeaders = new Headers();
+myHeaders.append('Authorization',"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2MDU4MDE1LCJleHAiOjE2MjYwOTQwMTV9.qCOiCW6-PLli0ayBgPw2eyo8pVnHY6xzNHcpYMHD2M0");
 myHeaders.append("Content-Type", "multipart/form-data");
 
-    var formdata = new FormData();
-    formdata.append("file", foto1, foto1.name);
+var formdata1 = new FormData();
+formdata1.append("file", foto1, foto1.name);
 
   let responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
         method: 'POST',
         header:myHeaders,
-        body: formdata
+        body: formdata1
     });
 
 if (responseFoto.status === 200) { 
 
-   imagemEnder = await responseFoto.text();
+   imagemEnder1 = await responseFoto.text();
+ 
+        console.log(imagemEnder1);
+ 
+}
 
-console.log("teste") 
-        console.log(imagemEnder);
+var formdata2 = new FormData();
+formdata2.append("file", foto2, foto2.name);
+responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
+        method: 'POST',
+        header:myHeaders,
+        body: formdata2
+    });
 
-console.log("testec") 
+if (responseFoto.status === 200) { 
 
+   imagemEnder2 = await responseFoto.text();
+ 
+        console.log(imagemEnder2);
+ 
+}
+
+var formdata3 = new FormData();
+formdata3.append("file", foto3, foto3.name);
+
+responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
+        method: 'POST',
+        header:myHeaders,
+        body: formdata3
+    });
+
+if (responseFoto.status === 200) { 
+
+   imagemEnder3 = await responseFoto.text();
+ 
+        console.log(imagemEnder3);
+ 
+}
+
+var formdata4 = new FormData();
+formdata4.append("file", foto4, foto4.name);
+
+responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
+        method: 'POST',
+        header:myHeaders,
+        body: formdata4
+    });
+
+if (responseFoto.status === 200) { 
+
+   imagemEnder4 = await responseFoto.text();
+ 
+        console.log(imagemEnder4);
+ 
+}
+
+var vacinado=false
+if(vacinado_select_pet_value=="sim"){
+vacinado=true
+}
+var castrado=false
+if(castrado_pet_select_value =="sim"){
+vacinado=true
+}
+var adotado=false
+if(vacinado_select_pet_value=="adotado"){
+vacinado=true
 }
 
 
-
 sleep(10);
-let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/add", { method: 'POST', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"}, body: JSON.stringify({ 
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/add", { method: 'POST', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2MDU4MDE1LCJleHAiOjE2MjYwOTQwMTV9.qCOiCW6-PLli0ayBgPw2eyo8pVnHY6xzNHcpYMHD2M0"}, body: JSON.stringify({ 
   
-"adotado": true,
-  "castrado": true,
+"adotado": adotado,
+  "castrado": castrado,
   "descricao": descricao_pet,
   "especie": especie_select_value,
   "fotos": [
@@ -770,9 +1029,9 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/add", { meth
         "id": 1
   },
   "nome": nome,
-  "vacinado": true ,
+  "vacinado": vacinado ,
   "uriFotos": [
-    imagemEnder
+    imagemEnder1,imagemEnder2,imagemEnder3,imagemEnder4
   ]
     
 
@@ -788,6 +1047,27 @@ sleep(10);
 buscaPets(); 
 meMostraPets(); 
 
+document.getElementById("nome_pet").value="";
+document.getElementById("descricao_pet").value="";
+document.getElementById("idade_pet").value="";
+
+
+document.getElementById("inputGroupFile04_pet").value="";
+document.getElementById("inputGroupFile02_pet").value="";
+document.getElementById("inputGroupFile03_pet").value="";
+document.getElementById("inputGroupFile01_pet").value="";
+
+
+document.getElementById("inputGroupFile04_pet").files[0]="";
+document.getElementById("inputGroupFile02_pet").files[0]="";
+document.getElementById("inputGroupFile03_pet").files[0]="";
+document.getElementById("inputGroupFile01_pet").files[0]="";
+
+
+document.getElementById("inputGroupFile04_pet").files[0].name="";
+document.getElementById("inputGroupFile02_pet").files[0].name="";
+document.getElementById("inputGroupFile03_pet").files[0].name="";
+document.getElementById("inputGroupFile01_pet").files[0].name="";
  
 }
 
@@ -1002,8 +1282,8 @@ for (var i = 0;i<data.length;i++){
     html+=   '<td>'+ changeLabel(data[i].status)+'</td>' 
     html+=   '<td hidden >'+ data[i].id+ '</td>' 
      html+= '<td>'
-html+='<button type="button" class="btn btn-editar" onclick="mostraEscondePets(1)" >Editar</button> ' 
-html+='<button type="button" class="btn btn-excluir">Excluir</button>'
+html+='<button type="button" class="btn btn-editar" onclick="mostraEscondePets(1,'+ data[i].id+')" >Editar</button> ' 
+html+='<button type="button" class="btn btn-excluir" onclick="deletePet('+ data[i].id+')">Excluir</button>'
  html+= '</tr>' 
 }
 
@@ -1144,6 +1424,7 @@ buscaPets();
  
 <br>
 
+<div id="fotos" >
 <div class="input-group mb-3">
   <label class="input-group-text" for="inputGroupFile01">Foto 1</label>
   <input type="file" class="form-control" id="inputGroupFile01_pet">
@@ -1163,7 +1444,17 @@ buscaPets();
   <label class="input-group-text" for="inputGroupFile04">Foto 4</label>
   <input type="file" class="form-control" id="inputGroupFile04_pet">
 </div>
+</div>
 
+<div id="divFotosPets">
+<figure>
+<p class="title"> Fotos do pet</p>
+  <img class ="imgPet"  id="img1" src="imagem.jpg" alt="Minha Figura">
+<img class ="imgPet"    id="img2"  src="imagem.jpg" alt="Minha Figura">
+  <img class ="imgPet"  id="img3" src="imagem.jpg" alt="Minha Figura">
+  <img class ="imgPet"  id="img4" src="imagem.jpg" alt="Minha Figura">
+</figure>
+</div>
 
  
   
@@ -1215,7 +1506,10 @@ buscaPets();
 
 <script>
 
-
+var dataEvento;
+var tamanhoPagina = 6;
+var pagina_evento = 0;
+var sizeEvento=0;
 async function fetchEvento() {
 
   let response = await fetch("http://minhaudocao.com.br:8080/api/evento/all");	
@@ -1226,29 +1520,66 @@ async function fetchEvento() {
 
 async function buscaEventos(){
 var html="";
-var data = await fetchEvento();
-console.log(data);
-for (var i = 0;i<data.length;i++){
+var dataEvento = await fetchEvento();
+for (var i = pagina_evento * tamanhoPagina; i < dataEvento.length && i < (pagina_evento + 1) *  tamanhoPagina; i++){
       
          console.log(i);
 
 	 html+= '<tr>'
     html+=  '<th scope="row">'+i+'</th>'
-    html+=  '<td>'+data[i].nome+'</td>'
-    html+=  '<td>'+data[i].endereco.estado+'</td>'
-    html+=   '<td>'+data[i].endereco.cidade+'</td>' 
-    html+=   '<td hidden >'+ data[i].id+ '</td>' 
+    html+=  '<td>'+dataEvento[i].nome+'</td>'
+    html+=  '<td>'+dataEvento[i].endereco.estado+'</td>'
+    html+=   '<td>'+dataEvento[i].endereco.cidade+'</td>' 
+    html+=   '<td hidden >'+ dataEvento[i].id+ '</td>' 
      html+= '<td>'
-html+='<button type="button" class="btn btn-editar" onclick="mostraEscondeEventos(1,'+data[i].id+')"   >Editar</button> ' 
-html+='<button type="button" class="btn btn-excluir">Excluir</button>'
+html+='<button type="button" class="btn btn-editar" onclick="mostraEscondeEventos(1,'+dataEvento[i].id+')"   >Editar</button> ' 
+html+='<button type="button" class="btn btn-excluir" onclick="deleteEvento('+dataEvento[i].id+')"  >Excluir</button>'
  html+= '</tr>' 
 }
 
 console.log(html);
+
+document.getElementById("tbodyEvento").innerHTML = "";
 var d1 = document.getElementById('tbodyEvento');
 d1.insertAdjacentHTML('beforeend', html);
-} 
-buscaEventos();
+
+$('#numeracao_evento').text('Página ' + (pagina_evento + 1) + ' de ' + Math.ceil(dataEvento.length / tamanhoPagina));
+
+
+return dataEvento.length;
+
+}
+
+async function ajustarBotoesEvento() {
+sizeEvento = await buscaEventos();
+    $('#proximo_evento').prop('disabled', sizeEvento.length <= tamanhoPagina || pagina_evento >= sizeEvento.length / tamanhoPagina - 1);
+    $('#anterior_evento').prop('disabled', sizeEvento.length <= tamanhoPagina || pagina_evento == 0);
+}
+
+$(function() {
+    $('#proximo_evento').click(function() {
+        if (pagina_evento < sizeEvento / tamanhoPagina - 1) {
+            pagina_evento ++;
+            buscaEventos();
+            ajustarBotoesEvento();
+        }
+    });
+    $('#anterior_evento').click(function() {
+        if (pagina_evento > 0) {
+            pagina_evento--;
+			 buscaEventos();
+            ajustarBotoesEvento();
+        }
+    });
+    sizeEvento = buscaEventos();
+    ajustarBotoesEvento();
+});
+
+ 
+
+
+
+
 
 
 </script>
@@ -1259,21 +1590,16 @@ buscaEventos();
 
 </table>
 <br><br>
- <p class="u-align-center u-custom-font u-font-oswald u-text u-text-3"><nav aria-label="...">
-  <ul class="pagination" >
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Anterior</a>
-    </li>
-    <li class="page-item" ><a class="page-link"  style="color: purple" href="#">1</a></li>
-    <li class="page-item active">
-      <a class="page-link"  style="background-color:purple;border-color:purple" href="#">2 <span class="sr-only">(atual)</span></a>
-    </li>
-    <li class="page-item"><a  style="color: purple" class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link"  style="color: purple" href="#">Próximo</a>
-    </li>
-  </ul>
-</nav></p>
+
+<div class="pagePagination">
+<button id="anterior_evento" class="anterior"  >&lsaquo; Anterior</button>
+    <span id="numeracao_evento" class="numeracao"></span>
+    <button id="proximo_evento" class="proximo"  >Próximo &rsaquo;</button>
+</div>
+ 
+
+
+ 
     </div> 
 
 
@@ -1327,7 +1653,7 @@ buscaEventos();
     <button type="button" class="btn btn-primary btn-pesquisarCep" onclick="pesquisacep_evento(cep_evento.value)">Pesquisar</button>
     </div>
 
- </div>
+</div>
 
  
 
@@ -1411,6 +1737,8 @@ for (let i = 0; i < numberOfCopies; i++) {
 convertTxtToDate()
 
 }
+
+
  
 function convertTxtToDate() {
         $('input.datepicker').each(function () {
@@ -1513,12 +1841,14 @@ function convertTxtToDate() {
 
 async function fetchCampoFormulario() {
 
-  let response = await fetch("http://minhaudocao.com.br:8080/api/formulario/all",{ method: 'GET', headers: {'Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"}});	
+  let response = await fetch("http://minhaudocao.com.br:8080/api/formulario/all",{ method: 'GET', headers: {'Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2MDU4MDE1LCJleHAiOjE2MjYwOTQwMTV9.qCOiCW6-PLli0ayBgPw2eyo8pVnHY6xzNHcpYMHD2M0"}});	
 	return  await  response.json();; 
  
     
 }
- 
+var data;
+var tamanhoPagina = 6;
+var pagina = 0;
 
 function changeLabel(label){
 if(label==true)
@@ -1528,9 +1858,10 @@ return "Nao";
 
 async function buscaCampo(){
 var html="";
-var data = await fetchCampoFormulario();
+data = await fetchCampoFormulario();
 console.log(data);
-for (var i = 0;i<data.length;i++){
+
+for (var i = pagina * tamanhoPagina; i < data.length && i < (pagina + 1) *  tamanhoPagina; i++){
       
          console.log(i);
 
@@ -1543,7 +1874,7 @@ for (var i = 0;i<data.length;i++){
      html+= '<td>'
 
 html+='<button type="button" class="btn btn-editar"  onclick="mostraEscondeFormulario(1,'+data[i].id+')" >Editar</button> ' 
-html+='<button type="button" class="btn btn-excluir"  >Excluir</button>'
+html+='<button type="button" class="btn btn-excluir" onclick="deleteCampo('+data[i].id+')" >Excluir</button>'
  html+= '</tr>' 
 }
 
@@ -1551,11 +1882,43 @@ console.log(html);
 
 document.getElementById("tbodyCampo").innerHTML = "";
 document.getElementById('tbodyCampo').innerHTML+=html;
+$('#numeracao_campo').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(data.length / tamanhoPagina));
 
-
+return data.length;
  
 } 
 buscaCampo();
+
+
+async function ajustarBotoes() {
+var size = await buscaCampo();
+alert(size);
+    $('#proximo_campo').prop('disabled', size.length <= tamanhoPagina || pagina >= size.length / tamanhoPagina - 1);
+    $('#anterior_campo').prop('disabled', size.length <= tamanhoPagina || pagina == 0);
+}
+
+$(function() {
+    $('#proximo_campo').click(function() {
+        if (pagina < data.length / tamanhoPagina - 1) {
+            pagina++;
+            buscaCampo();
+            ajustarBotoes();
+        }
+    });
+    $('#anterior_campo').click(function() {
+        if (pagina > 0) {
+            pagina--;
+            buscaCampo();
+        }
+    });
+    buscaCampo();
+    ajustarBotoes();
+});
+
+$('li').click(function() {
+  $(this).addClass('active').siblings().removeClass('active');
+});
+
 
 </script>
 
@@ -1569,23 +1932,15 @@ buscaCampo();
 
 
 </table>
-<br><br>
- <p class="u-align-center u-custom-font u-font-oswald u-text u-text-3"><nav aria-label="...">
-  <ul class="pagination" >
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Anterior</a>
-    </li>
-    <li class="page-item" ><a class="page-link"  style="color: purple" href="#">1</a></li>
-    <li class="page-item active">
-      <a class="page-link"  style="background-color:purple;border-color:purple" href="#">2 <span class="sr-only">(atual)</span></a>
-    </li>
-    <li class="page-item"><a  style="color: purple" class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link"  style="color: purple" href="#">Próximo</a>
-    </li>
-  </ul>
-</nav></p>
-    </div> 
+<br>
+<div class="pagePagination">
+<button id="anterior_campo" class="anterior" disabled>&lsaquo; Anterior</button>
+    <span id="numeracao_campo" class="numeracao"></span>
+    <button id="proximo_campo" class="proximo" disabled>Próximo &rsaquo;</button>
+</div>
+ 
+
+</div> 
 
 
 <div id="formFormularioDiv" style="visibility: hidden;" >
@@ -1689,34 +2044,7 @@ buscaCampo();
 
 	      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 		
-<div class="formAdoption">
-<p class="title">Formulario de Adocao<p>
-<form>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Senha</label>
-      <input type="password" class="form-control" id="inputPassword" placeholder="Senha">
-    </div>
-  </div>
-   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Senha</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
-    </div>
-  </div>
-
-
-  <button type="submit" class="btn btn-primary">Entrar</button>
-</form>
-</div>
+ 
      
     <footer class="u-clearfix u-custom-color-12 u-footer" id="sec-33d3"><div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-clearfix u-expanded-width u-gutter-30 u-layout-wrap u-layout-wrap-1">
@@ -1812,5 +2140,8 @@ console.log(datas.length);
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+ <script>
  
+
+</script>
 </html>
