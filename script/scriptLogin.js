@@ -17,7 +17,12 @@
             alert(jsonobject['jwt']);
         } else {
             gravarCookie(result);
-            window.location.replace("home.html");
+
+            if (jsonobject['roles'][0] == 'ROLE_USER' || jsonobject['roles'][0] == 'ROLE_INSTITUICAO') {
+                window.location.replace("MinhaConta.html");
+            } else {
+                window.location.replace("home.html");
+            }            
         }
         console.log(result);
     })
@@ -55,7 +60,7 @@ function gravarCookie(token) {
 
         tempodevida.setTime(tempodevida.getTime() + (1*24*60*60*1000));
         tempodevida = tempodevida.toUTCString();
-        document.cookie = 'auth=' + encodeURI(jsonobject['jwt']) + '; expires=' + tempodevida + '; path=/';
+        document.cookie = 'auth=' + encodeURI(jsonobject['jwt'])+'#'+encodeURI(jsonobject['roles'][0]) + '#' + encodeURI(jsonobject['id']) + '; expires=' + tempodevida + '; path=/';
     } catch (error) {
          console.log('Error ao gravar cookie ', error);
     }
