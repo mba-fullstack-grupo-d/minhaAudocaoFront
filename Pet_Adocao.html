@@ -169,32 +169,32 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 </span>
               </a>
             </div>
-            <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-1">Simba</h3>
-            <p class="u-align-center u-large-text u-text u-text-variant u-text-2">aDescricao do pet  Descricao do pet Descricao do pet    aDescricao do pet  Descricao do pet Descricao do pet Descricao do pet Descricao do pet aaaaaa<br>
+            <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-1 " id="nome">Simba</h3>
+            <p class="u-align-center u-large-text u-text u-text-variant u-text-2 descricao" id="descricao">aDescricao do pet  Descricao do pet Descricao do pet    aDescricao do pet  Descricao do pet Descricao do pet Descricao do pet Descricao do pet aaaaaa<br><br><br><br><br><br><br><br>
             </p>
-            <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-3">Instituicao Save My Pet&nbsp;<br>
+         <div class="instituicao_pet_nome">   <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-3 " id="instituicao">Instituicao Save My Pet&nbsp;</div><br>
             </p>
-<div>
+<div class="infoPets">
             <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-4">Especie<br>
             </p>
-            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-5">Gato</p>
+            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-5 " id="especie">Gato</p>
             <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-6">Idade<br>
             </p>
             <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-7">Genero<br>
             </p>
-            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-8">Masculino</p>
-            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-9">2 meses</p>
+            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-8"  id="genero">Masculino</p>
+            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-9" id="idade">2 meses</p>
             <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-10">Vacinado(a)<br>
             </p>
-            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-11">Nao<br>
+            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-11" id="vacinado">Nao<br>
             </p>
             <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-12">Castrado (a)<br>
             </p>
-            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-13">Nao<br>
+            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-13" id="castrado">1<br>
             </p>
             <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-14">Localizacao<br>
             </p>
-            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-15">Sao Bernado do Campo&nbsp; &nbsp;-&nbsp; Sao Paulo<br>
+            <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-15"id="localizacao" >Sao Bernado do Campo&nbsp; &nbsp;-&nbsp; Sao Paulo<br>
 
             </p> 
 </div>
@@ -210,57 +210,45 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
 
 
 </section>
-         <section>
+         <section id="sForm">
+
  
 
 <script> 
 
-var campo1 = {
-  'nomeCampo': 'Texto 1',
-  'tipo':  'texto',
-  'obrigatorio':'true'
-};
+var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2MjI0MzE1LCJleHAiOjE2MjYyNjAzMTV9.HAJXo9maGZ8ErJFF66QEQTnF8NwCWJjOoaVMeUySoC4";
 
-var campo2 = {
-  'nomeCampo': 'Texto 2',
-  'tipo':  'texto',
-  'obrigatorio':'true'
-};
+var campoId=1
 
-var campo3 = {
-  'nomeCampo': 'Texto 3',
-  'tipo':  'texto',
-  'obrigatorio':false
-};
-var campo4 = {
-  'nomeCampo': 'Texto 4',
-  'tipo':  'texto',
-  'obrigatorio':false
-};
-var campo5 = {
-  'nomeCampo': 'Texto 5',
-  'tipo':  'texto',
-  'obrigatorio':true
-};
+var data;
+async function buscaForm(){
+let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
 
-var promessas=[campo1, campo2,campo3, campo4,campo5]
+console.log(campoId);
 
+if (response.status === 200) {
+data= await response.json();
+
+ 
+console.log("tamanho do array aqui")
+console.log(data)
 var quantidadeLinhas=0;
 var html = '<div class="formAdoption">';
 html+='<p class="title">Formulario de Adocao<p>'
 html+='<form>' 
-for(let i = 0 ; i<promessas.length;i++){
+
+for(let i = 0 ; i<data.length;i++){
        
 		  html+='  <div class="form-row">'
 		  let linha=0;	
          while(linha< 2){  
-          if(i<  promessas.length){  
+          if(i<  data.length){  
 	      html+='    <div class="form-group col-md-6">'
-	      html+='      <label for="inputEmail4">'+promessas[i].nomeCampo+'</label>'
-           if(promessas[i].obrigatorio)
-    	   html+='       <input type="text" required="" class="form-control" id="inputEmail" placeholder="'+promessas[i].nomeCampo+'">'
+	      html+='      <label for="inputEmail4">'+data[i].nome+'</label>'
+           if(data[i].obrigatorio)
+    	   html+='       <input type="text" required="" class="form-control" id="+data[i].nome+" placeholder="'+data[i].nome+'">'
 			else{
-			html+='       <input type="text" class="form-control" id="inputEmail" placeholder="'+promessas[i].nomeCampo+'">'
+			html+='       <input type="text" class="form-control" id="+data[i].nome+" placeholder="'+data[i].nome+'">'
 			          
 		 }	
      	   html+='   </div>'
@@ -276,11 +264,74 @@ for(let i = 0 ; i<promessas.length;i++){
 html+='<button type="submit" class="btn btn-primary btn_adotar_pet">Adotar</button>'
 html+='</form>'
 html+='</div>';
-document.body.innerHTML += html;
+ 
+
+
+document.getElementById("sForm").innerHTML = "";
+var d1 = document.getElementById('sForm');
+d1.insertAdjacentHTML('beforeend', html);
 
 
 
+console.log("tamanho do array aqui 2")
 
+}
+
+else{ alert("Não foi possível a inclusão do cadastro!"); }
+ 
+
+}
+ 
+
+
+buscaForm();
+
+
+async function preencherFormPet(campoId){
+
+window.scrollTo(0, 0);
+
+console.log(campoId);
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
+
+
+console.log(campoId);
+
+if (response.status === 200) {
+data= await response.json();
+console.log(data);
+
+
+document.getElementById("nome").innerHTML=data.nome;
+document.getElementById('idade').innerHTML=value=data.idade;
+document.getElementById('especie').innerHTML=value=data.especie;
+
+document.getElementById('genero').innerHTML=value=data.genero;   
+
+document.getElementById('descricao').innerHTML=value=data.descricao+" teste uma linha maior de descricao , vamos ver";
+
+
+document.getElementById('instituicao').innerHTML=value=data.instituicao.nome;
+
+if(data.castrado)
+document.getElementById('castrado').innerHTML=value="Sim";
+else
+document.getElementById('castrado').innerHTML=value="Nao";
+
+
+if(data.vacinado)
+document.getElementById('vacinado').innerHTML=value="Sim";
+else
+document.getElementById('vacinado').innerHTML=value="Nao";
+
+
+}
+
+else{ alert("Não foi possível a busca do evento!"); }
+}
+
+
+preencherFormPet(16)
  
 
 </script>

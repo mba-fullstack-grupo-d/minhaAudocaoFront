@@ -16,14 +16,19 @@ color: #fff;
     border-color:   purple;
 	text-align:center;
 }
+.panel-primary{
+margin-left:40px;
+margin-right:40px;
+
+
+}
 
 .panel-primary>.panel-heading {
     color: #fff;
-    background-color:  purple;
-    border-color: purple; 
-    margin-top:10px
-
-
+    background-color:  #581575;
+    border-color: #581575;
+border-top-left-radius:36px;
+border-top-right-radius:36px;
 }
 
 .panel-body {
@@ -31,6 +36,8 @@ color: #fff;
    margin: -10px 35px 25px 25px;
 	    border-top-width:10px;
 border-color:black;
+
+ 
 }
  
  
@@ -38,6 +45,9 @@ border-color:black;
     color: #fff;
     background-color:  purple;
     border-color: purple;
+margin-left:20px;
+
+	margin-top:30px;
 	
 }
 
@@ -46,14 +56,18 @@ border-color:black;
     background-color: #333;
     border-color: #080808;
 	
-	margin:5px 5px 5px 5px;
+
+	margin-right:20px;
+	margin-top:70px;
 }
 
 .btn-success {
     color: #fff;
     background-color: #581575 ;
     border-color: #581575 ; 
-	margin:4px 4px 4px 4px;
+	margin-top:70px;
+
+	margin-right:20px;
 
 }
 
@@ -96,6 +110,7 @@ img {
   opacity: 1;
   right: 0;
   background-color:#e05ddc;
+ 
 }
 
 .btn-danger:hover{
@@ -237,3 +252,22 @@ margin-left:15px;
 margin-bottom:25px;
 }
 
+
+.divFotosPets{
+margin-top:-300px;
+
+}
+
+.fotos_pets{
+margin-bottom:120px
+}
+
+.infoPets{
+
+margin-top:70px;
+}
+
+.instituicao_pet_nome{
+
+margin-top:50px;
+}
