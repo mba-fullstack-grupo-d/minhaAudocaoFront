@@ -16,7 +16,7 @@
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster:400|Oswald:200,300,400,500,600,700">
     
     
-    
+    <script type="text/javascript" src="script/scriptLogin.js"></script>
     
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
@@ -76,19 +76,16 @@
               <form action="#" method="POST" class="u-clearfix u-form-spacing-42 u-form-vertical u-inner-form" style="padding: 40px;" source="custom" name="form">
                 <div class="u-form-group u-form-name u-form-group-1">
                   <label for="name-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Name</label>
-                  <input type="text" placeholder="Digite seu email" id="name-5a14" name="email-1" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                  <input type="text" placeholder="Digite seu email" id="email" name="email" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                 </div>
                 <div class="u-form-group u-form-group-2">
                   <label for="email-5a14" class="u-form-control-hidden u-label" wfd-invisible="true">Email</label>
-                  <input type="password" placeholder="Entre com sua senha" id="email" name="email" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                  <input type="password" placeholder="Entre com sua senha" id="password" name="password" class="u-border-2 u-border-black u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="true" >
                 </div>
                 <div class="u-align-center u-form-group u-form-submit u-form-group-3">
                   <a href="#" class="u-border-2 u-border-black u-btn u-btn-submit u-button-style u-hover-black u-none u-text-black u-text-hover-white u-btn-1">ENVIAR</a>
-                  <input type="submit" value="submit" class="u-form-control-hidden" wfd-invisible="true">
+                  <input type="submit" value="submit" class="u-form-control-hidden" wfd-invisible="true" onclick="submitLogin()">
                 </div>
-                <div class="u-form-send-message u-form-send-success" wfd-invisible="true"> Thank you! Your message has been sent. </div>
-                <div class="u-form-send-error u-form-send-message" wfd-invisible="true"> Unable to send your message. Please fix errors then try again. </div>
-                <input type="hidden" value="" name="recaptchaResponse" wfd-invisible="true">
               </form>
             </div>
             <a href="cadastro.html" data-page-id="240073938" class="u-active-none u-border-2 u-border-active-custom-color-9 u-border-custom-color-11 u-border-hover-custom-color-10 u-btn u-button-style u-hover-none u-none u-text-black u-text-hover-palette-2-base u-btn-2">Não tem uma conta? Cadastre-se</a>
@@ -190,16 +187,5 @@
           </div>
         </div>
       </div></footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <a class="u-link" href="https://nicepage.com/templates" target="_blank">
-        <span>Free Templates</span>
-      </a>
-      <p class="u-text">
-        <span>created with</span>
-      </p>
-      <a class="u-link" href="https://nicepage.com/html-website-builder" target="_blank">
-        <span>HTML Website Builder</span>
-      </a>. 
-    </section>
   </body>
 </html>

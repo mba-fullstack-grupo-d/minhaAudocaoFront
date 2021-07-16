@@ -64,10 +64,10 @@
         </div>
 
         <div class="form-group">
-          <label class="col-md-2 control-label" for="Nome">Sobrenome <h11>*</h11></label>
+          <label class="col-md-2 control-label" for="Nome">Sobrenome/Descrição <h11>*</h11></label>
           <div class="col-md-8">
-            <input id="sobrenome" name="sobrenome" placeholder="Digite sobrenome ou nome fantasia da instituicao"
-              class="form-control input-md" required="true" type="text">
+            <input id="sobrenome" name="sobrenome" placeholder="Digite sobrenome ou descrição da instituicao"
+              class="form-control input-md" required="" type="text">
           </div>
         </div>        
 
@@ -160,7 +160,7 @@
           <label class="col-md-2 control-label" for="Nome">Imagem <h11>*</h11></label>
           <div class="col-md-8">
             <input id="imagem" name="imagem" placeholder="Selecionar imagem"
-              class="form-control input-md" required="true" type="file" accept="image/*" >
+              class="form-control input-md" required="true" type="file" accept="image/*" onchange="requestUploadImagem(this.files[0], this.files[0].name)">
           </div>
         </div> 
 
