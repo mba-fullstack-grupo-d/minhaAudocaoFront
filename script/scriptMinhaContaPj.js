@@ -445,15 +445,15 @@ if(descricao ==""){
 }
 
    
-var fotos = document.getElementById("inputGroupFile01_event").files[0];
-if(fotos==null){
+var foto= document.getElementById("inputGroupFile01_event").files[0];
+if(foto==null){
 	alert("Preencher foto evento")	
 return ;
 }
 
 
-var foto = document.getElementById("inputGroupFile01_event").files[0].name;
-if(foto ==""){
+var fotoName= document.getElementById("inputGroupFile01_event").files[0].name;
+if(fotoName ==""){
 	alert("Preencher foto evento")	
 	document.getElementById("inputGroupFile01_event").focus();
 	return ;
@@ -473,7 +473,29 @@ var data2 = document.getElementById('datepicker2').value;
 	return ;
 }
 
-  
+ 
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "multipart/form-data");
+var formdata1 = new FormData();
+formdata1.append("file", foto, foto.name);
+
+  let responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
+        method: 'POST',
+        header:myHeaders,
+        body: formdata1
+    });
+
+if (responseFoto.status === 401){
+
+   window.location.replace("login.html");
+}
+if (responseFoto.status === 200) { 
+
+   imagemEnder1 = await responseFoto.text();
+ 
+        console.log(imagemEnder1);
+ 
+}
  
 
 console.log(titulo) 
@@ -519,6 +541,7 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/add", { m
  }
   ],
   "descricao": descricao,
+"imagem": imagemEnder1,
   "endereco": {
     "cep": cep,
     "cidade": cidade,

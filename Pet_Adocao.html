@@ -16,7 +16,7 @@
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster:400|Oswald:200,300,400,500,600,700">
     
     
-    
+    	
     
     
     
@@ -66,7 +66,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg-7b92" x="0px" y="0px" viewBox="0 0 302 302" style="enable-background:new 0 0 302 302;" xml:space="preserve" class="u-svg-content"><g><rect y="36" width="302" height="30"></rect><rect y="236" width="302" height="30"></rect><rect y="136" width="302" height="30"></rect>
 </g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
             </a>
-          </div class="card">
+          </div>
           <div class="u-custom-menu u-nav-container">
             <ul class="u-custom-font u-font-lobster u-nav u-spacing-8 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-active-custom-color-12 u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-hover-custom-color-10 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white" href="Home.html" style="padding: 10px 16px;">Home</a>
 </li><li class="u-nav-item"><a class="u-active-custom-color-12 u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-hover-custom-color-10 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white" href="adote.html" style="padding: 10px 16px;">Adote</a>
@@ -88,8 +88,8 @@
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
         </nav>
-        <a href="914621728" class="u-border-1 u-border-active-custom-color-10 u-border-hover-custom-color-10 u-btn u-button-style u-custom-font u-font-lobster u-none u-text-body-color u-btn-1">Entrar</a>
-        <a href="240073938" class="u-btn u-btn-round u-button-style u-custom-color-9 u-custom-font u-font-lobster u-hover-custom-color-10 u-radius-7 u-btn-2">Criar conta</a>
+        <a href="login.html" data-page-id="914621728" class="u-border-1 u-border-active-custom-color-10 u-border-hover-custom-color-10 u-btn u-button-style u-custom-font u-font-lobster u-none u-text-body-color u-btn-1">Entrar</a>
+        <a href="cadastro.html" data-page-id="240073938" class="u-btn u-btn-round u-button-style u-custom-color-9 u-custom-font u-font-lobster u-hover-custom-color-10 u-radius-7 u-btn-2">Criar conta</a>
         <a href="index.html" class="u-border-1 u-border-active-custom-color-10 u-border-hover-custom-color-10 u-btn u-button-style u-custom-font u-font-lobster u-none u-text-body-color u-btn-3">Minha Audoção</a>
         <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1280" data-image-height="853"></div>
       </div></header>
@@ -221,11 +221,10 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
 
 <script> 
 
-var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhdXNwaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE2MjY1NDUyOTgsImV4cCI6MTYyNjU4MTI5OH0.VXBD6fEMwezxeX0G4xA7gLToOCbV_6EMGJ-Bk19LL8Y";
+var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYW5pLXBtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2NTgyNDUwLCJleHAiOjE2MjY2MTg0NTB9.cwJTCXZmKy1W73ICCKs5LAvZofpuhZajLz-VmOQF4Cc";
 
-var campoId=1
-
-var data;
+var campoId=14
+ 
 async function buscaForm(){
 let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
 
@@ -234,16 +233,14 @@ console.log(campoId);
 if (response.status === 200) {
 data= await response.json();
 
- 
-console.log("tamanho do array aqui")
-console.log(data)
+
 var quantidadeLinhas=0;
-var html = '<div class="formAdoption">';
+var html = '<div id="form" class="formAdoption">';
 html+='<p class="title">Formulario de Adocao<p>'
 html+='<form>' 
-
+j=0
 for(let i = 0 ; i<data.length;i++){
-       
+        
 		  html+='  <div class="form-row">'
 		  let linha=0;	
          while(linha< 2){  
@@ -251,12 +248,13 @@ for(let i = 0 ; i<data.length;i++){
 	      html+='    <div class="form-group col-md-6">'
 	      html+='      <label for="'+data[i].nome+'">'+data[i].nome+'</label>'
            if(data[i].obrigatorio)
-    	   html+='       <input type="text" required="" class="form-control" id="+data[i].nome+" placeholder="'+data[i].nome+'">'
+    	   html+='       <input type="text" required="" class="form-control" id="'+data[i].nome+'" placeholder="'+data[i].nome+'">'
 			else{
-			html+='       <input type="text" class="form-control" id="+data[i].nome+" placeholder="'+data[i].nome+'">'
+			html+='       <input type="text" class="form-control" id="'+data[i].nome+'" placeholder="'+data[i].nome+'">'
 			          
-		 }	
-     	   html+='   </div>'
+	      	    }	
+     	j++;  
+		 html+='   </div>'
 			}
 		   linha=linha+1;
           i=i+1;
@@ -266,7 +264,7 @@ for(let i = 0 ; i<data.length;i++){
 
 }
  
-html+='<button type="submit" class="btn btn-primary btn_adotar_pet">Adotar</button>'
+html+='<button type="submit" class="btn btn-primary btn_adotar_pet" onclick="enviarEmail();return false">Adotar</button>'
 html+='</form>'
 html+='</div>';
  
@@ -308,26 +306,26 @@ console.log(data);
 
 
 document.getElementById("nome").innerHTML=data.nome;
-document.getElementById('idade').innerHTML=value=data.idade;
-document.getElementById('especie').innerHTML=value=data.especie;
+document.getElementById('idade').innerHTML=data.idade;
+document.getElementById('especie').innerHTML=data.especie;
 
-document.getElementById('genero').innerHTML=value=data.genero;   
+document.getElementById('genero').innerHTML=data.genero;   
 
-document.getElementById('descricao').innerHTML=value=data.descricao+" teste uma linha maior de descricao , vamos ver";
+document.getElementById('descricao').innerHTML=data.descricao;
 
 
-document.getElementById('instituicao').innerHTML=value=data.instituicao.nome;
+document.getElementById('instituicao').innerHTML=data.instituicao.nome;
 
 if(data.castrado)
-document.getElementById('castrado').innerHTML=value="Sim";
+document.getElementById('castrado').innerHTML="Sim";
 else
-document.getElementById('castrado').innerHTML=value="Nao";
+document.getElementById('castrado').innerHTML="Nao";
 
 
 if(data.vacinado)
-document.getElementById('vacinado').innerHTML=value="Sim";
+document.getElementById('vacinado').innerHTML="Sim";
 else
-document.getElementById('vacinado').innerHTML=value="Nao";
+document.getElementById('vacinado').innerHTML="Nao";
 
 var img1 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[0]+'">';
 var img_1 = document.getElementById('imgDog1');
@@ -348,15 +346,56 @@ var img4 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[3]+'">';
 var img_4 = document.getElementById('imgDog4');
 img_4.insertAdjacentHTML('beforeend', img4);
 
-
 }
 
-else{ alert("Não foi possível a busca do evento!"); }
+else{ alert("Não foi possível a busca do pet!"); }
+
 }
 
 
 preencherFormPet(39)
  
+
+
+
+async function enviarEmail(){
+
+alert(document.getElementById('form').innerHTML)
+
+let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} 
+}); 
+
+if (response.status === 200) {
+data= await response.json();
+var corpoEmail=""
+for(let i = 0 ; i<data.length;i++){
+
+
+ 
+var  titulo = data[i].nome;
+var  resposta= document.getElementById(data[i].nome).value;
+ 
+corpoEmail = corpoEmail + titulo + " = " + resposta + " \n "
+
+alert("teste "+ corpoEmail)	 
+}
+
+}
+
+response  = await fetch("http://minhaudocao.com.br:8080/api/send/14", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, 
+body: JSON.stringify({ "mensagem": corpoEmail }) }); 
+
+ 
+
+if (response.status === 200) {
+alert("email enviado")
+}
+else{
+alert("email nao enviado")
+}
+
+}
+
 
 </script>
 
