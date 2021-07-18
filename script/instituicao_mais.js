@@ -44,9 +44,9 @@ function getInstituicoes(IDInstituicao) {
         ' <h1 class="u-text u-text-1">' + instituicao.nome + '</h1> ' +
         ' <p class="u-text u-text-2">' + instituicao.descricao + '</p> ';
 
-    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + instituicao.endereco.cidade + '</h2> ' +
-        ' <p class="u-text u-text-2">350 ' + montaEndereco(instituicao) + '</p> ' +
-        '<hr style= size="50%" width="80%" color="gray"> ' +
+    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + instituicao.nome + '</h2> ' +
+        ' <p class="u-text u-text-2">' + montaEndereco(instituicao) + '</p> ' +
+        '<hr style= size="50%" width="100%" color="gray"> ' +
         ' <p class="u-text u-text-3">' + instituicao.telefone + '</p> ' +
         ' <p class="u-text u-text-custom-color-11 u-text-4">' + instituicao.email + '</p>';
 
@@ -54,7 +54,7 @@ function getInstituicoes(IDInstituicao) {
         ' style="border:0" allowfullscreen></iframe>';
     conteudoDisponiveis = '<h1 class="u-custom-font u-font-lobster u-text u-text-1"> Pets disponíveis de ' + instituicao.nome + ' &nbsp;</h1>';
 
-    conteudoTitulo = '<h1 class="u-text u-text-body-color u-text-1" id = "TituloOng">Ultimos eventos de'+ instituicao.nome+'</h1>';
+    conteudoTitulo = '<h1 class="u-text u-text-body-color u-text-1" id = "TituloOng">Ultimos eventos de '+ instituicao.nome+'</h1>';
 
 
 

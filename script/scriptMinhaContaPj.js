@@ -1,36 +1,53 @@
  
-function parseJwt(token) {
-  try {
-    // Get Token Header
-    const base64HeaderUrl = token.split('.')[0];
-    const base64Header = base64HeaderUrl.replace('-', '+').replace('_', '/');
-    const headerData = JSON.parse(window.atob(base64Header));
+ 
 
-    // Get Token payload and date's
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    const dataJWT = JSON.parse(window.atob(base64));
-    dataJWT.header = headerData;
+function CapturaParametrosUrl() {
 
-// TODO: add expiration at check ...
-
-
-    return dataJWT;
-  } catch (err) {
-    return false;
-  }
+    //captura a url da página
+    var url = window.location.href; 
+    alert("URL CAPTURADA: \n\n" + url);
+	
+	//tenta localizar o ?
+    var res = url.split('?'); 
+    	
+	if (res[1] === undefined) {
+        alert('página sem parâmetros.');
+    }
+	
+    if (res[1] !== undefined) {
+		//tenta localizar os & (pode haver mais de 1)
+        var parametros = res[1].split('&');
+        alert('Parametros encontrados:\n' + parametros);
+		
+	 
+    }
 }
 
-
-var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2MjI0MzE1LCJleHAiOjE2MjYyNjAzMTV9.HAJXo9maGZ8ErJFF66QEQTnF8NwCWJjOoaVMeUySoC4";
-
-var decoded = parseJwt(token);
-console.log(decoded);
-/*{exp: 10012016 name: john doe, scope:['admin']}*/
+CapturaParametrosUrl();
 
 
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+token =localStorage.getItem("token"); 
+instituicaoId=localStorage.getItem("idInstituicao"); 
+
+if(token==null){
+
+   window.location.replace("login.html");
+}
 
 function sleep(ms) {
+
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -71,7 +88,6 @@ document.getElementById("divFotosPets").style.visibility = "hidden";
 
 
 async function preencherFormPet(campoId){
-
 window.scrollTo(0, 0);
 
 console.log(campoId);
@@ -79,6 +95,11 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+campoId+""
 
 
 console.log(campoId);
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
 
 if (response.status === 200) {
 data= await response.json();
@@ -157,6 +178,11 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/"+campoId
 
 console.log(campoId);
 
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+
 if (response.status === 200) {
 data= await response.json();
 console.log(data);
@@ -218,8 +244,7 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-async function preencherFormCampo(campoId){
-
+async function preencherFormCampo(campoId){ 
 
 window.scrollTo(0, 0);
 console.log(campoId);
@@ -227,6 +252,11 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/"+cam
 
 
 console.log(campoId);
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
 
 if (response.status === 200) {
 data= await response.json();
@@ -268,6 +298,11 @@ obj.style.display = "table";
 window.scrollTo(0, 0); 
 var x = document.getElementById("formPetsDiv");
     x.style.visibility = "hidden";
+
+
+var x = document.getElementById("divFotosPets");
+    x.style.visibility = "hidden";
+
 }
 
 function meMostraFormulario(){
@@ -297,8 +332,7 @@ var x = document.getElementById("formEventosDiv");
 
 
 async function addCampo(){ 
-
-
+ 
  
 var  nome= document.getElementById("nome_campo").value;
  
@@ -331,13 +365,25 @@ ob=false
 
 
 let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/add", { method: 'POST', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, 
-body: JSON.stringify({ "instituicao": { "id": 1 }, "nome": nome, "obrigatorio": ob, "ordem": 0, "tipo":  select_tipocampo_value }) }); 
+body: JSON.stringify({ "instituicao": { "id": instituicaoId }, "nome": nome, "obrigatorio": ob, "ordem": 0, "tipo":  select_tipocampo_value }) }); 
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+
 
 if (response.status === 200) { alert("Cadastro efetuado com sucesso!") ;document.getElementById("nome_campo").value="";
  
 sleep(10); buscaCampo(0); meMostraFormulario(); }
 
-else{ alert("Não foi possível a inclusão do cadastro!"); }
+else{
+
+
+ alert("Não foi possível a inclusão do cadastro!"); 
+
+
+}
 
 
      console.log("response = "+response.status)
@@ -353,8 +399,7 @@ else{ alert("Não foi possível a inclusão do cadastro!"); }
 
 
 async function addEvento(){ 
-
-
+ 
  
 var  titulo= document.getElementById("titulo_evento").value;
  
@@ -484,7 +529,7 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/add", { m
   },
   
   "instituicao": {
-    "id": "1"
+    "id": instituicaoId
     
   },
   "nome": titulo
@@ -493,7 +538,10 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/add", { m
  }) }); 
 
 
+if (response.status === 401){
 
+   window.location.replace("login.html");
+}
 
 if (response.status === 200) { alert("Cadastro efetuado com sucesso!") ;
 
@@ -537,8 +585,14 @@ var resultado = confirm("Deseja excluir o pet selecionado?");
   if (resultado == true) {
  
 let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/delete/"+ idPet +"", { method: 'DELETE', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+" "}}); 
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+
 if (response.status === 200) {
-alert("Campo excluido com sucesso!");
+alert("Per excluido com sucesso!");
 sleep(10); 
 buscaPets(0); 
 meMostraPets(); 
@@ -546,7 +600,7 @@ meMostraPets();
  
 }
 
-else{ alert("Não foi possível a exclusao do campo!");
+else{ alert("Não foi possível a exclusao do pet!");
 
 }
 
@@ -561,6 +615,12 @@ var resultado = confirm("Deseja excluir o campo selecionado?");
   if (resultado == true) {
  
 let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/delete/"+ idCampo +"", { method: 'DELETE', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+ " "}}); 
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+
 if (response.status === 200) {
 alert("Campo excluido com sucesso!");
 sleep(10); 
@@ -585,6 +645,10 @@ var resultado = confirm("Deseja excluir o evento selecionado?");
 if (resultado == true) {
  
 let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/delete/"+ idEvento +"", { method: 'DELETE', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+ " "}}); 
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
 if (response.status === 200) {
 alert("Evento excluido com sucesso!");
 sleep(10); 
@@ -594,7 +658,7 @@ meMostraEventos();
  
 }
 
-else{ alert("Não foi possível a exclusao do campo!");
+else{ alert("Não foi possível a exclusao do evento!");
 
 }
 
@@ -722,6 +786,10 @@ formdata1.append("file", foto1, foto1.name);
         body: formdata1
     });
 
+if (responseFoto.status === 401){
+
+   window.location.replace("login.html");
+}
 if (responseFoto.status === 200) { 
 
    imagemEnder1 = await responseFoto.text();
@@ -738,6 +806,10 @@ responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
         body: formdata2
     });
 
+if (responseFoto.status === 401){
+
+   window.location.replace("login.html");
+}
 if (responseFoto.status === 200) { 
 
    imagemEnder2 = await responseFoto.text();
@@ -754,6 +826,10 @@ responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
         header:myHeaders,
         body: formdata3
     });
+if (responseFoto.status === 401){
+
+   window.location.replace("login.html");
+}
 
 if (responseFoto.status === 200) { 
 
@@ -766,11 +842,21 @@ if (responseFoto.status === 200) {
 var formdata4 = new FormData();
 formdata4.append("file", foto4, foto4.name);
 
+if (responseFoto.status === 401){
+
+   window.location.replace("login.html");
+}
+
 responseFoto = await fetch('http://minhaudocao.com.br:8080/api/uploadFoto', {
         method: 'POST',
         header:myHeaders,
         body: formdata4
     });
+
+if (responseFoto.status === 401){
+
+   window.location.replace("login.html");
+}
 
 if (responseFoto.status === 200) { 
 
@@ -805,7 +891,7 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/add", { meth
   "genero": sexo_select_pet_value, 
   "idade": idade_pet,
   "instituicao": {
-        "id": 1
+        "id": instituicaoId
   },
   "nome": nome,
   "vacinado": vacinado ,
@@ -818,7 +904,10 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/add", { meth
  }) }); 
 
 
+if (response.status === 401){
 
+   window.location.replace("login.html");
+}
 
 if (response.status === 200) {
 alert("Cadastro efetuado com sucesso!");
@@ -985,16 +1074,25 @@ function limpa_formulario_cep_evento() {
             
 }
 
+ 
+
+
 async function preencherDadosPessoais(campoId){
 
+
+campoId=instituicaoId;
 window.scrollTo(0, 0);
 
 console.log(campoId);
-let response  = await fetch("http://minhaudocao.com.br:8080/api/instituicao/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8'} }); 
+let response  = await fetch("http://minhaudocao.com.br:8080/api/instituicao/"+ instituicaoId +"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8'} }); 
 
 
 console.log(campoId);
 
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
 if (response.status === 200) {
 data= await response.json();
 console.log(data);
@@ -1024,7 +1122,7 @@ var sizePet=0;
 
 async function fetchPets() {
 
-  let response = await fetch("http://minhaudocao.com.br:8080/api/pet/instituicao/1",{ method: 'GET', headers: {'Authorization':"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI1OTQ2ODM5LCJleHAiOjE2MjU5ODI4Mzl9.n0ROetUNIpQynu2smozGaiKNt51YFwKiNXMTwVPGEuM"}});	
+let response = await fetch("http://minhaudocao.com.br:8080/api/pet/instituicao/"+ instituicaoId +"",{ method: 'GET', headers: {'Authorization':"Bearer "+token+""}});	
 	return  await  response.json();; 
  
     
@@ -1045,6 +1143,8 @@ pagina_pet= page;
 var html="";
 var buttonName = "Editar"
 dataPets = await fetchPets();
+
+
 console.log(dataPets);
 for (var i = pagina_pet * tamanhoPagina; i < dataPets.length && i < (pagina_pet + 1) *  tamanhoPagina; i++){
   
@@ -1068,6 +1168,7 @@ console.log(html);
 document.getElementById("tbodyPets").innerHTML = "";
 document.getElementById('tbodyPets').innerHTML+=html;
 
+if(dataPets.length >0)
 $('#numeracao_pet').text('Página ' + (pagina_pet + 1) + ' de ' + Math.ceil(dataPets.length / tamanhoPagina));
 
 return dataPets.length ;
@@ -1107,7 +1208,7 @@ $(function() {
 
 async function fetchCampoFormulario() {
 
-  let response = await fetch("http://minhaudocao.com.br:8080/api/formulario/all",{ method: 'GET', headers: {'Authorization':"Bearer "+token+""}});	
+let response = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+ instituicaoId +"",{ method: 'GET', headers: {'Authorization':"Bearer "+token+""}});	
 	return  await  response.json();; 
  
     
@@ -1152,6 +1253,8 @@ console.log(html);
 
 document.getElementById("tbodyCampo").innerHTML = "";
 document.getElementById('tbodyCampo').innerHTML+=html;
+
+if(data.length >0)
 $('#numeracao_campo').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(data.length / tamanhoPagina));
 
 return data.length;
@@ -1195,8 +1298,7 @@ var tamanhoPagina = 6;
 var pagina_evento = 0;
 var sizeEvento=0;
 async function fetchEvento() {
-
-  let response = await fetch("http://minhaudocao.com.br:8080/api/evento/all");	
+  let response = await fetch("http://minhaudocao.com.br:8080/api/evento/instituicao/"+ instituicaoId +"");	
 	return  await  response.json();; 
  
     
@@ -1230,6 +1332,7 @@ document.getElementById("tbodyEvento").innerHTML = "";
 var d1 = document.getElementById('tbodyEvento');
 d1.insertAdjacentHTML('beforeend', html);
 
+if(dataEvento.length >0)
 $('#numeracao_evento').text('Página ' + (pagina_evento + 1) + ' de ' + Math.ceil(dataEvento.length / tamanhoPagina));
 
 
@@ -1237,7 +1340,7 @@ return dataEvento.length;
 
 }
 
-async function ajustarBotoesEvento() {
+async function ajustarBotoesEvento	() {
 sizeEvento = await buscaEventos(1);
     $('#proximo_evento').prop('disabled', sizeEvento.length <= tamanhoPagina || pagina_evento >= sizeEvento.length / tamanhoPagina - 1);
     $('#anterior_evento').prop('disabled', sizeEvento.length <= tamanhoPagina || pagina_evento == 0);

@@ -17,12 +17,22 @@
             alert(jsonobject['jwt']);
         } else {
             gravarCookie(result);
+            // Save data to sessionStorage
+			localStorage.setItem('token', encodeURI(jsonobject['jwt'])); 
+			// Save data to sessionStorage
 
-            if (jsonobject['roles'][0] == 'ROLE_USER' || jsonobject['roles'][0] == 'ROLE_INSTITUICAO') {
-                window.location.replace("MinhaConta.html");
-            } else {
-                window.location.replace("home.html");
-            }            
+              
+           if (jsonobject['roles'][0] == 'ROLE_USER'){
+				localStorage.setItem('idPerson', encodeURI(jsonobject['id'])); 
+           	window.location.replace("MinhaContaPF.html?teste=1");
+        
+          }
+           if( jsonobject['roles'][0] == 'ROLE_INSTITUICAO') {
+				localStorage.setItem('idInstituicao', encodeURI(jsonobject['id'])); 
+               window.location.replace("MinhaConta.html?id=1");
+            
+			} 
+           
         }
         console.log(result);
     })
@@ -60,9 +70,13 @@ function gravarCookie(token) {
 
         tempodevida.setTime(tempodevida.getTime() + (1*24*60*60*1000));
         tempodevida = tempodevida.toUTCString();
+ 
         document.cookie = 'auth=' + encodeURI(jsonobject['jwt'])+'#'+encodeURI(jsonobject['roles'][0]) + '#' + encodeURI(jsonobject['id']) + '; expires=' + tempodevida + '; path=/';
+
+
     } catch (error) {
          console.log('Error ao gravar cookie ', error);
+ alert("Erro");
     }
 }
 
@@ -81,14 +95,18 @@ function apaga_cookie(nome){
 // Obtém o valor de um cookie
 // Envie o nome do cookie como parâmetro
 function valor_cookie(nome_cookie) {
+alert(nome_cookie)
     // Adiciona o sinal de = na frente do nome do cookie
     var cname = ' ' + nome_cookie + '=';
-    
+    alert(cname)
+
     // Obtém todos os cookies do documento
     var cookies = document.cookie;
     
+
+    alert("cooka ="+ cookies);
     // Verifica se seu cookie existe
-    if (cookies.indexOf(cname) == -1) {
+    if (cookies.indexOf(nome_cookie) == -1) {
         return false;
     }
     
