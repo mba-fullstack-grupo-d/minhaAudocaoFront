@@ -71,7 +71,7 @@ function getEvento(page) {
                     console.log(`${key} ${value}`);
                     conteudo = conteudo + '<div class="u-align-center u-border-1 u-border-grey-75 u-container-style u-custom-color-12 u-list-item u-radius-50 u-repeater-item u-shape-round">' +
                     '<div class="u-container-layout u-similar-container u-container-layout-2">' +
-                    '  <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1225" data-image-height="1280"></div>' +
+                    '  <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1225" data-image-height="1280" style= "background-image: url(' + element.instituicao.imagem + ')"></div>' +
                     '  <h3 class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-10 u-text-3">' + element.nome + '&nbsp;<br>' + element.instituicao.nome + 
                     '  </h3>' +
                     '  <p class="u-align-left u-custom-font u-font-oswald u-text u-text-white u-text-4">' + element.endereco.cidade + '-' + element.endereco.estado + '</p><span class="u-icon u-icon-circle u-text-white u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 54.757 54.757" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-a02c"></use></svg><svg class="u-svg-content" viewBox="0 0 54.757 54.757" x="0px" y="0px" id="svg-a02c" style="enable-background:new 0 0 54.757 54.757;"><g><path d="M27.557,12c-3.859,0-7,3.141-7,7s3.141,7,7,7s7-3.141,7-7S31.416,12,27.557,12z M27.557,24c-2.757,0-5-2.243-5-5' +
