@@ -9,7 +9,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "file:///D:/SSD%20ADATA/HD/IMPACTA/BootCamp/Repositorio/minhaAudocaoFront/cadastro.html",
+            "url": "file:///D:/SSD%20ADATA/HD/IMPACTA/BootCamp/Repositorio/minhaAudocaoFront/eventos.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
