@@ -5,9 +5,25 @@ function getDados(url) {
     return request.responseText
 }
 
+function getDadosParam(url, cidade, bairro, nome) {
+    if (cidade == '') { cidade = null }
+    if (bairro == '') { bairro = null }
+    if (nome == '') { nome = null }
+    let request = new XMLHttpRequest()
+    request.open("POST", url, false);
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify({
+        "bairro": bairro,
+        "cidade": cidade,
+        "nome": nome
+    }));
+
+    return request.responseText
+}
+
 function main() {
     try {
-        let page=1;
+        let page = 1;
         page = location.href.split("=").pop();
         //page=2;
         if (page > 0) {
@@ -24,25 +40,39 @@ function main() {
 
 function getInstituicao(page) {
     //Controles de dados
-    let data = getDados("http://minhaudocao.com.br:8080/api/instituicao/all");
+    let bairro = '';
+    let cidade = '';
+    let nome = '';
+    let data = null
+    cidade = document.getElementById("cidade").value;
+    bairro = document.getElementById("bairro").value;
+    nome = document.getElementById("nome_inst").value;
+
+    try{
+    if (cidade != '' || bairro != '' || nome != '') {
+        data = getDadosParam("http://minhaudocao.com.br:8080/api/instituicao/search", cidade, bairro, nome);
+        //document.getElementById("cidade").value = '';
+        //document.getElementById("bairro").value = '';
+        //document.getElementById("nome").value = '';
+    }
+    else {
+        data = getDados("http://minhaudocao.com.br:8080/api/instituicao/all");
+    }
     let instituicao = JSON.parse(data);
     let div = document.getElementById("card_instituicao");
-    let divPaginacao = document.getElementById("paginacao");
+    let divPaginacao = document.getElementById("paginacao"); 
+    let divencontradas = document.getElementById("n_encontradas");
     let conteudo = '';
     //Controles de paginacao
     let conteudoPaginacao = '';
     let RegistroAtual = 0;
     let limitePagina = 6;
-    let ativarAnterior='';
-    let ativarProximo='';
-    
-    let ultimaPagina='';
+    let ativarAnterior = '';
 
-    
+    let ultimaPagina = '';
 
-    console.log(instituicao);
     instituicao.forEach(element => {
-        if ((RegistroAtual >= (page-1)*limitePagina)&&(RegistroAtual < page*limitePagina)) {
+        if ((RegistroAtual >= (page - 1) * limitePagina) && (RegistroAtual < page * limitePagina)) {
             conteudo = conteudo + ' <div class="u-border-1 u-border-grey-75 u-container-style u-custom-color-12 u-list-item u-radius-50 u-repeater-item u-shape-round" style = "float:left"> ' +
                 ' <div class="u-container-layout u-similar-container u-container-layout-2"> ' +
                 '    <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1225" data-image-height="1280" style= "background-image: url(' + element.imagem + ')"> </div> ' +
@@ -62,41 +92,49 @@ function getInstituicao(page) {
                 '            <a href="instituicao_mais.html?id=' + element.id + '" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-9 u-hover-custom-color-10 u-radius-50 u-btn-1">SABER MAIS</a> ' +
                 '        </div> ' +
                 '    </div> ';
-                if (RegistroAtual>=Object.keys(instituicao).length-1){ultimaPagina='disabled'}else{ ultimaPagina=''}  
-                  
-        }
-        RegistroAtual= RegistroAtual +1; 
-        
+            if (RegistroAtual >= Object.keys(instituicao).length - 1) { ultimaPagina = 'disabled' } else { ultimaPagina = '' }
 
-        
-        
+        }
+        RegistroAtual = RegistroAtual + 1;
+
+
+
+
     });
 
     // Paginação
-    if (page<=1){ ativarAnterior='disabled'}else{ ativarAnterior=''}
-    
+    if (page <= 1) { ativarAnterior = 'disabled' } else { ativarAnterior = '' }
+
     console.log(ultimaPagina);
-    conteudoPaginacao =  '<p class="u-align-center u-custom-font u-font-oswald u-text u-text-3" style="bottom: 0; position: absolute;">' +
+    conteudoPaginacao = '<p class="u-align-center u-custom-font u-font-oswald u-text u-text-3" style="bottom: 0; position: absolute;">' +
         '<nav aria-label="...">' +
         '  <ul class="pagination" >' +
-        '    <li class="page-item '+ ativarAnterior+'">' +
-        '      <a class="page-link"  href="./instituicoes.html?page='+(page-1)+'" tabindex="-1">Anterior</a>' +
+        '    <li class="page-item ' + ativarAnterior + '">' +
+        '      <a class="page-link"  href="./instituicoes.html?page=' + (page - 1) + '" tabindex="-1">Anterior</a>' +
         '    </li>' +
-        '   <li class="page-item '+ ativarAnterior+'" ><a class="page-link"  style="color: purple" href="./instituicoes.html?page='+(page-1)+'">'+(page-1)+'</a></li>' +
+        '   <li class="page-item ' + ativarAnterior + '" ><a class="page-link"  style="color: purple" href="./instituicoes.html?page=' + (page - 1) + '">' + (page - 1) + '</a></li>' +
         '    <li class="page-item active">' +
-        '      <a class="page-link"  style="background-color:purple;border-color:purple" href="./instituicoes.html?page='+(page)+'">'+page+' <span class="sr-only">(atual)</span></a>' +
+        '      <a class="page-link"  style="background-color:purple;border-color:purple" href="./instituicoes.html?page=' + (page) + '">' + page + ' <span class="sr-only">(atual)</span></a>' +
         '    </li>' +
-        '    <li class="page-item '+ultimaPagina+'" ><a  style="color: purple" class="page-link" href="./instituicoes.html?page='+(parseInt(page)+1)+'">'+(parseInt(page)+1)+'</a></li>' +
-        '    <li class="page-item '+ultimaPagina+'">' +
-        '      <a class="page-link"   href="./instituicoes.html?page='+(parseInt(page)+1)+'">Próximo</a>' +
+        '    <li class="page-item ' + ultimaPagina + '" ><a  style="color: purple" class="page-link" href="./instituicoes.html?page=' + (parseInt(page) + 1) + '">' + (parseInt(page) + 1) + '</a></li>' +
+        '    <li class="page-item ' + ultimaPagina + '">' +
+        '      <a class="page-link"   href="./instituicoes.html?page=' + (parseInt(page) + 1) + '">Próximo</a>' +
         '    </li>' +
         '  </ul>' +
         '</nav></p>';
-
-
+ 
+    divencontradas.innerHTML =Object.keys(instituicao).length + ' Instituições encontradas' ;
     div.innerHTML = conteudo;
     divPaginacao.innerHTML = conteudoPaginacao;
-
+}
+catch{
+    let divencontradas = document.getElementById("n_encontradas");
+    let div = document.getElementById("card_instituicao");
+    let divPaginacao = document.getElementById("paginacao");
+    divencontradas.innerHTML ='Nenhuma Instituição Encontrada' ;
+    div.innerHTML = '<div></div>';
+    divPaginacao.innerHTML = '<div></div>';
+}
 }
 
 function montaEndereco(registro) {

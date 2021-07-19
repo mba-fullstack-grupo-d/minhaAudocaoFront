@@ -17,7 +17,7 @@ function main() {
     }
     else{window.location.href = "./instituicoes.html"; }
     }catch{
-        window.location.href = "./instituicoes.html";   
+        //window.location.href = "./instituicoes.html";   
     }
    
 
@@ -44,9 +44,9 @@ function getInstituicoes(IDInstituicao) {
         ' <h1 class="u-text u-text-1">' + instituicao.nome + '</h1> ' +
         ' <p class="u-text u-text-2">' + instituicao.descricao + '</p> ';
 
-    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + instituicao.nome + '</h2> ' +
-        ' <p class="u-text u-text-2">' + montaEndereco(instituicao) + '</p> ' +
-        '<hr style= size="50%" width="100%" color="gray"> ' +
+    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + instituicao.endereco.cidade + '</h2> ' +
+        ' <p class="u-text u-text-2">350 ' + montaEndereco(instituicao) + '</p> ' +
+        '<hr style= size="50%" width="80%" color="gray"> ' +
         ' <p class="u-text u-text-3">' + instituicao.telefone + '</p> ' +
         ' <p class="u-text u-text-custom-color-11 u-text-4">' + instituicao.email + '</p>';
 
@@ -54,7 +54,7 @@ function getInstituicoes(IDInstituicao) {
         ' style="border:0" allowfullscreen></iframe>';
     conteudoDisponiveis = '<h1 class="u-custom-font u-font-lobster u-text u-text-1"> Pets disponíveis de ' + instituicao.nome + ' &nbsp;</h1>';
 
-    conteudoTitulo = '<h1 class="u-text u-text-body-color u-text-1" id = "TituloOng">Ultimos eventos de '+ instituicao.nome+'</h1>';
+    conteudoTitulo = '<h1 class="u-text u-text-body-color u-text-1" id = "TituloOng">Ultimos eventos de'+ instituicao.nome+'</h1>';
 
 
 
@@ -111,7 +111,7 @@ function getEventos(IDInstituicao) {
     
 
 
-    //onsole.log(evento[0].nome);
+    console.log(evento[0].nome);
     conteudoCard2 = conteudoCard2 +'<h4 class="u-text u-text-body-color u-text-3">1.&nbsp;'+ evento[0].nome+'&nbsp;</h4> '+
     '<p class="u-text u-text-4">'+evento[0].descricao+'</p>' +
     '<a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
