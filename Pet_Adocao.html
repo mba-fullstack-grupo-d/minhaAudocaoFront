@@ -220,15 +220,106 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
  
 
 <script> 
+function getIdPet() {
+    try{
+    idPet = location.href.split("=").pop();
+if(idPet>0)
+    return idPet ;
+    else{
+       window.location.href = "./Adote.html";
+    }
+    }catch{
+        window.location.href = "./Adote.html";   
+    }
+   
 
-var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2NjY5NzMyLCJleHAiOjE2MjY3MDU3MzJ9.invGF3UeToFIIx6_GGq1Z1sfHU2nvZcHPoHishku3I4"
+}
 
-var campoId=14
+token =localStorage.getItem("token"); 
+personId=localStorage.getItem("idPerson"); 
+
+idInstituicao=""
  
-async function buscaForm(){
-let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
 
-console.log(campoId);
+ 
+
+
+ 
+
+
+async function preencherFormPet(){
+
+if(personId ==null || personId==""){
+alert("Voce deve estar logado para adotar um pet")
+ window.location.href = "./login.html";   
+}
+
+
+window.scrollTo(0, 0);
+ let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+getIdPet()+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
+
+ 
+
+if (response.status === 200) {
+data= await response.json();
+console.log(data);
+
+
+document.getElementById("nome").innerHTML=data.nome;
+document.getElementById('idade').innerHTML=data.idade;
+document.getElementById('especie').innerHTML=data.especie;
+
+document.getElementById('genero').innerHTML=data.genero;   
+
+document.getElementById('descricao').innerHTML=data.descricao;
+
+
+document.getElementById('instituicao').innerHTML=data.instituicao.nome;
+
+if(data.castrado)
+document.getElementById('castrado').innerHTML="Sim";
+else
+document.getElementById('castrado').innerHTML="Nao";
+
+
+if(data.vacinado)
+document.getElementById('vacinado').innerHTML="Sim";
+else
+document.getElementById('vacinado').innerHTML="Nao";
+
+var img1 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[0]+'">';
+var img_1 = document.getElementById('imgDog1');
+img_1.insertAdjacentHTML('beforeend', img1);
+
+
+var img2 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[1]+'">';
+var img_2 = document.getElementById('imgDog2');
+img_2.insertAdjacentHTML('beforeend', img2);
+
+
+var img3 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[2]+'">';
+var img_3 = document.getElementById('imgDog3');
+img_1.insertAdjacentHTML('beforeend', img3);
+
+
+var img4 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[3]+'">';
+var img_4 = document.getElementById('imgDog4');
+img_4.insertAdjacentHTML('beforeend', img4);
+
+}
+
+else{ alert("Não foi possível a busca do pet!"); }
+idInstituicao=data.instituicao.id;
+buscaForm(data.instituicao.id)
+
+}
+
+
+preencherFormPet(39)
+ 
+async function buscaForm(instiId){
+let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+ instiId +"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
+ 
 
 if (response.status === 200) {
 data= await response.json();
@@ -284,85 +375,13 @@ else{ alert("Não foi possível a inclusão do cadastro!"); }
  
 
 }
- 
-
-
-buscaForm();
-
-
-async function preencherFormPet(campoId){
-
-window.scrollTo(0, 0);
-
-console.log(campoId);
-let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
-
-
-console.log(campoId);
-
-if (response.status === 200) {
-data= await response.json();
-console.log(data);
-
-
-document.getElementById("nome").innerHTML=data.nome;
-document.getElementById('idade').innerHTML=data.idade;
-document.getElementById('especie').innerHTML=data.especie;
-
-document.getElementById('genero').innerHTML=data.genero;   
-
-document.getElementById('descricao').innerHTML=data.descricao;
-
-
-document.getElementById('instituicao').innerHTML=data.instituicao.nome;
-
-if(data.castrado)
-document.getElementById('castrado').innerHTML="Sim";
-else
-document.getElementById('castrado').innerHTML="Nao";
-
-
-if(data.vacinado)
-document.getElementById('vacinado').innerHTML="Sim";
-else
-document.getElementById('vacinado').innerHTML="Nao";
-
-var img1 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[0]+'">';
-var img_1 = document.getElementById('imgDog1');
-img_1.insertAdjacentHTML('beforeend', img1);
-
-
-var img2 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[1]+'">';
-var img_2 = document.getElementById('imgDog2');
-img_2.insertAdjacentHTML('beforeend', img2);
-
-
-var img3 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[2]+'">';
-var img_3 = document.getElementById('imgDog3');
-img_1.insertAdjacentHTML('beforeend', img3);
-
-
-var img4 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[3]+'">';
-var img_4 = document.getElementById('imgDog4');
-img_4.insertAdjacentHTML('beforeend', img4);
-
-}
-
-else{ alert("Não foi possível a busca do pet!"); }
-
-}
-
-
-preencherFormPet(39)
- 
-
 
 
 async function enviarEmail(){
 
 alert(document.getElementById('form').innerHTML)
 
-let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} 
+let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/instituicao/"+ idInstituicao +"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} 
 }); 
 
 if (response.status === 200) {
@@ -383,10 +402,12 @@ alert("teste "+ corpoEmail)
 }
 
 response  = await fetch("http://minhaudocao.com.br:8080/api/send", { method: 'POST', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, 
-body: JSON.stringify({ "idInstituicao": 14,
-  "idPessoa": 9,
-  "idPet": 16,
-  "mensagem": corpoEmail}) }); 
+body: JSON.stringify({ "idInstituicao": idInstituicao,
+  "idPessoa": personId,
+  "idPet": getIdPet(),
+  "mensagem": corpoEmail
+
+}) }); 
 
  
 

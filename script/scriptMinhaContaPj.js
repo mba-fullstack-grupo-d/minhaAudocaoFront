@@ -20,8 +20,7 @@ function CapturaParametrosUrl() {
         alert('Parametros encontrados:\n' + parametros);
     }
 }
-
-CapturaParametrosUrl();
+ 
 
 
 
@@ -197,7 +196,8 @@ document.getElementById('cidade_evento').value=data.endereco.cidade;
 document.getElementById('estado_evento').value=data.endereco.estado;
 document.getElementById('numero_evento').value=data.endereco.numero;
 document.getElementById("descricao_evento").value=data.descricao;
-   
+document.getElementById("idEndereco").value=data.endereco.id;
+    
 
 var year=data.datas[0].data.substring(0,4)
 var month=data.datas[0].data.substring(5,7)
@@ -207,7 +207,8 @@ date= day +"-"+ month +"-"+ year
 console.log(date) 
 document.getElementById("datepicker1").value= date +" "+ data.datas[0].horaInicio;
 document.getElementById("datepicker2").value= date +" "+ data.datas[0].horaFim
-
+document.getElementById("idData").value=data.datas[0].id;
+    
 
 }
 
@@ -303,6 +304,9 @@ var x = document.getElementById("formPetsDiv");
 
 var x = document.getElementById("divFotosPets");
     x.style.visibility = "hidden";
+var x = document.getElementById("fotos");
+    x.style.visibility = "hidden";
+
 
 }
 
@@ -552,7 +556,7 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/add", { m
   ],
   "descricao": descricao,
 "imagem": imagemEnder1,
-  "endereco": {
+  "endereco": { 
     "cep": cep,
     "cidade": cidade,
     "estado": estado,
@@ -602,7 +606,10 @@ else{ alert("Não foi possível a inclusão do cadastro!"); }
 
 }
 if(idEvento>0){
-alert(idEvento);
+
+var idEndereco = document.getElementById("idEndereco").value;
+
+var idData = document.getElementById("idData").value;
 let response  = await fetch("http://minhaudocao.com.br:8080/api/evento", { method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({ 
  "id": idEvento,
         "nome": titulo,
@@ -611,7 +618,7 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento", { metho
             "id": instituicaoId
         },
         "endereco": {
-            "id": 77,
+            "id": idEndereco,
             "cidade": cidade,
             "estado": estado,
             "logradouro": rua,
@@ -621,11 +628,11 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento", { metho
         },
         "datas": [
             {
-                "id": 34,
+                "id": idData,
                 "data": "2021-07-21",
                 "horaInicio": "00:00",
                 "horaFim": "00:00",
-                "idEvento": 33
+                "idEvento": idEvento
             }
         ]
 
@@ -1263,6 +1270,16 @@ alert("Preencher numero do endereco");
 
 var descricao = document.getElementById('descricao').value;
 
+
+var idEndInsti = document.getElementById('idEnderecoInsti').value;
+alert(idEndInsti);
+alert(cidade);
+alert(estado);
+alert(rua);
+alert(cep);
+alert(numero);
+alert(bairro);
+
 let response  = await fetch("http://minhaudocao.com.br:8080/api/instituicao", { 
 method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({   
 
@@ -1272,7 +1289,7 @@ method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Auth
     "email": email, 
     "telefone": telefone,
      "endereco": {
-        "id": 1,
+        "id": idEndInsti,
         "cidade": cidade,
         "estado":estado,
         "logradouro": rua,
@@ -1331,7 +1348,8 @@ document.getElementById('cidade').value=data.endereco.cidade;
 document.getElementById('estado').value=data.endereco.estado;
 document.getElementById('numero').value=data.endereco.numero; 
 document.getElementById('descricao').value=data.descricao; 
-
+document.getElementById('idEnderecoInsti').value=data.endereco.id; 
+ 
 }
 
 else{ alert("Não foi possível a busca do evento!"); }
@@ -1469,7 +1487,7 @@ for (var i = pagina * tamanhoPagina; i < data.length && i < (pagina + 1) *  tama
     html+=  '<td>'+data[i].tipo+'</td>'
     html+=   '<td>'+ changeLabel(data[i].obrigatorio)+'</td>' 
     html+=   '<td hidden >'+ data[i].id+ '</td>' 
-     html+= '<td>'
+    html+= '<td>'
 
 html+='<button type="button" class="btn btn-editar"  onclick="mostraEscondeFormulario(1,'+data[i].id+')" >Editar</button> ' 
 html+='<button type="button" class="btn btn-excluir" onclick="deleteCampo('+data[i].id+')" >Excluir</button>'

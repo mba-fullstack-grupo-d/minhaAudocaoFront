@@ -40,17 +40,45 @@
 
 <script>
 
-var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhdXNwaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE2MjY1NTg0NTksImV4cCI6MTYyNjU5NDQ1OX0.3Kr8urZbQ3AXuIfS9VLqEdnQMqBaUHoEIxbXBO9hjzI";
 
-async function preencherFormPet(campoId){
+function getIdPet() {
+    try{
+    idPet = location.href.split("=").pop();
+if(idPet>0)
+    return idPet ;
+    else{
+       window.location.href = "./Adote.html";
+    }
+    }catch{
+        window.location.href = "./Adote.html";   
+    }
+   
+
+}
+
+
+function getDados(url) {
+    let request = new XMLHttpRequest()
+    request.open("GET", url, false)
+    request.send()
+    return request.responseText
+}
+ 
+async function preencherFormPet(){
+
+token =localStorage.getItem("token"); 
+personId=localStorage.getItem("idPerson"); 
+
+
+
+var idPet= getIdPet();
 
 window.scrollTo(0, 0);
 
-console.log(campoId);
-let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+campoId+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
+console.log(idPet);
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+ idPet +"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8' }}); 
 
-
-console.log(campoId);
+ 
 
 if (response.status === 200) {
 data= await response.json();
@@ -80,6 +108,7 @@ else
 document.getElementById('vacinado').innerHTML=value="Nao";
 
 
+document.getElementById("linkAdote").href="./Pet_Adocao.html?id="+data.id;
 
 
 
@@ -95,7 +124,7 @@ img_2.insertAdjacentHTML('beforeend', img2);
 
 var img3 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[2]+'">';
 var img_3 = document.getElementById('imgDog3');
-img_1.insertAdjacentHTML('beforeend', img3);
+img_3.insertAdjacentHTML('beforeend', img3);
 
 
 var img4 =  '<img class="u-back-image u-expanded" src="'+data.uriFotos[3]+'">';
@@ -125,7 +154,11 @@ document.getElementById("email_instituicao").innerHTML=data.instituicao.email;
 document.getElementById("telefone_instituicao").innerHTML=data.instituicao.telefone; 
 
 
-let response_pets  = await fetch("http://minhaudocao.com.br:8080/api/pet/instituicao/14", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
+
+	document.getElementById("div_pets_na_ong").innerHTML= "Pets disponíveis na Ong " +data.instituicao.nome;
+
+
+let response_pets  = await fetch("http://minhaudocao.com.br:8080/api/pet/instituicao/"+data.instituicao.id+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
 
 
 if (response_pets.status === 200) {
@@ -143,7 +176,9 @@ for(let i=1;i<7;i++){
 		var responsavel ="pet"+i+"_responsavel";
 
 		var localizacao ="pet"+i+"_localizacao";    	var imagem ="pet"+i+"_img";	
-
+	var id ="idPet"+i;	
+	var link ="pet"+i+"_link";	
+ 
 	document.getElementById(nome).innerHTML=data2[x].nome;
 	document.getElementById(especie).innerHTML=data2[x].especie;
 	document.getElementById(idade).innerHTML=data2[x].idade;
@@ -152,8 +187,9 @@ for(let i=1;i<7;i++){
 	document.getElementById(imagem).src=data2[x].uriFotos[0];
 	document.getElementById(responsavel).innerHTML=data2[x].instituicao.nome + " <br><br>";
    document.getElementById(localizacao).innerHTML=data2[x].instituicao.endereco.cidade +" - "+data2[x].instituicao.endereco.estado  + " <br><br>";;
+	document.getElementById(id).innerHTML=data2[x].id;
 
-
+document.getElementById(link).href="./Pet_Mais.html?id="+data2[x].id;
 	}
 else{
 var name="pet"+i
@@ -168,12 +204,48 @@ document.getElementById(name).style.visibility="hidden"
 }
 
 else{ alert("Não foi possível a busca do evento!"); }
+
+
+getEventos(data.instituicao.id);
 }
 
 
-preencherFormPet(39)
+preencherFormPet()
  
 
+function getEventos(IDInstituicao) {
+    let url = "http://minhaudocao.com.br:8080/api/evento/instituicao/"+IDInstituicao;
+    let data = getDados(url);
+    let evento = JSON.parse(data);
+  
+    let divCard2 = document.getElementById("layout-2");
+    let divCard3 = document.getElementById("layout-3");
+    let divCard4 = document.getElementById("layout-4");
+    
+    let conteudoCard2 = '';
+    let conteudoCard3 = '';
+    let conteudoCard4 = '';
+    
+
+
+    console.log(evento[0].nome);
+if(evento.length>0){
+    conteudoCard2 = conteudoCard2 +'<h4 class="u-text u-text-body-color u-text-3">1.&nbsp;'+ evento[0].nome+'&nbsp;</h4> '+
+    '<p class="u-text u-text-4">'+evento[0].descricao+'</p>' +
+    '<a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
+}
+if(evento.length>1){ 
+conteudoCard3 = conteudoCard3 + ' <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;'+ evento[1].nome+'</h4> '+ ' <p class="u-text u-text-6">'+evento[1].descricao+'</p> '+ ' <a href="" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>'; 
+}
+
+if(evento.lenght>2){
+conteudoCard4 = conteudoCard4 + ' <h4 class="u-text u-text-7">3.&nbsp;'+ evento[2].nome+'</h4>'+ ' <p class="u-text u-text-8">'+evento[2].descricao+'</p>'+ ' <a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>';
+}
+    divCard2.innerHTML = conteudoCard2;
+    divCard3.innerHTML = conteudoCard3;
+    divCard4.innerHTML = conteudoCard4;
+document.getElementById("eventos_mesma_inst").innerHTML = "Eventos da instituicao " + evento[0].instituicao.nome
+}
 
 
 
@@ -214,8 +286,8 @@ preencherFormPet(39)
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
         </nav>
-        <a href="914621728" class="u-border-1 u-border-active-custom-color-10 u-border-hover-custom-color-10 u-btn u-button-style u-custom-font u-font-lobster u-none u-text-body-color u-btn-1">Entrar</a>
-        <a href="240073938" class="u-btn u-btn-round u-button-style u-custom-color-9 u-custom-font u-font-lobster u-hover-custom-color-10 u-radius-7 u-btn-2">Criar conta</a>
+        <a href="login.html" class="u-border-1 u-border-active-custom-color-10 u-border-hover-custom-color-10 u-btn u-button-style u-custom-font u-font-lobster u-none u-text-body-color u-btn-1">Entrar</a>
+        <a href="cadastro.html" class="u-btn u-btn-round u-button-style u-custom-color-9 u-custom-font u-font-lobster u-hover-custom-color-10 u-radius-7 u-btn-2">Criar conta</a>
         <a href="index.html" class="u-border-1 u-border-active-custom-color-10 u-border-hover-custom-color-10 u-btn u-button-style u-custom-font u-font-lobster u-none u-text-body-color u-btn-3">Minha Audoção</a>
         <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1280" data-image-height="853"></div>
       </div></header>
@@ -242,8 +314,7 @@ preencherFormPet(39)
                   </div>
                 </div>
                 <div class="u-carousel-item u-gallery-item">
-                  <div class="u-back-slide" data-image-width="1280" data-image-height="853" id="imgDog2" >
-                    <img class="u-back-image u-expanded" src="images/b5fa7b3bcfc208b8474e35e200fa785788e6315a88ae5459781ba4ee3c5ad8d2f13766eda947c93c5bbfdd6f5699c66fa6d3fdf500f0dfccf0601b_1280.jpg">
+                  <div class="u-back-slide" data-image-width="1280" data-image-height="853" id="imgDog2" > 
                   </div>
                   <div class="u-over-slide u-over-slide-1">
                     <h3 class="u-gallery-heading">Sample Title</h3>
@@ -251,8 +322,7 @@ preencherFormPet(39)
                   </div>
                 </div>
                 <div class="u-carousel-item u-gallery-item" data-image-width="1280" data-image-height="853">
-                  <div class="u-back-slide" data-image-width="1225" data-image-height="1280"  id="imgDog3">
-                    <img class="u-back-image u-expanded" src="images/6f70f98155038cf1c7a85c5e6967ed32290fcfe51ca29e697f4eccd2505d792c8f8f91cb3b44f9f057de8537cd9bce4d00ae8e52cf8655323ac719_1280.jpg">
+                  <div class="u-back-slide" data-image-width="1225" data-image-height="1280"  id="imgDog3"> 
                   </div>
                   <div class="u-over-slide u-over-slide-2">
                     <h3 class="u-gallery-heading"></h3>
@@ -260,8 +330,7 @@ preencherFormPet(39)
                   </div>
                 </div>
                 <div class="u-carousel-item u-gallery-item" data-image-width="1280" data-image-height="853">
-                  <div class="u-back-slide"  id="imgDog4">
-                    <img class="u-back-image u-expanded" src="images/443922479-0.jpeg">
+                  <div class="u-back-slide"  id="imgDog4"> 
                   </div>
                   <div class="u-over-slide u-over-slide-3">
                     <h3 class="u-gallery-heading"></h3>
@@ -325,7 +394,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
             <p  class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-15"id="localizacao" >Sao Bernado do Campo&nbsp; &nbsp;-&nbsp; Sao Paulo<br>
 
             </p> 
-            <a href="Pet_Adocao.html" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-1">Adotar</a>
+            <a id="linkAdote" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-1">Adotar</a>
           </div>
         </div><span class="u-icon u-icon-circle u-text-custom-color-10 u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 -32 512.00011 512" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-0846"></use></svg><svg class="u-svg-content" viewBox="0 -32 512.00011 512" id="svg-0846"><path d="m342.382812 239.351562c-23.039062-35.941406-62.277343-57.402343-104.964843-57.402343s-81.925781 21.460937-104.960938 57.402343l-55.515625 86.605469c-9.210937 14.367188-13.460937 30.96875-12.292968 47.996094 1.167968 17.03125 7.648437 32.890625 18.738281 45.875 11.097656 12.972656 25.761719 21.839844 42.40625 25.644531 16.644531 3.804688 33.707031 2.179688 49.339843-4.691406l1.046876-.464844c39.335937-16.945312 84.285156-16.789062 123.519531.464844 10.121093 4.449219 20.84375 6.699219 31.664062 6.699219 5.882813 0 11.800781-.667969 17.664063-2.003907 16.644531-3.800781 31.308594-12.667968 42.410156-25.644531 11.09375-12.972656 17.578125-28.835937 18.75-45.871093 1.171875-17.035157-3.078125-33.632813-12.289062-48.007813zm0 0"></path><path d="m91.894531 239.238281c16.515625-6.34375 29.0625-19.652343 35.328125-37.476562 5.964844-16.960938 5.476563-36.109375-1.378906-53.921875-6.859375-17.800782-19.335938-32.332032-35.132812-40.921875-16.59375-9.019531-34.824219-10.488281-51.3125-4.132813-33.171876 12.753906-48.394532 53.746094-33.929688 91.398438 11.554688 29.96875 38.503906 48.886718 65.75 48.886718 6.957031 0 13.933594-1.234374 20.675781-3.832031zm0 0"></path><path d="m199.613281 171.386719c41.46875 0 75.207031-38.4375 75.207031-85.683594 0-47.257813-33.738281-85.703125-75.207031-85.703125-41.464843 0-75.199219 38.445312-75.199219 85.703125 0 47.246094 33.734376 85.683594 75.199219 85.683594zm0 0"></path><path d="m329.496094 192.4375h.003906c6.378906 2.117188 12.886719 3.128906 19.367188 3.128906 30.242187 0 59.714843-22.011718 70.960937-55.839844 6.476563-19.472656 6.050781-40.0625-1.199219-57.972656-7.585937-18.75-21.644531-32.359375-39.589844-38.324218-17.949218-5.964844-37.359374-3.476563-54.660156 7-16.527344 10.007812-29.191406 26.246093-35.660156 45.71875-13.652344 41.078124 4.640625 84.273437 40.777344 96.289062zm0 0"></path><path d="m487.875 182.4375-.011719-.011719c-28.597656-21.125-71.367187-11.96875-95.347656 20.421875-23.957031 32.40625-20.210937 75.972656 8.34375 97.113282 10.414063 7.714843 22.71875 11.402343 35.3125 11.402343 21.949219 0 44.785156-11.203125 60.050781-31.804687 23.953125-32.40625 20.210938-75.972656-8.347656-97.121094zm0 0"></path></svg></span> 
       </div>
@@ -364,7 +433,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
     </section>
     <section class="u-clearfix u-custom-color-12 u-section-3" id="sec_pets">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h1 class="u-custom-font u-font-lobster u-text u-text-1">Pets disponíveis na Ong xxxxxxxxxxxxxxx&nbsp;&nbsp;</h1>
+        <h1 class="u-custom-font u-font-lobster u-text u-text-1" id="div_pets_na_ong">Pets disponíveis na Ong xxxxxxxxxxxxxxx&nbsp;&nbsp;</h1>
         <div class="u-list u-list-1">
           <div class="u-repeater u-repeater-1">
             <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-1" id="pet1">
@@ -391,11 +460,13 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-11" id="pet1_responsavel">Save My pet&nbsp;<br>
                   <br>
                 </p>
+
                 <p  style="
     margin-left: 75px;" class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-12" id="pet1_localizacao">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
                   <br>
+ <p id="idPet1" hidden ><br>
                 </p>
-                <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-1">Saber mais</a>
+                <a href="" id="pet1_link" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-1">Saber mais</a>
               </div>
             </div>
             <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-2" id="pet2">
@@ -426,8 +497,9 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
     margin-left: 75px;" class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-23" id="pet2_localizacao">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
                   <br>
                 </p>
-                <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-2">Saber mais</a>
+                <a href=""  id="pet2_link" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-2">Saber mais</a>
               </div>
+ <p id="idPet2" hidden ><br>
             </div>
             <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-3" id="pet3" >
               <div class="u-container-layout u-similar-container u-container-layout-3">
@@ -455,8 +527,9 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 </p>
                 <p  style="margin-left: 75px;" class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-34" id="pet3_localizacao">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
                   <br>
+ <p id="idPet3" hidden ><br>
                 </p>
-                <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-3">Saber mais</a>
+                <a href=""  id="pet3_link" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-3">Saber mais</a>
               </div>
             </div>
             <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-4" id="pet4">
@@ -482,12 +555,13 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 </p>
                 <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-44" id="pet4_responsavel">Save My pet&nbsp;<br>
                   <br>
+ <p id="idPet4"  hidden ><br>
                 </p>
                 <p  style="
     margin-left: 75px;" class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-45" id="pet4_localizacao">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
                   <br>
                 </p>
-                <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-4">Saber mais</a>
+                <a href=""  id="pet4_link" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-4">Saber mais</a>
               </div>
             </div>
             <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-5" id="pet5">
@@ -516,9 +590,10 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 </p>
                 <p  style="
     margin-left: 75px;" class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-56" id="pet5_localizacao" >Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
+ <p id="idPet5" hidden ><br>
                   <br>
                 </p>
-                <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-5">Saber mais</a>
+                <a href="" id="pet5_link" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-5">Saber mais</a>
               </div>
             </div>
             <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-6" id="pet6">
@@ -540,6 +615,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-64">Responsavel<br>
                 </p>
                 <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-65">Localizacao<br>
+
+
                   <br>
                 </p>
                 <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-66" id="pet6_responsavel" >Save My pet&nbsp;<br>
@@ -549,15 +626,17 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
     margin-left: 75px;" class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-67" id="pet6_localizacao" >Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
                   <br>
                 </p>
-                <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-6">Saber mais</a>
+                <a href="" id="pet6_link" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-6">Saber mais</a>
               </div>
+
+                <p id="idPet6" hidden ><br>
             </div>
           </div>
         </div>
       </div>
     </section>
     <section class="u-align-center-lg u-align-center-md u-align-center-xl u-align-left-sm u-align-left-xs u-clearfix u-white u-section-4" id="carousel_5361">
-      <h1 class="u-align-center u-text u-text-body-color u-text-1">Ultimos eventos da Ong xxxxxx</h1>
+      <h1 class="u-align-center u-text u-text-body-color u-text-1" id="eventos_mesma_inst">Ultimos eventos da Ong xxxxxx</h1>
       <div class="u-expanded-width u-grey-15 u-shape u-shape-rectangle u-shape-1"></div>
       <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
         <div class="u-gutter-0 u-layout">
@@ -578,14 +657,14 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 <div class="u-size-30">
                   <div class="u-layout-row">
                     <div class="u-container-style u-layout-cell u-size-30 u-white u-layout-cell-2">
-                      <div class="u-container-layout u-container-layout-2">
+                      <div class="u-container-layout u-container-layout-2" id="layout-2" >
                         <h4 class="u-text u-text-body-color u-text-3">1.&nbsp;Feira de adoção- Ong Abcd&nbsp;</h4>
                         <p class="u-text u-text-4">Feirao de adocao de animais que realizada pela ong xpto, na cidade de Salto - sp</p>
                         <a href="https://nicepage.com/c/slider-html-templates" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>
                       </div>
                     </div>
                     <div class="u-container-style u-custom-color-12 u-layout-cell u-right-cell u-size-30 u-layout-cell-3">
-                      <div class="u-container-layout u-valign-top u-container-layout-3">
+                      <div class="u-container-layout u-valign-top u-container-layout-3" id="layout-3">
                         <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;Feira de adoção- Ong Abcd</h4>
                         <p class="u-text u-text-6">Vel pharetra vel turpis nunc eget. Ut eu sem integer vitae justo eget magna fermentum iaculis. Amet cursus sit amet dictum sit. Nisl rhoncus mattis .</p>
                         <a href="https://nicepage.com/c/slider-html-templates" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>
@@ -596,7 +675,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
                 <div class="u-size-30">
                   <div class="u-layout-row">
                     <div class="u-container-style u-custom-color-10 u-layout-cell u-size-30 u-layout-cell-4">
-                      <div class="u-container-layout u-valign-top u-container-layout-4">
+                      <div class="u-container-layout u-valign-top u-container-layout-4" id="layout-4">
                         <h4 class="u-text u-text-7">3.&nbsp;Feira de adoção- Ong Abcd</h4>
                         <p class="u-text u-text-8">Vel pharetra vel turpis nunc eget. Ut eu sem integer vitae justo eget magna fermentum iaculis. Amet cursus sit amet dictum sit. Nisl rhoncus mattis .</p>
                         <a href="https://nicepage.com/k/adult-html-templates" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>

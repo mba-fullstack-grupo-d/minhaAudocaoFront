@@ -14,14 +14,17 @@ function readCookie(name) {
 token =localStorage.getItem("token"); 
 personId=localStorage.getItem("idPerson"); 
 
-alert(token);
-alert(personId);
 
+if(personId=="" || personId) {
+
+
+}
 
 function sleep(ms) {
 
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 
 function onlynumber(evt) {
@@ -39,6 +42,107 @@ function onlynumber(evt) {
  
  
 
+
+async function updateDadosPessoais(){
+
+var nome = document.getElementById("nome").value;
+if(nome==""){
+alert("Preencher nome");
+return ;
+}
+
+if(nome==""){
+alert("Preencher sobrenome");
+return ;
+}
+
+var email =document.getElementById("email").value;
+if(email ==""){
+alert("Preencher email");
+return ;
+}
+var telefone = document.getElementById("telefone").value ;
+if(telefone ==""){
+alert("Preencher telefone");
+return ;
+}
+
+
+var cep = document.getElementById("cep").value;
+if(cep ==""){
+alert("Preencher cep");
+return;
+}
+var rua = document.getElementById('rua').value;
+if(rua==""){
+alert("Preencher rua");
+return;
+}
+var bairro = document.getElementById('bairro').value;
+if(bairro==""){
+alert("Preencher bairro");
+return;
+}
+var cidade = document.getElementById('cidade').value;
+if(cidade==""){
+alert("Preencher cidade");
+return;
+}
+var estado = document.getElementById('estado').value;
+if(estado==""){
+alert("Preencher estado");
+return;
+}
+var numero = document.getElementById('numero').value; 
+if(numero==""){
+alert("Preencher numero do endereco");
+return;
+}
+
+var sobrenome = document.getElementById('sobrenome').value;
+if(sobrenome ==""){
+alert("Preencher o sobrenome");
+return;
+}
+personId=localStorage.getItem("idPerson"); 
+var idEndereco = document.getElementById('idEndereco').value;
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pessoa", { 
+method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({   
+
+ "idPessoa": personId,
+    "nome": nome,
+    "sobrenome": sobrenome,
+    "email": email ,
+    "telefone": telefone,
+    "endereco": {
+        "id": idEndereco,
+        "cidade": cidade,
+        "estado": estado,
+        "logradouro": rua,
+        "numero": numero,
+        "cep": cep,
+        "bairro": bairro
+    }
+
+
+
+    
+ }) });  
+
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+if (response.status === 200) { 
+alert("Atualizacao efetuada com sucesso!"); 
+}
+
+else{ alert("Não foi possível a busca do evento!"); }
+
+
+
+}
 
 
 function pesquisacep(valor) {
@@ -163,21 +267,18 @@ function limpa_formulario_cep_evento() {
  
 
 
-async function preencherDadosPessoais(campoId){
+async function preencherDadosPessoais(){
 
-
-campoId= personId;
+ 
 window.scrollTo(0, 0);
+ 
 
-console.log(campoId);
-
-
-alert(personId);
+var personId=localStorage.getItem("idPerson"); 
+ 
 
 let response  = await fetch("http://minhaudocao.com.br:8080/api/pessoa/"+ personId +"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
 
-
-console.log(campoId);
+ 
 
 if (response.status === 401){
 
@@ -195,6 +296,8 @@ document.getElementById('bairro').value=data.endereco.bairro;
 document.getElementById('cidade').value=data.endereco.cidade;
 document.getElementById('estado').value=data.endereco.estado;
 document.getElementById('numero').value=data.endereco.numero; 
+document.getElementById('idEndereco').value=data.endereco.id; 
+document.getElementById('sobrenome').value=data.sobrenome; 
 
 }
 

@@ -150,7 +150,7 @@ function requestCep(url, name) {
 }
 
   function submitCadastro(event) {
-    event.preventDefault();
+
 
     var documento = document.getElementById('documento').value;
     var tipopessoa = document.getElementById('tipopessoa').value;
@@ -167,6 +167,67 @@ function requestCep(url, name) {
     var telefone = document.getElementById('telefone').value;
     var cep = document.getElementById('cep').value;
 
+   var nome = document.getElementById("nome").value;
+
+if(tipopessoa==""){
+alert("Escolher o tipo da pessoa");
+return ;
+}
+
+if(nome==""){
+alert("Preencher nome");
+return ;
+}
+
+if(nome==""){
+alert("Preencher sobrenome");
+return ;
+}
+
+if(email ==""){
+alert("Preencher email");
+return ;
+}
+if(telefone ==""){
+alert("Preencher telefone");
+return ;
+}
+if(cep ==""){
+alert("Preencher cep");
+return;
+}
+if(rua==""){
+alert("Preencher rua");
+return;
+}
+if(bairro==""){
+alert("Preencher bairro");
+return;
+}
+if(cidade==""){
+alert("Preencher cidade");
+return;
+}
+if(estado==""){
+alert("Preencher estado");
+return;
+}
+if(numero==""){
+alert("Preencher numero do endereco");
+return;
+}
+if(sobrenome ==""){
+alert("Preencher o sobrenome");
+return;
+}
+if(senha ==""){
+alert("Preencher a senha");
+return;
+}
+if(imagemEnder==null || imagemEnder==""){
+alert("Escolher uma imagem");
+return;
+}
 
     if (validaEmail(email)) {
         if (validaEndereco(rua, numero, bairro, cidade, estado)) {
@@ -280,3 +341,7 @@ function validaNomeSobrenome(nome, sobrenome)
     return false;
 }
 
+
+function goToLoginPage(){
+ window.location.replace("login.html");
+}

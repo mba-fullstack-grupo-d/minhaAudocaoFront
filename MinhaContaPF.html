@@ -157,14 +157,13 @@ preencherDadosPessoais(1)
 
  <div class="form-group col-md-6">
       <label for="inputTipoPessoa">Tipo Pessoa<h11>*</h11></label>
-        <select required="" id="tipo_pessoa_select" name="tipo_pessoa_select" class="form-control">
-      <option value="instituicao">Instituição</option>
-      <option value="pessoafisica">Pessoa fisica</option> 
+        <select required="" disabled id="tipo_pessoa_select" name="tipo_pessoa_select" class="form-control">
+      <option value="pessoafisica">Pessoa fisica</option>
+      <option value="instituicao">Instituição</option> 
     </select>    </div> 
     <div class="form-group col-md-6">
-      <label for="inputDocument">Documento<h11>*</h11></label>
-      <input type="documento" class="form-control" id="inputDocumento" required="" placeholder="Digite seu Documento">
-    </div>
+      <label for="inputEmail">Email<h11>*</h11></label>
+     <input id="email" name="email" class="form-control" placeholder="email@email.com" required="" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >    </div>
  </div>
 
 <div class="form-row">
@@ -173,8 +172,9 @@ preencherDadosPessoais(1)
     <input id="nome" name="nome" placeholder="Digite seu nome ou nome da sua instituicao" class="form-control" required="" type="text">
    </div>
  <div class="form-group col-md-6">
-      <label for="inputEmail">Email<h11>*</h11></label>
-     <input id="email" name="email" class="form-control" placeholder="email@email.com" required="" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >     </div>
+    <label for="inputsobreNome">Nome<h11>*</h11></label>
+    <input id="sobrenome" name="sobrenome" placeholder="Digite seu sobrenome" class="form-control" required="" type="text">
+      </div>
  
 </div>
 
@@ -223,13 +223,15 @@ preencherDadosPessoais(1)
 </div>
 
 
+   <input id="idEndereco"  hidden >     </div>
+ 
  
 
 
 <!-- Button (Double) -->
 <div class="form-row">
     <div class="form-group col-md-6">
-    <button id="Cadastrar" name="Cadastrar" class="btn btn-success" type="Submit">Cadastrar</button>  
+    <button id="editar" name="editar" onclick="updateDadosPessoais() ;return false" class="btn btn-success" type="Submit">Cadastrar</button>  
   </div> 
 </div>
 

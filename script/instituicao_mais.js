@@ -101,6 +101,7 @@ function getEventos(IDInstituicao) {
     let url = "http://minhaudocao.com.br:8080/api/evento/instituicao/"+IDInstituicao;
     let data = getDados(url);
     let evento = JSON.parse(data);
+alert(evento.length);
     let divCard2 = document.getElementById("layout-2");
     let divCard3 = document.getElementById("layout-3");
     let divCard4 = document.getElementById("layout-4");
@@ -112,20 +113,19 @@ function getEventos(IDInstituicao) {
 
 
     console.log(evento[0].nome);
+if(evento.length>0){
     conteudoCard2 = conteudoCard2 +'<h4 class="u-text u-text-body-color u-text-3">1.&nbsp;'+ evento[0].nome+'&nbsp;</h4> '+
     '<p class="u-text u-text-4">'+evento[0].descricao+'</p>' +
     '<a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
+}
+if(evento.length>1){
+alert(evento.length);
+conteudoCard3 = conteudoCard3 + ' <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;'+ evento[1].nome+'</h4> '+ ' <p class="u-text u-text-6">'+evento[1].descricao+'</p> '+ ' <a href="" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>'; 
+}
 
-    conteudoCard3 = conteudoCard3 +
-    ' <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;'+ evento[1].nome+'</h4> '+
-    ' <p class="u-text u-text-6">'+evento[1].descricao+'</p> '+
-    ' <a href="" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>';
-   
-    conteudoCard4 = conteudoCard4 +
-    ' <h4 class="u-text u-text-7">3.&nbsp;'+ evento[2].nome+'</h4>'+
-    ' <p class="u-text u-text-8">'+evento[2].descricao+'</p>'+
-    ' <a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>';
-
+if(evento.lenght>2){
+conteudoCard4 = conteudoCard4 + ' <h4 class="u-text u-text-7">3.&nbsp;'+ evento[2].nome+'</h4>'+ ' <p class="u-text u-text-8">'+evento[2].descricao+'</p>'+ ' <a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>';
+}
     divCard2.innerHTML = conteudoCard2;
     divCard3.innerHTML = conteudoCard3;
     divCard4.innerHTML = conteudoCard4;

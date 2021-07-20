@@ -16,10 +16,10 @@ color: #fff;
     border-color:   purple;
 	text-align:center;
 }
+
 .panel-primary{
 margin-left:40px;
 margin-right:40px;
-
 
 }
 
@@ -47,7 +47,7 @@ border-color:black;
     border-color: purple;
 margin-left:20px;
 
-	margin-top:30px;
+	margin-top:0px;
 	
 }
 
@@ -124,8 +124,11 @@ img {
     
     margin-left: 10px;
     margin-right: 10px;
-}
 
+    margin-top: 10px;
+}
+.input-group{
+   margin-top: 10px;}
  
 
 .list-group-item.active {
@@ -136,11 +139,7 @@ img {
 }
 
 
-.input-md,.col-md-4,.col-md-8{
-    
-    margin-botton: 10px;
-    margin-top: 10px;
-   }
+
 
 .btn-editar{
 background-color: blue;

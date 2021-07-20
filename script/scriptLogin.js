@@ -1,6 +1,7 @@
     var retorno;
 
-  function requestLogin(opts) {
+
+function requestLogin(opts) {
 
     fetch('http://minhaudocao.com.br:8080/api/authenticate', {
         method: 'POST',

@@ -74,7 +74,7 @@
         <!-- Prepended text-->
         <div class="form-group">
           <label class="col-md-2 control-label" for="telefone">Telefone <h11>*</h11></label>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
               <input id="telefone" name="telefone" class="form-control" placeholder="XX XXXXX-XXXX" required="true"
@@ -109,7 +109,7 @@
         <!-- Prepended text-->
         <div class="form-group">
           <label class="col-md-2 control-label" for="prependedtext">Endereço</label>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="input-group">
               <span class="input-group-addon">Rua</span>
               <input id="rua" name="rua" class="form-control" placeholder="" required="true" readonly="readonly"
@@ -137,7 +137,7 @@
 
         <div class="form-group">
           <label class="col-md-2 control-label" for="prependedtext"></label>
-          <div class="col-md-4">
+          <div class="col-md-2">
             <div class="input-group">
               <span class="input-group-addon">Cidade</span>
               <input id="cidade" name="cidade" class="form-control" placeholder="" required="true" readonly="readonly"
@@ -155,7 +155,7 @@
 
           </div>
         </div>
-
+<br> 
         <div class="form-group">
           <label class="col-md-2 control-label" for="Nome">Imagem <h11>*</h11></label>
           <div class="col-md-8">
@@ -164,7 +164,8 @@
           </div>
         </div> 
 
-        <!-- Select Basic -->
+    <br> 
+    <!-- Select Basic -->
         <div class="form-group">
 
           <label class="col-md-2 control-label" for="selectbasic">Senha <h11>*</h11></label>
@@ -178,10 +179,10 @@
 
           <!-- Text input-->
 
-          <label class="col-md-1 control-label" for="senha">Confirmação de Senha<h11>*</h11></label>
+          <label class="col-md-3 control-label" for="senha">Confirmação de Senha<h11>*</h11></label>
           <div class="col-md-3">
             <input id="confirmacao" name="confirmacao" type="password" placeholder="Repita a senha desejada"
-              class="form-control input-md" required="true">
+              class="form-control input-md-3" required="true">
 
           </div>
         </div>
@@ -192,9 +193,8 @@
         <div class="form-group">
           <label class="col-md-2 control-label" for="Cadastrar"></label>
           <div class="col-md-8">
-            <button id="Cadastrar" name="Cadastrar" class="btn btn-success" type="Submit"
-              onclick="submitCadastro(event)">Cadastrar</button>
-            <button id="Cancelar" name="Cancelar" class="btn btn-danger" type="Reset">Cancelar</button>
+            <button id="Cadastrar" name="Cadastrar" class="btn btn-success" type="Submit" onclick="submitCadastro();return false">Cadastrar</button>
+            <button id="Login" name="Login" class="btn btn-danger" type="Reset" onclick="goToLoginPage();return false">Login</button>
           </div>
         </div>
 
