@@ -36,7 +36,7 @@ function getPets() {
     ' Idade: '+ element.idade+'<br> '+
     ' Castrado: '+ traduzBoolean(element.castrado)+'<br> '+
     ' Instituicao: '+ element.instituicao.nome+'<br> </p>'+
-    '  <a href="Pet_mais.html?id='+ element.id +'" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-3" style="bottom: 10px;position: absolute;left:35%">Saber mais</a> '+
+    '  <a href="Pet_Mais.html?id='+ element.id +'" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-3" style="bottom: 10px;position: absolute;left:35%">Saber mais</a> '+
     ' </div> '+
     ' </div>';
     limite = limite+1;
@@ -61,17 +61,17 @@ function getEventos() {
     
     conteudoCard2 = conteudoCard2 +'<h4 class="u-text u-text-body-color u-text-3">1.&nbsp;'+ evento[0].nome+'&nbsp;</h4> '+
     '<p class="u-text u-text-4">'+evento[0].descricao+'</p>' +
-    '<a href="Eventos_mais.html?id='+evento[0].id+'" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
+    '<a href="Eventos_Mais.html?id='+evento[0].id+'" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
 
     conteudoCard3 = conteudoCard3 +
     ' <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;'+ evento[1].nome+'</h4> '+
     ' <p class="u-text u-text-6">'+evento[1].descricao+'</p> '+
-    ' <a href="Eventos_mais.html?id='+evento[1].id+'" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>';
+    ' <a href="Eventos_Mais.html?id='+evento[1].id+'" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>';
    
     conteudoCard4 = conteudoCard4 +
     ' <h4 class="u-text u-text-7">3.&nbsp;'+ evento[2].nome+'</h4>'+
     ' <p class="u-text u-text-8">'+evento[2].descricao+'</p>'+
-    ' <a href="Eventos_mais.html?id='+evento[2].id+'" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>';
+    ' <a href="Eventos_Mais.html?id='+evento[2].id+'" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>';
 
     divCard2.innerHTML = conteudoCard2;
     divCard3.innerHTML = conteudoCard3;
