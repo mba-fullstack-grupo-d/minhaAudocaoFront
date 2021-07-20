@@ -106,6 +106,7 @@ function requestCep(url, name) {
                 })
         }).then(response => {
             if (response.ok) {
+                document.querySelector("form").reset();
                 alert("Cadastro efetuado com sucesso!");
             } else {
                 alert("Não foi possível a inclusão do cadastro!")
@@ -136,6 +137,7 @@ function requestCep(url, name) {
                 })
         }).then(response => {
             if (response.ok) {
+                document.querySelector("form").reset();
                 alert("Cadastro efetuado com sucesso!");
             } else {
                 alert("Não foi possível a inclusão do cadastro!")

@@ -7,9 +7,9 @@ function getInstituicoes(url, cidade, bairro, nome) {
         request.open("POST", url, false);
         request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         request.send(JSON.stringify({
-            "bairro": bairro,
-            "cidade": cidade,
-            "nome": nome
+            "bairro": bairro==""?null:bairro,
+            "cidade": cidade==""?null:cidade,
+            "nome": nome==""?null:nome
           }));
     } else {
         request.open("GET", url, false);
@@ -43,9 +43,7 @@ function getEvento(page) {
     if (cidade != '' || bairro != '' || nome != '')
     {
         data = getInstituicoes("http://minhaudocao.com.br:8080/api/evento/search", cidade, bairro, nome);
-        document.getElementById("cidade").value = '';
-        document.getElementById("bairro").value = '';
-        document.getElementById("nome").value = '';
+        document.querySelector("form").reset();
     } else {
         data = getInstituicoes("http://minhaudocao.com.br:8080/api/evento/all", cidade, bairro, nome);
     }
@@ -84,7 +82,7 @@ function getEvento(page) {
                     '</g>' +
                     '</g>' +
                     '</g></svg></span>' +
-                    '  <a href="https://nicepage.com/pt/modelos-joomla" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-9 u-hover-custom-color-10 u-radius-50 u-btn-1">SABER MAIS</a>' +
+                    '  <a href="eventos_mais.html?id=' + element.instituicao.id + '" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-9 u-hover-custom-color-10 u-radius-50 u-btn-1">SABER MAIS</a> ' +
                     '</div>' +
                     '</div>';
                     if (RegistroAtual>=Object.keys(instituicao).length-1){ativarProximo='disabled'}else{ ativarProximo=''}  
