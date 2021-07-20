@@ -221,7 +221,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
 
 <script> 
 
-var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYW5pLXBtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2NTgyNDUwLCJleHAiOjE2MjY2MTg0NTB9.cwJTCXZmKy1W73ICCKs5LAvZofpuhZajLz-VmOQF4Cc";
+var token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbGlhZ3BtQGhvdG1haWwuY29tIiwiaWF0IjoxNjI2NjY5NzMyLCJleHAiOjE2MjY3MDU3MzJ9.invGF3UeToFIIx6_GGq1Z1sfHU2nvZcHPoHishku3I4"
 
 var campoId=14
  
@@ -375,15 +375,18 @@ for(let i = 0 ; i<data.length;i++){
 var  titulo = data[i].nome;
 var  resposta= document.getElementById(data[i].nome).value;
  
-corpoEmail = corpoEmail + titulo + " = " + resposta + " \n "
+corpoEmail = corpoEmail + titulo + " = " + resposta + "; \n \n "
 
 alert("teste "+ corpoEmail)	 
 }
 
 }
 
-response  = await fetch("http://minhaudocao.com.br:8080/api/send/14", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, 
-body: JSON.stringify({ "mensagem": corpoEmail }) }); 
+response  = await fetch("http://minhaudocao.com.br:8080/api/send", { method: 'POST', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, 
+body: JSON.stringify({ "idInstituicao": 14,
+  "idPessoa": 9,
+  "idPet": 16,
+  "mensagem": corpoEmail}) }); 
 
  
 

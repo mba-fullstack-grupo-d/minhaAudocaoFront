@@ -18,8 +18,6 @@ function CapturaParametrosUrl() {
 		//tenta localizar os & (pode haver mais de 1)
         var parametros = res[1].split('&');
         alert('Parametros encontrados:\n' + parametros);
-		
-	 
     }
 }
 
@@ -76,11 +74,13 @@ if(buttonName==1){
 button.innerText = "Editar pet"
 preencherFormPet(campoId)
 document.getElementById("fotos").style.visibility = "hidden"; 
+document.getElementById("idPet").value = campoId ;
 }
 if(buttonName==2){
 button.innerText = "Cadastrar pet"
 document.getElementById("fotos").style.visibility = "visible"; 
 document.getElementById("divFotosPets").style.visibility = "hidden";
+document.getElementById("idPet").value = 0 ;
 
 }
 }
@@ -106,6 +106,11 @@ data= await response.json();
 console.log(data);
 
 
+document.getElementById('img1').src=data.uriFotos[0];
+document.getElementById('img2').src=data.uriFotos[1];
+document.getElementById('img3').src=data.uriFotos[2];
+document.getElementById('img4').src=data.uriFotos[3];
+
 document.getElementById("fotos").style.visibility = "hidden"; 
 document.getElementById("divFotosPets").style.visibility = "visible"; 
 document.getElementById("nome_pet").value=data.nome;
@@ -119,22 +124,14 @@ $("#sexo_select_pet").find('option:contains("' + capitalizeFirstLetter(data.gene
 console.log(capitalizeFirstLetter(data.genero)); 
 $("#vacinado_select").find('option:contains("' + changeLabel(data.vacinado) + '")').prop('selected', true);
 $("#castrado_pet_select").find('option:contains("' + changeLabel(data.castrado) + '")').prop('selected', true);
-
 if(data.adotado){
 $("#status_pet_select").find('option:contains("Adotado")').prop('selected', true);
 }
 else{
 $("#status_pet_select").find('option:contains("Em adocao")').prop('selected', true);
 
-
-document.getElementById('img1').src=data.uriFotos[0];
-document.getElementById('img2').src=data.uriFotos[1];
-document.getElementById('img3').src=data.uriFotos[2];
-document.getElementById('img4').src=data.uriFotos[3];
-
 }
-   
-
+    
 
 
 }
@@ -161,10 +158,14 @@ var button = document.getElementById("cadastrar_evento");
 if(buttonName==1){
 button.innerText = "Editar evento"
 console.log(campoId);
+document.getElementById("id_evento").value = campoId ;
 preencherFormEvento(campoId);
+
 }
-if(buttonName==2)
+if(buttonName==2) {
+document.getElementById("id_evento").value = 0 ;
 button.innerText = "Cadastrar evento" 
+}
 }
 
 
@@ -401,6 +402,8 @@ else{
 async function addEvento(){ 
  
  
+var idEvento=document.getElementById("id_evento").value;
+
 var  titulo= document.getElementById("titulo_evento").value;
  
 if(titulo ==""){
@@ -445,19 +448,10 @@ if(descricao ==""){
 }
 
    
-var foto= document.getElementById("inputGroupFile01_event").files[0];
-if(foto==null){
-	alert("Preencher foto evento")	
-return ;
-}
 
 
-var fotoName= document.getElementById("inputGroupFile01_event").files[0].name;
-if(fotoName ==""){
-	alert("Preencher foto evento")	
-	document.getElementById("inputGroupFile01_event").focus();
-	return ;
-}
+
+
 
 var data1 = document.getElementById('datepicker1').value;
 if(data1 ==""){
@@ -473,6 +467,33 @@ var data2 = document.getElementById('datepicker2').value;
 	return ;
 }
 
+dataf=data1.substring(0,10)
+
+console.log(dataf)
+var year=data1.substring(6,10)
+var month=data1.substring(3,5)
+var day=data1.substring(0,2)
+console.log(year)
+console.log(month)
+console.log(day)
+ 
+var dataFormatada = year +"-"+ month +"-"+ day
+
+
+
+if(idEvento==0){
+var foto= document.getElementById("inputGroupFile01_event").files[0];
+if(foto==null){
+	alert("Preencher foto evento")	
+return ;
+}
+
+var fotoName= document.getElementById("inputGroupFile01_event").files[0].name;
+if(fotoName ==""){
+	alert("Preencher foto evento")	
+	document.getElementById("inputGroupFile01_event").focus();
+	return ;
+}
  
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "multipart/form-data");
@@ -515,17 +536,6 @@ console.log(data1.substring(11,16))
 
 console.log(data2.substring(11,16))
 console.log(data2)
-dataf=data1.substring(0,10)
-
-console.log(dataf)
-var year=data1.substring(6,10)
-var month=data1.substring(3,5)
-var day=data1.substring(0,2)
-console.log(year)
-console.log(month)
-console.log(day)
- 
-var dataFormatada = year +"-"+ month +"-"+ day
 
 console.log(dataFormatada)
  
@@ -590,9 +600,70 @@ document.getElementById('datepicker2').value="";
 else{ alert("Não foi possível a inclusão do cadastro!"); }
 
 
+}
+if(idEvento>0){
+alert(idEvento);
+let response  = await fetch("http://minhaudocao.com.br:8080/api/evento", { method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({ 
+ "id": idEvento,
+        "nome": titulo,
+        "descricao":descricao,
+        "instituicao": {
+            "id": instituicaoId
+        },
+        "endereco": {
+            "id": 77,
+            "cidade": cidade,
+            "estado": estado,
+            "logradouro": rua,
+            "numero": numero,
+            "cep": cep,
+            "bairro": bairro
+        },
+        "datas": [
+            {
+                "id": 34,
+                "data": "2021-07-21",
+                "horaInicio": "00:00",
+                "horaFim": "00:00",
+                "idEvento": 33
+            }
+        ]
 
 
-console.log(foto) 
+ }) }); 
+
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+
+if (response.status === 200) { alert("Atualizacao efetuada com sucesso!") ;
+
+ 
+sleep(10); 
+buscaEventos(0);  
+meMostraEventos(); 
+document.getElementById("nome_campo").value="";
+document.getElementById("titulo_evento").value="";
+document.getElementById('cep_evento').value="";
+document.getElementById('rua_evento').value="";
+document.getElementById('numero_evento').value="";
+document.getElementById('bairro_evento').value="";
+document.getElementById('cidade_evento').value="";
+document.getElementById('estado_evento').value="";
+document.getElementById('descricao_evento').value=""; 
+document.getElementById('datepicker1').value="";
+document.getElementById('datepicker2').value="";
+}
+
+else{ alert("Não foi possível a inclusão do cadastro!"); }
+
+
+}
+
+
+ 
  
 }
 
@@ -759,6 +830,25 @@ if(descricao_pet ==""){
 	return ;
 }
 
+var vacinado=false
+if(vacinado_select_pet_value=="sim"){
+vacinado=true
+}
+var castrado=false
+if(castrado_pet_select_value =="sim"){
+castrado=true
+}
+var adotado =false
+if(status_pet_select_value =="adotado"){
+adotado =true
+}
+
+ 
+
+var idPet=document.getElementById("idPet").value;
+
+if(idPet==0){
+
 var foto1 = document.getElementById("inputGroupFile01_pet").files[0];
 if(foto1 ==null){
 	alert("Preencher as fotos do pet")	
@@ -783,15 +873,7 @@ return ;
 } 
  
 
-console.log(nome) 
-console.log(idade_pet) 
-console.log(especie_select_value) 
-console.log(sexo_select_pet_value)
-console.log(vacinado_select_pet_value) 
-console.log(status_pet_select_value) 
-console.log(castrado_pet_select_value) 
-console.log(descricao_pet) 
-console.log(foto1) 
+
 
 alert("Vamos fazer os uploads das fotos do seu pet e o cadastrado dele!");
 
@@ -889,20 +971,7 @@ if (responseFoto.status === 200) {
  
 }
 
-var vacinado=false
-if(vacinado_select_pet_value=="sim"){
-vacinado=true
-}
-var castrado=false
-if(castrado_pet_select_value =="sim"){
-vacinado=true
-}
-var adotado=false
-if(vacinado_select_pet_value=="adotado"){
-vacinado=true
-}
 
- 
 let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/add", { method: 'POST', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({ 
   
 "adotado": adotado,
@@ -941,8 +1010,6 @@ meMostraPets();
 document.getElementById("nome_pet").value="";
 document.getElementById("descricao_pet").value="";
 document.getElementById("idade_pet").value="";
-
-
 document.getElementById("inputGroupFile04_pet").value="";
 document.getElementById("inputGroupFile02_pet").value="";
 document.getElementById("inputGroupFile03_pet").value="";
@@ -954,7 +1021,61 @@ document.getElementById("inputGroupFile01_pet").value="";
  
 }
 
-else{ alert("Não foi possível a inclusão do cadastro!"); }
+else{ alert("Não foi possível a inclusão do cadastro!"); 
+
+
+}
+
+
+}
+
+ 
+
+if(idPet>0){
+
+alert("castrado "+castrado)
+
+
+alert("vacinado "+vacinado)
+
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pet", { method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({ 
+"id": idPet,
+    "nome": nome,
+    "especie": especie_select_value,
+    "descricao": descricao_pet,
+    "adotado": adotado,
+    "genero": sexo_select_pet_value,
+    "idade": idade_pet,
+    "instituicao": {
+        "id": instituicaoId
+    },
+    "vacinado": vacinado,
+    "castrado": castrado,
+	"adotado": adotado,
+
+ }) }); 
+
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+
+if (response.status === 200) {
+alert("Atualizacao efetuada com sucesso!");
+sleep(10); 
+buscaPets(0); 
+meMostraPets();  
+
+
+
+ 
+}
+
+else{ alert("Não foi possível a inclusão do cadastro!"); 
+
+
+}
 
 
 
@@ -962,8 +1083,7 @@ else{ alert("Não foi possível a inclusão do cadastro!"); }
 
 
 
-
-
+}
 
 
  
@@ -1097,7 +1217,89 @@ function limpa_formulario_cep_evento() {
             
 }
 
- 
+async function updateDadosPessoais(){
+
+var nome = document.getElementById("nome").value;
+if(nome==""){
+alert("Preencher nome");
+}
+
+var email =document.getElementById("email").value;
+if(email ==""){
+alert("Preencher email");
+}
+var telefone = document.getElementById("telefone").value ;
+if(telefone ==""){
+alert("Preencher telefone");
+}
+
+
+var cep = document.getElementById("cep").value;
+if(cep ==""){
+alert("Preencher cep");
+}
+var rua = document.getElementById('rua').value;
+if(rua==""){
+alert("Preencher rua");
+}
+var bairro = document.getElementById('bairro').value;
+if(bairro==""){
+alert("Preencher bairro");
+}
+var cidade = document.getElementById('cidade').value;
+if(cidade==""){
+alert("Preencher cidade");
+}
+var estado = document.getElementById('estado').value;
+if(estado==""){
+alert("Preencher estado");
+}
+var numero = document.getElementById('numero').value; 
+if(numero==""){
+alert("Preencher numero do endereco");
+}
+
+
+
+var descricao = document.getElementById('descricao').value;
+
+let response  = await fetch("http://minhaudocao.com.br:8080/api/instituicao", { 
+method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({   
+
+ "id": instituicaoId,
+    "nome": nome,
+    "descricao":descricao,
+    "email": email, 
+    "telefone": telefone,
+     "endereco": {
+        "id": 1,
+        "cidade": cidade,
+        "estado":estado,
+        "logradouro": rua,
+        "numero": numero,
+        "cep": cep,
+        "bairro": bairro
+    }
+
+
+
+    
+ }) });  
+
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
+if (response.status === 200) { 
+alert("Atualizacao efetuada com sucesso!"); 
+}
+
+else{ alert("Não foi possível a busca do evento!"); }
+
+
+
+}
 
 
 async function preencherDadosPessoais(campoId){
@@ -1119,7 +1321,6 @@ if (response.status === 401){
 if (response.status === 200) {
 data= await response.json();
 console.log(data);
-document.getElementById("inputDocumento").value=data.nome;
 document.getElementById("nome").value=data.nome;
 document.getElementById("email").value=data.email;
 document.getElementById("telefone").value=data.telefone;
@@ -1129,6 +1330,7 @@ document.getElementById('bairro').value=data.endereco.bairro;
 document.getElementById('cidade').value=data.endereco.cidade;
 document.getElementById('estado').value=data.endereco.estado;
 document.getElementById('numero').value=data.endereco.numero; 
+document.getElementById('descricao').value=data.descricao; 
 
 }
 
@@ -1155,7 +1357,9 @@ let response = await fetch("http://minhaudocao.com.br:8080/api/pet/instituicao/"
 function changeLabel(label){
 if(label==true)
 return "Sim";
+else{
 return "Nao";
+}
 }
 
 async function buscaPets(page){
@@ -1178,7 +1382,7 @@ for (var i = pagina_pet * tamanhoPagina; i < dataPets.length && i < (pagina_pet 
     html+=  '<th scope="row">'+i+'</th>'
     html+=  '<td>'+ dataPets[i].nome+'</td>'
     html+=  '<td>'+ dataPets[i].especie+'</td>'
-    html+=   '<td>'+ changeLabel(dataPets[i].status)+'</td>' 
+    html+=   '<td>'+ changeLabel(dataPets[i].adotado)+'</td>' 
     html+=   '<td hidden >'+ dataPets[i].id+ '</td>' 
      html+= '<td>'
 html+='<button type="button" class="btn btn-editar" onclick="mostraEscondePets(1,'+ dataPets[i].id+')" >Editar</button> ' 

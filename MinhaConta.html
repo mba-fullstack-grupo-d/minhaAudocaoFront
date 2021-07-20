@@ -224,17 +224,18 @@ preencherDadosPessoais(1)
  
  
 </div>
+<br>
 
-
- 
+ <div class="form-group">
+  <span class="input-group-text spanDescricao">Descricao</span>
+  <textarea id="descricao" class="form-control txtDescricao" aria-label="With textarea"></textarea>
+</div>
 
 
 <!-- Button (Double) -->
 <div class="form-row">
     <div class="form-group col-md-6">
-    <button id="Cadastrar" name="Cadastrar" class="btn btn-success" type="Submit">Cadastrar</button> 
-
-    <button id="Cancelar" name="Cancelar" class="btn btn-danger" type="Reset">Cancelar</button>
+    <button id="btn_editar" name="editar" class="btn btn-success" type="Submit" onclick="updateDadosPessoais();return false">Editar</button> 
   </div> 
 </div>
 
@@ -444,6 +445,11 @@ preencherDadosPessoais(1)
 </figure>
 </div>
 
+
+<div class="input-group mb-3"> 
+  <input type="text" class="form-control" hidden id="idPet">
+</div>
+
  
   
 <!-- Button (Double) -->
@@ -542,7 +548,9 @@ preencherDadosPessoais(1)
       <input id="titulo_evento" name="titulo_evento" placeholder="Digite o titulo do evento" class="form-control " required="" type="text">
  </div>
  </div>
-<br>
+<br> 
+
+<input id="id_evento" name="id_evento"  hidden class="form-control " required="" type="text">
 
 <div class="form-row">
 
@@ -739,9 +747,9 @@ Data e hora inical :  <input type="text" id="datepicker1" class="datepicker">  D
 <div class="form-group">
 
 
-    <label class="col-md-4 control-label" for="prependedtext">Nome do campo<h11>*</h11></label>
+    <label class="col-md-5 control-label" for="prependedtext">Nome do campo<h11>*</h11></label>
 
-  <div class="col-md-4">
+  <div class="col-md-5">
     <input id="nome_campo" name="nome_campo" placeholder="Digite o nome do campo" class="form-control input-md" required="" type="text">
 </div>
 </div>
@@ -751,8 +759,8 @@ Data e hora inical :  <input type="text" id="datepicker1" class="datepicker">  D
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="tipo_campo">Tipo do campo<h11>*</h11></label>
-  <div class="col-md-4">
+  <label class="col-md-5 control-label" for="tipo_campo">Tipo do campo<h11>*</h11></label>
+  <div class="col-md-5">
     <select required id="tipo_campo_select" name="tipo_campo_select" class="form-control">
       <option value="texto">Texto</option>
       <option value="numerico">Numerico</option>
@@ -763,8 +771,8 @@ Data e hora inical :  <input type="text" id="datepicker1" class="datepicker">  D
 </div>
 
 <div class="form-group">
-<label class="col-md-4 control-label" for="campo_obrigatorio">Obrigatorio<h11>*</h11></label>
-  <div class="col-md-4">
+<label class="col-md-5 control-label" for="campo_obrigatorio">Obrigatorio<h11>*</h11></label>
+  <div class="col-md-5">
     <select required id="obrigatorio_select" name="obrigatorio_select" class="form-control">
       <option value="sim">Sim</option>
       <option value="nao">Nao</option>  
@@ -772,6 +780,7 @@ Data e hora inical :  <input type="text" id="datepicker1" class="datepicker">  D
   </div>
 </div>
 
+ 
  
 
 
