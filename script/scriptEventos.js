@@ -82,7 +82,7 @@ function getEvento(page) {
                     '</g>' +
                     '</g>' +
                     '</g></svg></span>' +
-                    '  <a href="eventos_mais.html?id=' + element.instituicao.id + '" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-9 u-hover-custom-color-10 u-radius-50 u-btn-1">SABER MAIS</a> ' +
+                    '  <a href="Eventos_Mais.html?id=' + element.instituicao.id + '" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-9 u-hover-custom-color-10 u-radius-50 u-btn-1">SABER MAIS</a> ' +
                     '</div>' +
                     '</div>';
                     if (RegistroAtual>=Object.keys(instituicao).length-1){ativarProximo='disabled'}else{ ativarProximo=''}  
@@ -99,18 +99,18 @@ function getEvento(page) {
         '<nav aria-label="...">' +
         '  <ul class="pagination" >' +
         '    <li class="page-item '+ ativarAnterior+'">' +
-        '      <a class="page-link"  href="./eventos.html?page='+(page-1)+'" tabindex="-1">Anterior</a>' +
+        '      <a class="page-link"  href="./Eventos.html?page='+(page-1)+'" tabindex="-1">Anterior</a>' +
         '    </li>' +
         ((page-1)<=0?'':
-        '   <li class="page-item '+ ativarAnterior+'" ><a class="page-link"  style="color: purple" href="./eventos.html?page='+(page-1)+'">'+(page-1)+'</a></li>') +
+        '   <li class="page-item '+ ativarAnterior+'" ><a class="page-link"  style="color: purple" href="./Eventos.html?page='+(page-1)+'">'+(page-1)+'</a></li>') +
         '    <li class="page-item active">' +
-        '      <a class="page-link"  style="background-color:purple;border-color:purple" href="./eventos.html?page='+(page)+'">'+page+' <span class="sr-only">(atual)</span></a>' +
+        '      <a class="page-link"  style="background-color:purple;border-color:purple" href="./Eventos.html?page='+(page)+'">'+page+' <span class="sr-only">(atual)</span></a>' +
         '    </li>' +
         ((page)>=ultimaPagina?'    <li class="page-item '+ativarProximo+'">':
-        '    <li class="page-item '+ativarProximo+'" ><a  style="color: purple" class="page-link" href="./eventos.html?page='+(parseInt(page)+1)+'">'+(parseInt(page)+1)+'</a></li>') +
+        '    <li class="page-item '+ativarProximo+'" ><a  style="color: purple" class="page-link" href="./Eventos.html?page='+(parseInt(page)+1)+'">'+(parseInt(page)+1)+'</a></li>') +
         '    <li class="page-item '+ativarProximo+'">' +
-        ((page)>=ultimaPagina?'      <a class="page-link"   href="./eventos.html?page='+(parseInt(page))+'">Próximo</a>':
-        '      <a class="page-link"   href="./eventos.html?page='+(parseInt(page)+1)+'">Próximo</a>' )+
+        ((page)>=ultimaPagina?'      <a class="page-link"   href="./Eventos.html?page='+(parseInt(page))+'">Próximo</a>':
+        '      <a class="page-link"   href="./Eventos.html?page='+(parseInt(page)+1)+'">Próximo</a>' )+
         '    </li>' +
         '  </ul>' +
         '</nav></p>';
