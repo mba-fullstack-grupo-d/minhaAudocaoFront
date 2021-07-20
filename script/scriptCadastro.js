@@ -147,7 +147,8 @@ function requestCep(url, name) {
     }
 }
 
-  function submitCadastro() {
+  function submitCadastro(event) {
+    event.preventDefault();
 
     var documento = document.getElementById('documento').value;
     var tipopessoa = document.getElementById('tipopessoa').value;

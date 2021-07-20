@@ -188,7 +188,7 @@
         <div class="u-clearfix u-custom-html u-custom-html-1">
           <style></style>
         </div>
-        <p class="u-align-center u-custom-font u-font-oswald u-text u-text-2">10 Instituições encontradas</p>
+        <p class="u-align-center u-custom-font u-font-oswald u-text u-text-2" id="n_encontradas">Nenhuma instituição encontrada</p>
         <div class="u-list u-list-1" style = "float:left; margin-left:30px" >
           <div class="u-repeater u-repeater-1" id="card_instituicao">
             
@@ -208,26 +208,30 @@
           <form action="#" method="POST" class="u-clearfix u-form-spacing-33 u-form-vertical u-inner-form"
             style="padding: 15px;" source="custom" name="form">
             <div class="u-form-group">
-              <label for="email-6797"
-                class="u-custom-font u-font-oswald u-label u-text-body-alt-color u-label-1">Localização</label>
-              <input type="text" id="email-6797" name="txt_localizacao"
+              <label for="cidade"
+                class="u-custom-font u-font-oswald u-label u-text-body-alt-color u-label-1">Cidade</label>
+              <input type="text" id="cidade" name="cidade"
                 class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-text-black u-white u-input-1"
-                required="required" placeholder="Digite a cidade ou estado">
+                 placeholder="Digite a cidade">
             </div>
             <div class="u-form-group u-form-group-2">
-              <label for="text-9d31" class="u-custom-font u-font-oswald u-label u-text-body-alt-color u-label-2">Nome da
+              <label for="bairro" class="u-custom-font u-font-oswald u-label u-text-body-alt-color u-label-2">Bairro</label>
+              <input type="text" placeholder="Digite o nome da instituição" id="bairro" name="bairro"
+                class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-text-black u-white u-input-2">
+            </div>
+            <div class="u-form-group u-form-group-2">
+              <label for="nome_inst" class="u-custom-font u-font-oswald u-label u-text-body-alt-color u-label-2">Nome da
                 instituição</label>
-              <input type="text" placeholder="Digite o nome da instituição" id="text-9d31" name="txt_insti_nome"
+              <input type="text" placeholder="Digite o nome da instituição" id="nome_inst" name="nome_inst"
                 class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-text-black u-white u-input-2">
             </div>
             <div class="u-align-center u-form-group u-form-submit">
               <a href="#"
                 class="u-btn u-btn-round u-btn-submit u-button-style u-custom-color-9 u-hover-custom-color-11 u-radius-19 u-btn-7">Buscar</a>
-              <input type="submit" value="submit" class="u-form-control-hidden">
+                <input type="submit" value="submit" class="u-form-control-hidden" onclick=getInstituicao(1)>
             </div>
-            <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
-            <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try
-              again.</div>
+            
+         
             <input type="hidden" value="" name="recaptchaResponse">
           </form>
         </div><span class="u-icon u-icon-circle u-text-white u-icon-19"><svg class="u-svg-link"
