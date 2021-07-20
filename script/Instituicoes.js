@@ -110,15 +110,15 @@ function getInstituicao(page) {
         '<nav aria-label="...">' +
         '  <ul class="pagination" >' +
         '    <li class="page-item ' + ativarAnterior + '">' +
-        '      <a class="page-link"  href="./instituicoes.html?page=' + (page - 1) + '" tabindex="-1">Anterior</a>' +
+        '      <a class="page-link"  href="./Instituicoes.html?page=' + (page - 1) + '" tabindex="-1">Anterior</a>' +
         '    </li>' +
-        '   <li class="page-item ' + ativarAnterior + '" ><a class="page-link"  style="color: purple" href="./instituicoes.html?page=' + (page - 1) + '">' + (page - 1) + '</a></li>' +
+        '   <li class="page-item ' + ativarAnterior + '" ><a class="page-link"  style="color: purple" href="./Instituicoes.html?page=' + (page - 1) + '">' + (page - 1) + '</a></li>' +
         '    <li class="page-item active">' +
-        '      <a class="page-link"  style="background-color:purple;border-color:purple" href="./instituicoes.html?page=' + (page) + '">' + page + ' <span class="sr-only">(atual)</span></a>' +
+        '      <a class="page-link"  style="background-color:purple;border-color:purple" href="./Instituicoes.html?page=' + (page) + '">' + page + ' <span class="sr-only">(atual)</span></a>' +
         '    </li>' +
-        '    <li class="page-item ' + ultimaPagina + '" ><a  style="color: purple" class="page-link" href="./instituicoes.html?page=' + (parseInt(page) + 1) + '">' + (parseInt(page) + 1) + '</a></li>' +
+        '    <li class="page-item ' + ultimaPagina + '" ><a  style="color: purple" class="page-link" href="./Instituicoes.html?page=' + (parseInt(page) + 1) + '">' + (parseInt(page) + 1) + '</a></li>' +
         '    <li class="page-item ' + ultimaPagina + '">' +
-        '      <a class="page-link"   href="./instituicoes.html?page=' + (parseInt(page) + 1) + '">Próximo</a>' +
+        '      <a class="page-link"   href="./Instituicoes.html?page=' + (parseInt(page) + 1) + '">Próximo</a>' +
         '    </li>' +
         '  </ul>' +
         '</nav></p>';
