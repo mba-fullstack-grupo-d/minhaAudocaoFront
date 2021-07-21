@@ -101,7 +101,7 @@ function getEventos(IDInstituicao) {
     let url = "http://minhaudocao.com.br:8080/api/evento/instituicao/"+IDInstituicao;
     let data = getDados(url);
     let evento = JSON.parse(data);
-alert(evento.length);
+
     let divCard2 = document.getElementById("layout-2");
     let divCard3 = document.getElementById("layout-3");
     let divCard4 = document.getElementById("layout-4");
@@ -119,7 +119,7 @@ if(evento.length>0){
     '<a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
 }
 if(evento.length>1){
-alert(evento.length);
+
 conteudoCard3 = conteudoCard3 + ' <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;'+ evento[1].nome+'</h4> '+ ' <p class="u-text u-text-6">'+evento[1].descricao+'</p> '+ ' <a href="" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>'; 
 }
 

@@ -1038,12 +1038,7 @@ else{ alert("Não foi possível a inclusão do cadastro!");
 
  
 
-if(idPet>0){
-
-alert("castrado "+castrado)
-
-
-alert("vacinado "+vacinado)
+if(idPet>0){ 
 
 let response  = await fetch("http://minhaudocao.com.br:8080/api/pet", { method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({ 
 "id": idPet,
@@ -1272,13 +1267,6 @@ var descricao = document.getElementById('descricao').value;
 
 
 var idEndInsti = document.getElementById('idEnderecoInsti').value;
-alert(idEndInsti);
-alert(cidade);
-alert(estado);
-alert(rua);
-alert(cep);
-alert(numero);
-alert(bairro);
 
 let response  = await fetch("http://minhaudocao.com.br:8080/api/instituicao", { 
 method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({   
