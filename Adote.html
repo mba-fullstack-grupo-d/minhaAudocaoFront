@@ -239,13 +239,17 @@ header();
           <div class="u-expanded-width u-form u-form-1">
             <form action="#" method="POST" class="u-clearfix u-form-spacing-23 u-form-vertical u-inner-form" style="padding: 15px;" source="custom" name="form">
               <div class="u-form-group">
-                <label for="email-6797" class="u-custom-font u-font-oswald u-label u-label-1">Localização</label>
-                <input type="text" id="email-6797" name="txt_localizacao" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-1" required="required" placeholder="">
+                <label for="email-6797" class="u-custom-font u-font-oswald u-label u-label-1">Cidade</label>
+                <input type="text" id="cidade" name="txt_cidade" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-1" required="required" placeholder="">
+              </div>
+              <div class="u-form-group">
+                <label for="email-6797" class="u-custom-font u-font-oswald u-label u-label-1">Bairro</label>
+                <input type="text" id="bairro" name="txt_bairro" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-1" required="required" placeholder="">
               </div>
               <div class="u-form-group u-form-select u-form-group-2">
                 <label for="select-88a7" class="u-custom-font u-font-oswald u-label u-label-2">Espécie</label>
                 <div class="u-form-select-wrapper">
-                  <select id="select-88a7" name="select_especie" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-2">
+                  <select id="especie" name="select_especie" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-2">
                     <option value="Gato">Gato</option>
                     <option value="Cachorro">Cachorro</option>
                     <option value="Coelho">Coelho</option>
@@ -258,7 +262,7 @@ header();
               <div class="u-form-group u-form-select u-form-group-3">
                 <label for="select-45ba" class="u-custom-font u-font-oswald u-label u-label-3">Gênero</label>
                 <div class="u-form-select-wrapper">
-                  <select id="select-45ba" name="select_genero" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-3">
+                  <select id="genero" name="select_genero" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-3">
                     <option value="Feminino">Feminino</option>
                     <option value="Masculino">Masculino</option>
                   </select>
@@ -267,15 +271,15 @@ header();
               </div>
               <div class="u-form-group u-form-group-4">
                 <label for="text-9d31" class="u-custom-font u-font-oswald u-label u-label-4">Nome da instituição</label>
-                <input type="text" placeholder="Digite o nome da instituição" id="text-9d31" name="txt_insti_nome" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-4">
+                <input type="text" placeholder="Digite o nome da instituição" id="instituicao" name="txt_insti_nome" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-4">
               </div>
               <div class="u-form-group u-form-select u-form-group-5">
                 <label for="select-293b" class="u-custom-font u-font-oswald u-label u-label-5">Idade</label>
                 <div class="u-form-select-wrapper">
-                  <select id="select-293b" name="select_idade" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-5">
+                  <select id="idade" name="select_idade" class="u-border-1 u-border-white u-custom-font u-font-oswald u-input u-input-rectangle u-radius-50 u-white u-input-5">
                     <option value="Menor que 1 ano">Menor que 1 ano</option>
                     <option value="Entre 1 e 2 anos">Entre 1 e 2 anos</option>
-                    <option value="Entre 3 e 6  anos">Entre 3 e 6  anos</option>
+                    <option value="Entre 3 e 6 anos">Entre 3 e 6 anos</option>
                     <option value="Entre 5 e 8 anos">Entre 5 e 8 anos</option>
                     <option value="Maior que 8 anos">Maior que 8 anos</option>
                   </select>
@@ -284,7 +288,7 @@ header();
               </div>
               <div class="u-align-center u-form-group u-form-submit">
                 <a href="#" class="u-btn u-btn-round u-btn-submit u-button-style u-custom-color-9 u-hover-custom-color-11 u-radius-10 u-btn-1">BUSCAR</a>
-                <input type="submit" value="submit" class="u-form-control-hidden">
+                <input type="submit" value="submit" class="u-form-control-hidden" onclick=getPet(1)>
               </div>
               <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
               <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
@@ -296,217 +300,16 @@ header();
       <div class="u-container-style u-group u-white u-group-2">
         <div class="u-container-layout u-container-layout-2">
           <h1 class="u-custom-font u-font-oswald u-text u-text-1">Pets Disponiveis&nbsp;</h1>
-          <div class="u-clearfix u-custom-html u-custom-html-1">
-            <style></style>
-            <p><select   style=" width:180px;margin-left:140px" class="form-control" id="ordenar">
-      <option>Ordem crescente</option>
-      <option>Ordem descrescente</option> 
-    </select></p>
-
-          </div>
-          <p class="u-custom-font u-font-oswald u-large-text u-text u-text-variant u-text-2">10 pets encontrados</p>
-          <p class="u-align-center u-custom-font u-font-oswald u-text u-text-3">
-<nav aria-label="...">
-  <ul class="pagination" >
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Anterior</a>
-    </li>
-    <li class="page-item" ><a class="page-link"  style="color: purple" href="#">1</a></li>
-    <li class="page-item active">
-      <a class="page-link"  style="background-color:purple;border-color:purple" href="#">2 <span class="sr-only">(atual)</span></a>
-    </li>
-    <li class="page-item"><a  style="color: purple" class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link"  style="color: purple" href="#">Próximo</a>
-    </li>
-  </ul>
-</nav></p>
+          <p class="u-align-center u-custom-font u-font-oswald u-text u-text-2" id="n_encontradas"></p>    
         </div>
       </div>
       <div class="u-list u-list-1">
-        <div class="u-repeater u-repeater-1">
-          <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-1">
-            <div class="u-container-layout u-similar-container u-container-layout-3">
-              <img alt="" class="u-image u-image-default u-image-1" data-image-width="1280" data-image-height="853" src="images/aa459116e158cd17547519f206f8ae9ebda6135723d846476a53ffa0a716697c67f5b29ecd36cd18cf1f91f7a8c4192fdcba81d5e6a393262e275c_1280.jpg">
-              <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-4">Simba</h3>
-              <div class="u-border-1 u-border-grey-dark-1 u-line u-line-horizontal u-line-1"></div>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-5">Especie<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-6">Idade<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-7">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-8">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-9">Masculino</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-10">2 meses</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-11">Responsavel<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-12">Localizacao<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-13">Save My pet&nbsp;<br>
-                <br>
-              </p>
-              <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-14">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
-                <br>
-              </p>
-              <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-2">Saber mais</a>
-            </div>
-          </div>
-          <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-2">
-            <div class="u-container-layout u-similar-container u-container-layout-4">
-              <img alt="" class="u-image u-image-default u-image-2" data-image-width="1280" data-image-height="853" src="images/aa459116e158cd17547519f206f8ae9ebda6135723d846476a53ffa0a716697c67f5b29ecd36cd18cf1f91f7a8c4192fdcba81d5e6a393262e275c_1280.jpg">
-              <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-15">Simba</h3>
-              <div class="u-border-1 u-border-grey-dark-1 u-line u-line-horizontal u-line-2"></div>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-16">Especie<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-17">Idade<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-18">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-19">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-20">Masculino</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-21">2 meses</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-22">Responsavel<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-23">Localizacao<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-24">Save My pet&nbsp;<br>
-                <br>
-              </p>
-              <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-25">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
-                <br>
-              </p>
-              <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-3">Saber mais</a>
-            </div>
-          </div>
-          <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-3">
-            <div class="u-container-layout u-similar-container u-container-layout-5">
-              <img alt="" class="u-image u-image-default u-image-3" data-image-width="1280" data-image-height="853" src="images/aa459116e158cd17547519f206f8ae9ebda6135723d846476a53ffa0a716697c67f5b29ecd36cd18cf1f91f7a8c4192fdcba81d5e6a393262e275c_1280.jpg">
-              <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-26">Simba</h3>
-              <div class="u-border-1 u-border-grey-dark-1 u-line u-line-horizontal u-line-3"></div>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-27">Especie<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-28">Idade<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-29">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-30">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-31">Masculino</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-32">2 meses</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-33">Responsavel<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-34">Localizacao<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-35">Save My pet&nbsp;<br>
-                <br>
-              </p>
-              <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-36">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
-                <br>
-              </p>
-              <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-4">Saber mais</a>
-            </div>
-          </div>
-          <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-4">
-            <div class="u-container-layout u-similar-container u-container-layout-6">
-              <img alt="" class="u-image u-image-default u-image-4" data-image-width="1280" data-image-height="853" src="images/aa459116e158cd17547519f206f8ae9ebda6135723d846476a53ffa0a716697c67f5b29ecd36cd18cf1f91f7a8c4192fdcba81d5e6a393262e275c_1280.jpg">
-              <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-37">Simba</h3>
-              <div class="u-border-1 u-border-grey-dark-1 u-line u-line-horizontal u-line-4"></div>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-38">Especie<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-39">Idade<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-40">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-41">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-42">Masculino</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-43">2 meses</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-44">Responsavel<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-45">Localizacao<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-46">Save My pet&nbsp;<br>
-                <br>
-              </p>
-              <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-47">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
-                <br>
-              </p>
-              <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-5">Saber mais</a>
-            </div>
-          </div>
-          <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-5">
-            <div class="u-container-layout u-similar-container u-container-layout-7">
-              <img alt="" class="u-image u-image-default u-image-5" data-image-width="1280" data-image-height="853" src="images/aa459116e158cd17547519f206f8ae9ebda6135723d846476a53ffa0a716697c67f5b29ecd36cd18cf1f91f7a8c4192fdcba81d5e6a393262e275c_1280.jpg">
-              <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-48">Simba</h3>
-              <div class="u-border-1 u-border-grey-dark-1 u-line u-line-horizontal u-line-5"></div>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-49">Especie<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-50">Idade<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-51">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-52">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-53">Masculino</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-54">2 meses</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-55">Responsavel<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-56">Localizacao<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-57">Save My pet&nbsp;<br>
-                <br>
-              </p>
-              <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-58">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
-                <br>
-              </p>
-              <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-6">Saber mais</a>
-            </div>
-          </div>
-          <div class="u-container-style u-custom-color-10 u-list-item u-repeater-item u-shape-rectangle u-list-item-6">
-            <div class="u-container-layout u-similar-container u-container-layout-8">
-              <img alt="" class="u-image u-image-default u-image-6" data-image-width="1280" data-image-height="853" src="images/aa459116e158cd17547519f206f8ae9ebda6135723d846476a53ffa0a716697c67f5b29ecd36cd18cf1f91f7a8c4192fdcba81d5e6a393262e275c_1280.jpg">
-              <h3 class="u-align-center u-custom-font u-font-lobster u-text u-text-59">Simba</h3>
-              <div class="u-border-1 u-border-grey-dark-1 u-line u-line-horizontal u-line-6"></div>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-60">Especie<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-61">Idade<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-62">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-63">Genero<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-64">Masculino</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-65">2 meses</p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-66">Responsavel<br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-67">Localizacao<br>
-                <br>
-              </p>
-              <p class="u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-68">Save My pet&nbsp;<br>
-                <br>
-              </p>
-              <p class="u-align-center u-custom-font u-font-oswald u-text u-text-custom-color-12 u-text-69">Sao Bernado do Campo&nbsp; &nbsp;Sao Paulo&nbsp;<br>
-                <br>
-              </p>
-              <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-7">Saber mais</a>
-            </div>
-          </div>
+        <div class="u-repeater u-repeater-1" id="card_adote">
+          
         </div>
-      </div>
+      <div id="paginacao" style="bottom: 90px; position: absolute;"></div>
+    </div>
+
     </section>
     <section class="u-clearfix u-section-3" id="sec-47d7">
       <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
@@ -579,7 +382,7 @@ header();
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
- 
+    <script src="script/scriptAdote.js"></script>
 
   </body>
 </html>
