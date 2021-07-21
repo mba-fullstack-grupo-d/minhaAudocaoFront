@@ -150,7 +150,7 @@ function requestCep(url, name) {
 }
 
 function submitCadastro(event) {
-event.preventDefault();
+    event.preventDefault();
 
     var documento = document.getElementById('documento').value;
     var tipopessoa = document.getElementById('tipopessoa').value;
@@ -170,8 +170,8 @@ event.preventDefault();
    var nome = document.getElementById("nome").value;
 
 if(tipopessoa==""){
-alert("Escolher o tipo da pessoa");
-return ;
+    alert("Escolher o tipo da pessoa");
+    return ;
 }
 
 if(nome==""){
