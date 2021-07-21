@@ -1,4 +1,4 @@
-    // Variavel Imagem
+// Variavel Imagem
     var imagemEnder;
     var retorno;
 
@@ -150,7 +150,9 @@ function requestCep(url, name) {
 }
 
 function submitCadastro(event) {
-event.preventDefault(); 
+    event.preventDefault();
+
+    //var documento = document.getElementById('documento').value;
     var tipopessoa = document.getElementById('tipopessoa').value;
     var nome = document.getElementById('nome').value;
     var sobrenome = document.getElementById('sobrenome').value;
@@ -168,8 +170,8 @@ event.preventDefault();
    var nome = document.getElementById("nome").value;
 
 if(tipopessoa==""){
-alert("Escolher o tipo da pessoa");
-return ;
+    alert("Escolher o tipo da pessoa");
+    return ;
 }
 
 if(nome==""){
@@ -245,7 +247,7 @@ return;
                     numero:numero,
                     id:null,
                     tipopessoa:tipopessoa,
-                    documento:documento,
+                    documento:1,
                     telefone:telefone
                 });
                 } else {
