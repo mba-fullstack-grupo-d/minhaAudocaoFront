@@ -22,7 +22,7 @@ function main() {
     try {
         let page=1;
         page = location.href.split("=").pop();
-        //page=2;
+
         if (page > 0) {
             getEvento(page);
         }
@@ -42,6 +42,7 @@ function getEvento(page) {
     var data = null;
     if (cidade != '' || bairro != '' || nome != '')
     {
+        page = 1;
         data = getInstituicoes("http://minhaudocao.com.br:8080/api/evento/search", cidade, bairro, nome);
         document.querySelector("form").reset();
     } else {
@@ -60,7 +61,7 @@ function getEvento(page) {
     let limitePagina = 6;
     let ativarAnterior='';
     let ativarProximo='';
-    let ultimaPagina=Math.ceil(totalRecords / 10);
+    let ultimaPagina=Math.ceil(totalRecords / 6);
  
 
     instituicao.forEach(element => {

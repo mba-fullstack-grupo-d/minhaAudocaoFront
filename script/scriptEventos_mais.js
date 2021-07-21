@@ -86,7 +86,7 @@ function getPets(IDInstituicao) {
     ' Sexo: '+ element.genero+'<br> '+
     ' Idade: '+ element.idade+'<br> '+
     ' Castrado: '+ traduzBoolean(element.castrado)+'<br> </p>'+
-    '  <a href="" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-3" style="bottom: 10px;position: absolute;left:35%">Saber mais</a> '+
+    '  <a href="Pet_Mais.html?id=' + element.id + '" class="u-align-center u-btn u-button-style u-custom-color-12 u-hover-custom-color-9 u-btn-3" style="bottom: 10px;position: absolute;left:35%">Saber mais</a> '+
     ' </div> '+
     ' </div>';
     limite = limite+1;
