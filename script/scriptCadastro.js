@@ -150,9 +150,7 @@ function requestCep(url, name) {
 }
 
 function submitCadastro(event) {
-event.preventDefault();
-
-    var documento = document.getElementById('documento').value;
+event.preventDefault(); 
     var tipopessoa = document.getElementById('tipopessoa').value;
     var nome = document.getElementById('nome').value;
     var sobrenome = document.getElementById('sobrenome').value;
