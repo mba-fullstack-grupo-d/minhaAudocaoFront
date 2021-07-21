@@ -670,7 +670,6 @@ else{ alert("Não foi possível a inclusão do cadastro!"); }
 if(idEvento>0){
 
 var idEndereco = document.getElementById("idEndereco").value;
-alert(idEndereco);
 var idData = document.getElementById("idData").value;
 let response  = await fetch("http://minhaudocao.com.br:8080/api/evento", { method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({ 
     "id": idEvento,
