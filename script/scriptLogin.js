@@ -22,8 +22,14 @@ function requestLogin(opts) {
 			localStorage.setItem('token', encodeURI(jsonobject['jwt'])); 
 			// Save data to sessionStorage
 
-              
+             if(localStorage.getItem('idPerson')>0 || localStorage.getItem('idInstituicao')>0  ){
+				alert("Deslogar primeiro");
+				return;
+				}
+ 
            if (jsonobject['roles'][0] == 'ROLE_USER'){
+				
+					
 				localStorage.setItem('idPerson', encodeURI(jsonobject['id'])); 
            	window.location.replace("MinhaContaPF.html?teste=1");
         

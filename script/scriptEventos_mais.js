@@ -117,7 +117,7 @@ console.log(evento[0].nome);
 if(evento.length>0){ 
     conteudoCard2 = conteudoCard2 +'<h4 class="u-text u-text-body-color u-text-3">1.&nbsp;'+ evento[0].nome+'&nbsp;</h4> '+
     '<p class="u-text u-text-4">'+evento[0].descricao+'</p>' +
-    '<a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
+    '<a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAIS</a>';
 }
 
 if(evento.length>1){

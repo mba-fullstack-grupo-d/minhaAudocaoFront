@@ -405,6 +405,8 @@ else{
 
 async function addEvento(){ 
  
+ var instituicao = JSON.parse(localStorage.getItem('instituicao'));
+
  
 var idEvento=document.getElementById("id_evento").value;
 
@@ -459,7 +461,7 @@ if(descricao ==""){
 
 var data1 = document.getElementById('datepicker1').value;
 if(data1 ==""){
-	alert("Preencher data/hora final do evento")	
+	alert("Preencher data/hora inicial do evento")	
 	document.getElementById('datepicker1').focus();
 	return ;
 }
@@ -550,8 +552,8 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento/add", { m
  "datas": [
     {
       "data": dataFormatada,
-      "horaFim": data1.substring(11,16),
-      "horaInicio": data2.substring(11,16)    
+      "horaFim": data2.substring(11,16),
+      "horaInicio": data1.substring(11,16)    
  }
   ],
   "descricao": descricao,
@@ -608,34 +610,46 @@ else{ alert("Não foi possível a inclusão do cadastro!"); }
 if(idEvento>0){
 
 var idEndereco = document.getElementById("idEndereco").value;
-
+alert(idEndereco);
 var idData = document.getElementById("idData").value;
 let response  = await fetch("http://minhaudocao.com.br:8080/api/evento", { method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, body: JSON.stringify({ 
- "id": idEvento,
-        "nome": titulo,
-        "descricao":descricao,
-        "instituicao": {
-            "id": instituicaoId
-        },
+    "id": idEvento,
+    "nome": titulo,
+    "descricao": descricao,
+    "instituicao": {
+        "id": instituicao.id,
+        "nome": instituicao.nome,
+        "descricao": instituicao.descricao,
+        "email": instituicao.email,
+        "telefone": instituicao.telefon, 
         "endereco": {
-            "id": idEndereco,
-            "cidade": cidade,
-            "estado": estado,
-            "logradouro": rua,
-            "numero": numero,
-            "cep": cep,
-            "bairro": bairro
-        },
-        "datas": [
-            {
-                "id": idData,
-                "data": "2021-07-21",
-                "horaInicio": "00:00",
-                "horaFim": "00:00",
-                "idEvento": idEvento
-            }
-        ]
-
+            "id": instituicao.endereco.id,
+            "cidade": instituicao.endereco.cidade,
+            "estado": instituicao.endereco.estado,
+            "logradouro": instituicao.endereco.logradouro,
+            "numero": instituicao.endereco.numero,
+            "cep":instituicao.endereco.cep,
+            "bairro": instituicao.endereco.bairro
+        }
+    },
+    "endereco": {  
+    "id":idEndereco,
+    "cep": cep,
+    "cidade": cidade,
+    "estado": estado,
+    "logradouro": rua ,
+    "numero": numero,
+     "bairro":bairro
+  },
+    "datas": [
+        {
+          "id": idData,
+           "data": dataFormatada,
+      "horaFim": data2.substring(11,16),
+      "horaInicio": data1.substring(11,16),
+            "idEvento": idEvento
+        }
+    ]        
 
  }) }); 
 
@@ -1221,6 +1235,9 @@ function limpa_formulario_cep_evento() {
 
 async function updateDadosPessoais(){
 
+var instituicao = JSON.parse(localStorage.getItem('instituicao'));
+ 
+
 var nome = document.getElementById("nome").value;
 if(nome==""){
 alert("Preencher nome");
@@ -1298,6 +1315,7 @@ if (response.status === 401){
 }
 if (response.status === 200) { 
 alert("Atualizacao efetuada com sucesso!"); 
+preencherDadosPessoais(instituicaoId)
 }
 
 else{ alert("Não foi possível a busca do evento!"); }
@@ -1325,7 +1343,11 @@ if (response.status === 401){
 }
 if (response.status === 200) {
 data= await response.json();
+
+
+
 console.log(data);
+
 document.getElementById("nome").value=data.nome;
 document.getElementById("email").value=data.email;
 document.getElementById("telefone").value=data.telefone;
@@ -1337,6 +1359,8 @@ document.getElementById('estado').value=data.endereco.estado;
 document.getElementById('numero').value=data.endereco.numero; 
 document.getElementById('descricao').value=data.descricao; 
 document.getElementById('idEnderecoInsti').value=data.endereco.id; 
+
+localStorage.setItem("instituicao", JSON.stringify(data)); 
  
 }
 
