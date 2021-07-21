@@ -43,6 +43,11 @@ if(token==null){
    window.location.replace("login.html");
 }
 
+if(instituicaoId == 0 || localStorage.getItem("idInstituicao")==null){
+
+   window.location.replace("login.html");
+}
+
 function sleep(ms) {
 
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -270,7 +275,7 @@ console.log(tipo);
 $("#tipo_campo_select").find('option:contains("' + tipo + '")').prop('selected', true);
 $("#obrigatorio_select").find('option:contains("' + changeLabel(data.obrigatorio) + '")').prop('selected', true);
 
-
+document.getElementById("id_campo").value= campoId;
 }
 
 else{ alert("Não foi possível a inclusão do cadastro!"); }
@@ -367,8 +372,10 @@ if(select_obrigatorio_value =="nao"){
 ob=false
  
 }     
+idCampo = document.getElementById("id_campo").value
 
-
+if(idCampo==0)
+{
 let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/add", { method: 'POST', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, 
 body: JSON.stringify({ "instituicao": { "id": instituicaoId }, "nome": nome, "obrigatorio": ob, "ordem": 0, "tipo":  select_tipocampo_value }) }); 
 
@@ -380,7 +387,10 @@ if (response.status === 401){
 
 if (response.status === 200) { alert("Cadastro efetuado com sucesso!") ;document.getElementById("nome_campo").value="";
  
-sleep(10); buscaCampo(0); meMostraFormulario(); }
+sleep(10); 
+buscaCampo(0);
+meMostraFormulario(); 
+}
 
 else{
 
@@ -389,15 +399,65 @@ else{
 
 
 }
+}
 
 
-     console.log("response = "+response.status)
+if(idCampo>0)
+{
+
+ var instituicao = JSON.parse(localStorage.getItem('instituicao'));
+
+var idCampo=document.getElementById("id_campo").value;
+let response  = await fetch("http://minhaudocao.com.br:8080/api/formulario/", { method: 'PUT', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""}, 
+body: JSON.stringify({
+"id": idCampo, 
+"instituicao": { 
+
+"id": instituicao.id,
+        "nome": instituicao.nome,
+        "descricao": instituicao.descricao,
+        "email": instituicao.email,
+        "telefone": instituicao.telefone, 
+        "endereco": {
+            "id": instituicao.endereco.id,
+            "cidade": instituicao.endereco.cidade,
+            "estado": instituicao.endereco.estado,
+            "logradouro": instituicao.endereco.logradouro,
+            "numero": instituicao.endereco.numero,
+            "cep":instituicao.endereco.cep,
+            "bairro": instituicao.endereco.bairro
+        }
+
+ }, 
+"nome": nome,
+ "obrigatorio": ob, 
+"ordem": 0, 
+"tipo": select_tipocampo_value }) 
+}); 
+
+if (response.status === 401){
+
+   window.location.replace("login.html");
+}
 
 
-     console.log(nome)
-     console.log(select_tipocampo_value)
-     console.log(select_obrigatorio_value)
+if (response.status === 200) { alert("Campo atualizado com sucesso!") ;document.getElementById("nome_campo").value="";
+ 
+sleep(10); 
+buscaCampo(0);
+meMostraFormulario(); 
+}
 
+else{
+
+
+ alert("Não foi possível a atualizacao do campo!"); 
+
+
+}
+}
+
+ 
  
 }
 
@@ -621,7 +681,7 @@ let response  = await fetch("http://minhaudocao.com.br:8080/api/evento", { metho
         "nome": instituicao.nome,
         "descricao": instituicao.descricao,
         "email": instituicao.email,
-        "telefone": instituicao.telefon, 
+        "telefone": instituicao.telefone, 
         "endereco": {
             "id": instituicao.endereco.id,
             "cidade": instituicao.endereco.cidade,

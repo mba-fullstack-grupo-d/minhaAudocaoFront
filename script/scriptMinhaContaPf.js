@@ -15,10 +15,11 @@ token =localStorage.getItem("token");
 personId=localStorage.getItem("idPerson"); 
 
 
-if(personId=="" || personId) {
+if(personId == 0 || localStorage.getItem("idPerson")==null){
 
-
+   window.location.replace("login.html");
 }
+
 
 function sleep(ms) {
 
