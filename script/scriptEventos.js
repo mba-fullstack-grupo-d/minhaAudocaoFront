@@ -86,7 +86,7 @@ function getEvento(page) {
                         '</g>' +
                         '</g>' +
                         '</g></svg></span>' +
-                        '  <a href="Eventos_Mais.html?id=' + element.instituicao.id + '" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-9 u-hover-custom-color-10 u-radius-50 u-btn-1">SABER MAIS</a> ' +
+                        '  <a href="Eventos_Mais.html?id=' + element.id + '" class="u-align-center u-btn u-btn-round u-button-style u-custom-color-9 u-hover-custom-color-10 u-radius-50 u-btn-1">SABER MAIS</a> ' +
                         '</div>' +
                         '</div>';
                         if (RegistroAtual>=Object.keys(instituicao).length-1){ativarProximo='disabled'}else{ ativarProximo=''}  

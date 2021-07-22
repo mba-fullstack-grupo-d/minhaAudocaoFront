@@ -1,3 +1,5 @@
+let IDInstituicao = "";
+
 function getDados(url) {
     let request = new XMLHttpRequest()
     request.open("GET", url, false)
@@ -7,13 +9,13 @@ function getDados(url) {
 
 function main() {
     try{
-    IDInstituicao = location.href.split("=").pop();
-    if (IDInstituicao>0) {
+    IDEvento = location.href.split("=").pop();
+    if (IDEvento>0) {
    
-        console.log(IDInstituicao);
-        getInstituicoes(IDInstituicao);
+        console.log(IDEvento);
+        getInstituicoes(IDEvento);
         getPets(IDInstituicao);
-		 getEventos(IDInstituicao)
+        getEventos(IDInstituicao);
         
     }
     else{window.location.href = "./eventos.html"; }
@@ -24,46 +26,57 @@ function main() {
 
 }
 
-function getInstituicoes(IDInstituicao) {
-    let url = "http://minhaudocao.com.br:8080/api/instituicao/"+IDInstituicao;
+function getInstituicoes(IDEvento) {
+    let url = "http://minhaudocao.com.br:8080/api/evento/"+IDEvento;
     console.log(url);
     let data = getDados(url);
-    let instituicao = JSON.parse(data);
+    let eventos = JSON.parse(data) ;
     let div = document.getElementById("instituicao");
     let divEndereco = document.getElementById("endereco");
     let divMaps = document.getElementById("map-container-google-1");
     let divDisponiveis = document.getElementById("disponiveis");
     let divTituloOng= document.getElementById("TituloOng");
     let conteudoTitulo = '';
-    
 
     let conteudo = '';
     let conteudoEndereco = '';
     let conteudoMaps = '';
     let conteudoDisponiveis = '';
-    conteudo = ' <img src="' + instituicao.imagem + '" alt="" class="u-image u-image-default u-image-1" data-image-width="1504" data-image-height="1000"> ' +
-        ' <h1 class="u-text u-text-1">' + instituicao.nome + '</h1> ' +
-        ' <p class="u-text u-text-2">' + instituicao.descricao + '</p> ';
 
-    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + instituicao.endereco.cidade + '</h2> ' +
-        ' <p class="u-text u-text-2">' + montaEndereco(instituicao) + '</p> ' +
+    IDInstituicao = eventos.instituicao.id;
+    conteudo = ' <img src=images/443922479-0.jpeg alt="" class="u-image u-image-default u-image-1" data-image-width="1504" data-image-height="1000"> ' +
+        ' <h1 class="u-text u-text-1">' + eventos.nome + '</h1> ' +
+        ' <p class="u-text u-text-2">' + eventos.descricao + '</p> ';
+    Object.entries(eventos.datas).forEach(([key]) => {
+        conteudo = conteudo + ' <h1 class="u-align-left u-text u-text-custom-color-11 u-text-3">' + eventos.datas[key].data + '&nbsp&nbsp&nbsp' + eventos.datas[key].horaInicio + ' às ' + eventos.datas[key].horaFim + '</h1>';
+    });
+    
+    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + eventos.endereco.cidade + '</h2> ' +
+        ' <p class="u-text u-text-2">' + montaEndereco(eventos) + '</p> ' +
         '<hr style= size="50%" width="80%" color="gray"> ' +
-        ' <p class="u-text u-text-3">' + instituicao.telefone + '</p> ' +
-        ' <p class="u-text u-text-custom-color-11 u-text-4">' + instituicao.email + '</p>';
+        ' <p class="u-text u-text-3">' + eventos.instituicao.telefone + '</p> ' +
+        ' <p class="u-text u-text-custom-color-11 u-text-4">' + eventos.instituicao.email + '</p>';
 
-    conteudoMaps = ' <iframe src="https://maps.google.com/maps?q=' + instituicao.endereco.cep + '&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" ' +
+    Object.entries(eventos.datas).forEach(([key]) => {
+        conteudoEndereco = conteudoEndereco + ' <br><br><h1 class="u-align-left u-text u-text-custom-color-11 u-text-4">' + eventos.datas[key].data + '&nbsp&nbsp&nbsp' + eventos.datas[key].horaInicio + ' às ' + eventos.datas[key].horaFim + '</h1> ';
+    });
+
+    conteudoEndereco = conteudoEndereco + ' <h2 class="u-align-center u-text u-text-custom-color-11 u-text-6">Realizado por&nbsp;</h2> ' +
+    ' <h2 class="u-align-center u-text u-text-custom-color-11 u-text-7">&nbsp;' + eventos.instituicao.nome + '</h2>' +
+    ' <a href="instituicao_mais.html?id=' + eventos.instituicao.id + '" class="u-btn u-button-style u-custom-color-12 u-hover-custom-color-10 u-btn-1">Saber mais sobre a Instituicao&nbsp;</a>';
+
+    conteudoMaps = ' <iframe src="https://maps.google.com/maps?q=' + eventos.endereco.cep + '&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" ' +
         ' style="border:0" allowfullscreen></iframe>';
-    conteudoDisponiveis = '<h1 class="u-custom-font u-font-lobster u-text u-text-1"> Pets disponíveis de ' + instituicao.nome + ' &nbsp;</h1>';
+    conteudoDisponiveis = '<h1 class="u-custom-font u-font-lobster u-text u-text-1"> Pets disponíveis de ' + eventos.instituicao.nome + ' &nbsp;</h1>';
 
-    conteudoTitulo = '<h1 class="u-text u-text-body-color u-text-1" id = "TituloOng">Ultimos eventos de '+ instituicao.nome+'</h1>';
-
-
+    conteudoTitulo = '<h1 class="u-text u-text-body-color u-text-1" id = "TituloOng">Ultimos eventos de '+ eventos.instituicao.nome+'</h1>';
 
     div.innerHTML = conteudo;
     divEndereco.innerHTML = conteudoEndereco;
     divMaps.innerHTML = conteudoMaps;
     divDisponiveis.innerHTML = conteudoDisponiveis;
     divTituloOng.innerHTML = conteudoTitulo;
+
 }
 
 function getPets(IDInstituicao) {
