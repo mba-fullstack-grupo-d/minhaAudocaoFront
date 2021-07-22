@@ -134,9 +134,12 @@ document.getElementById("link_evento3").href="./Eventos_Mais.html?id="+evento[2]
     divCard2.innerHTML = conteudoCard2;
     divCard3.innerHTML = conteudoCard3;
     divCard4.innerHTML = conteudoCard4; 
- 
+
+if(document.getElementById("link_evento1")!=null)
 document.getElementById("link_evento1").href="./Eventos_Mais.html?id="+evento[0].id;
+if(document.getElementById("link_evento2")!=null)
 document.getElementById("link_evento2").href="./Eventos_Mais.html?id="+evento[1].id;
+if(document.getElementById("link_evento3")!=null)
 document.getElementById("link_evento3").href="./Eventos_Mais.html?id="+evento[2].id;
 
 

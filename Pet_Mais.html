@@ -76,7 +76,7 @@ var idPet= getIdPet();
 window.scrollTo(0, 0);
 
 console.log(idPet);
-let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+ idPet +"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8' }}); 
+let response  = await fetch("http://minhaudocao.com.br:8080/api/pet/"+ idPet +"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8'}}); 
 
  
 
@@ -158,7 +158,7 @@ document.getElementById("telefone_instituicao").innerHTML=data.instituicao.telef
 	document.getElementById("div_pets_na_ong").innerHTML= "Pets disponíveis na Ong " +data.instituicao.nome;
 
 
-let response_pets  = await fetch("http://minhaudocao.com.br:8080/api/pet/instituicao/"+data.instituicao.id+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8','Authorization':"Bearer "+token+""} }); 
+let response_pets  = await fetch("http://minhaudocao.com.br:8080/api/pet/instituicao/"+data.instituicao.id+"", { method: 'GET', headers: { 'Content-Type': 'application/json;charset=utf-8'} }); 
 
 
 if (response_pets.status === 200) {
@@ -249,9 +249,11 @@ document.getElementById("link_evento3").href="./Eventos_Mais.html?id="+evento[2]
     divCard3.innerHTML = conteudoCard3;
     divCard4.innerHTML = conteudoCard4;
 document.getElementById("eventos_mesma_inst").innerHTML = "Eventos da instituicao " + evento[0].instituicao.nome
- 
+if(document.getElementById("link_evento1")!=null)
 document.getElementById("link_evento1").href="./Eventos_Mais.html?id="+evento[0].id;
+if(document.getElementById("link_evento2")!=null)
 document.getElementById("link_evento2").href="./Eventos_Mais.html?id="+evento[1].id;
+if(document.getElementById("link_evento3")!=null)
 document.getElementById("link_evento3").href="./Eventos_Mais.html?id="+evento[2].id;
 }
 
