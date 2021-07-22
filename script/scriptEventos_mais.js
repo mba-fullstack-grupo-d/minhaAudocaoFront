@@ -51,7 +51,7 @@ function getInstituicoes(IDEvento) {
         conteudo = conteudo + ' <h1 class="u-align-left u-text u-text-custom-color-11 u-text-3">' + eventos.datas[key].data + '&nbsp&nbsp&nbsp' + eventos.datas[key].horaInicio + ' às ' + eventos.datas[key].horaFim + '</h1>';
     });
     
-    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + eventos.endereco.cidade + '</h2> ' +
+    conteudoEndereco = '<h2 class="u-text u-text-custom-color-11 u-text-1">' + eventos.nome + '</h2> ' +
         ' <p class="u-text u-text-2">' + montaEndereco(eventos) + '</p> ' +
         '<hr style= size="50%" width="80%" color="gray"> ' +
         ' <p class="u-text u-text-3">' + eventos.instituicao.telefone + '</p> ' +
@@ -114,9 +114,11 @@ function getPets(IDInstituicao) {
 function getEventos(IDInstituicao) {
 
 
+  
     let url = "http://minhaudocao.com.br:8080/api/evento/instituicao/"+IDInstituicao;
     let data = getDados(url);
     let evento = JSON.parse(data);
+  
     let divCard2 = document.getElementById("layout-2");
     let divCard3 = document.getElementById("layout-3");
     let divCard4 = document.getElementById("layout-4");
@@ -126,30 +128,34 @@ function getEventos(IDInstituicao) {
     let conteudoCard4 = '';
     
 
-console.log(evento[0].nome); 
-if(evento.length>0){ 
+
+    console.log(evento[0].nome);
+if(evento.length>0){
     conteudoCard2 = conteudoCard2 +'<h4 class="u-text u-text-body-color u-text-3">1.&nbsp;'+ evento[0].nome+'&nbsp;</h4> '+
     '<p class="u-text u-text-4">'+evento[0].descricao+'</p>' +
-    '<a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAIS</a>';
+    '<a  id="link_evento1" href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-2">MAis</a>';
+document.getElementById("link_evento1").href="./Eventos_Mais.html?id="+evento[0].id;
+
+}
+if(evento.length>1){ 
+conteudoCard3 = conteudoCard3 + ' <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;'+ evento[1].nome+'</h4> '+ ' <p class="u-text u-text-6">'+evento[1].descricao+'</p> '+ ' <a id="link_evento2" href="" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>'; 
+document.getElementById("link_evento2").href="./Eventos_Mais.html?id="+evento[1].id;
 }
 
-if(evento.length>1){
-
-    conteudoCard3 = conteudoCard3 +
-    ' <h4 class="u-text u-text-body-alt-color u-text-5">2.&nbsp;'+ evento[1].nome+'</h4> '+
-    ' <p class="u-text u-text-6">'+evento[1].descricao+'</p> '+
-    ' <a href="" class="u-active-none u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn u-button-style u-hover-none u-none u-text-body-alt-color u-text-hover-white u-btn-3">MAIS</a>';
+if(evento.lenght>2){
+conteudoCard4 = conteudoCard4 + ' <h4 class="u-text u-text-7">3.&nbsp;'+ evento[2].nome+'</h4>'+ ' <p class="u-text u-text-8">'+evento[2].descricao+'</p>'+ ' <a  id="link_evento3" href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>';
+document.getElementById("link_evento3").href="./Eventos_Mais.html?id="+evento[2].id;
 }
-if(evento.length>2){ 
-    conteudoCard4 = conteudoCard4 +
-    ' <h4 class="u-text u-text-7">3.&nbsp;'+ evento[2].nome+'</h4>'+
-    ' <p class="u-text u-text-8">'+evento[2].descricao+'</p>'+
-    ' <a href="" class="u-active-none u-border-2 u-border-active-grey-70 u-border-black u-border-hover-grey-70 u-btn u-button-style u-hover-none u-none u-text-body-color u-text-hover-grey-70 u-btn-4">Mais</a>';
-} 
-
     divCard2.innerHTML = conteudoCard2;
     divCard3.innerHTML = conteudoCard3;
-    divCard4.innerHTML = conteudoCard4;
+    divCard4.innerHTML = conteudoCard4; 
+ 
+if(document.getElementById("link_evento1")!=null)
+document.getElementById("link_evento1").href="./Eventos_Mais.html?id="+evento[0].id;
+if(document.getElementById("link_evento2")!=null)
+document.getElementById("link_evento2").href="./Eventos_Mais.html?id="+evento[1].id;
+if(document.getElementById("link_evento3")!=null)
+document.getElementById("link_evento3").href="./Eventos_Mais.html?id="+evento[2].id;
 }
 
 function montaEndereco(registro) {
