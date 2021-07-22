@@ -123,7 +123,7 @@ function getEvento(page) {
         {
             divencontradas.innerHTML ='Nenhum Evento Encontrado';
         } else {
-            divencontradas.innerHTML =Object.keys(instituicao).length + ' Instituições encontradas';
+            divencontradas.innerHTML =Object.keys(instituicao).length + ' Eventos encontrados';
         }
         div.innerHTML= conteudo;
         divPaginacao.innerHTML = conteudoPaginacao;
